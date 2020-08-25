@@ -16,10 +16,10 @@ namespace F7System.Api.Domain.Services
     public interface IUserService
     {
         User Authenticate(LoginModel loginModel);
-        IEnumerable<User> GetAll();
+        IQueryable<User> GetAll();
         User GetById(Guid id);
         void Create(LoginModel loginModel);
-        void Update(User user, string password = null);
+        void Update(UpdateUserCommand cmd);
         void Delete(Guid id);
         void CreateAdminUserWhenDontHaveManagerUsers();
     }
@@ -67,7 +67,7 @@ namespace F7System.Api.Domain.Services
             _f7DbContext.SaveChanges();
         }
 
-        public IEnumerable<User> GetAll()
+        public IQueryable<User> GetAll()
         {
             return _f7DbContext.UserDbSet;
         }
@@ -77,23 +77,23 @@ namespace F7System.Api.Domain.Services
             return _f7DbContext.UserDbSet.Find(id);
         }
 
-        public void Update(User userParam, string password = null)
+        public void Update(UpdateUserCommand cmd)
         {
-            var user = _f7DbContext.UserDbSet.Find(userParam.UserId);
+            var user = _f7DbContext.UserDbSet.Find(cmd.UserId);
 
             if (user == null)
                 throw new Exception("User not found");
 
-            if (userParam.Username != user.Username && (_f7DbContext.UserDbSet.FirstOrDefault(x => x.Username == user.Username) != null)){
-                throw new Exception("Username " + userParam.Username + " is already taken");
+            if (cmd.Username != user.Username && (_f7DbContext.UserDbSet.FirstOrDefault(x => x.Username == user.Username) != null)){
+                throw new Exception("Username " + cmd.Username + " is already taken");
             }
             
-            user.Username = userParam.Username;
+            user.Username = cmd.Username;
 
             // update password if it was entered
-            if (!string.IsNullOrWhiteSpace(password))
+            if (!string.IsNullOrWhiteSpace(cmd.Password))
             {
-                CreatePasswordHash(password, out var passwordHash, out var passwordSalt);
+                CreatePasswordHash(cmd.Password, out var passwordHash, out var passwordSalt);
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
             }
@@ -121,7 +121,7 @@ namespace F7System.Api.Domain.Services
                 Subject = new ClaimsIdentity(new []
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                    // new Claim(ClaimTypes.Role, user.Role),
+                    new Claim(ClaimTypes.Role, user.Role.ToString()),
                     new Claim(ClaimTypes.Name, user.Username)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
@@ -163,7 +163,7 @@ namespace F7System.Api.Domain.Services
 
         public void CreateAdminUserWhenDontHaveManagerUsers()
         {
-            if (!_f7DbContext.UserDbSet.Any(x => x.Manager != null))
+            if (!_f7DbContext.UserDbSet.Any())
             {
                 Create(new LoginModel()
                 {
@@ -173,10 +173,12 @@ namespace F7System.Api.Domain.Services
 
                 var user = _f7DbContext.UserDbSet.FirstOrDefault(x => x.Username == "admin");
 
+
                 if (user != null)
                 {
-                    user.Manager = new Manager(){UserId = user.UserId};
-                    _f7DbContext.ManagerDbSet.Add(user.Manager);
+                    user.Role = Role.Administrator;
+                    // user.Manager = new Manager(){UserId = user.UserId};
+                    // _f7DbContext.ManagerDbSet.Add(user.Manager);
                     _f7DbContext.UserDbSet.Update(user);
                     _f7DbContext.SaveChanges();
                 }

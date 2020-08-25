@@ -17,12 +17,15 @@
           <e p="Commands" t="Include">
             <e p="AddDisciplinesToStudentCommand.cs" t="Include" />
             <e p="LoginCommand.cs" t="Include" />
+            <e p="UpdateUserCommand.cs" t="Include" />
+          </e>
+          <e p="Enums" t="Include">
+            <e p="Role.cs" t="Include" />
           </e>
           <e p="Models" t="Include">
             <e p="Configuration.cs" t="Include" />
             <e p="Course.cs" t="Include" />
             <e p="Discipline.cs" t="Include" />
-            <e p="Manager.cs" t="Include" />
             <e p="Period.cs" t="Include" />
             <e p="Student.cs" t="Include" />
             <e p="Teacher.cs" t="Include" />

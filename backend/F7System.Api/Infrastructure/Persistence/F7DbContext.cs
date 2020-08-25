@@ -6,7 +6,7 @@ namespace F7System.Api.Infrastructure.Persistence
     public class F7DbContext: DbContext
     {
         public DbSet<User> UserDbSet { get; set; }
-        public DbSet<Manager> ManagerDbSet { get; set; }
+        // public DbSet<Manager> ManagerDbSet { get; set; }
 
 
 
@@ -18,11 +18,11 @@ namespace F7System.Api.Infrastructure.Persistence
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-                .HasOne(x => x.Manager)
-                .WithOne(x => x.User)
-                .HasForeignKey<Manager>(x => x.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+            // modelBuilder.Entity<User>()
+            //     .HasOne(x => x.Manager)
+            //     .WithOne(x => x.User)
+            //     .HasForeignKey<Manager>(x => x.UserId)
+            //     .OnDelete(DeleteBehavior.Restrict);
             // .IsRequired();
         }
     }

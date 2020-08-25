@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Git\F7System\backend" t="IncludeFlat">
+      <e p="F7System.Api" t="IncludeRecursive">
+        <e p="appsettings.Development.json" t="Include" />
+        <e p="appsettings.json" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Controllers" t="Include">
+          <e p="ConfigurationController.cs" t="Include" />
+          <e p="UserController.cs" t="Include" />
+        </e>
+        <e p="Domain" t="Include">
+          <e p="CommandHandlers" t="Include">
+            <e p="StudentCommandHandler.cs" t="Include" />
+          </e>
+          <e p="Commands" t="Include">
+            <e p="AddDisciplinesToStudentCommand.cs" t="Include" />
+            <e p="LoginCommand.cs" t="Include" />
+          </e>
+          <e p="Models" t="Include">
+            <e p="Configuration.cs" t="Include" />
+            <e p="Course.cs" t="Include" />
+            <e p="Discipline.cs" t="Include" />
+            <e p="Manager.cs" t="Include" />
+            <e p="Period.cs" t="Include" />
+            <e p="Student.cs" t="Include" />
+            <e p="Teacher.cs" t="Include" />
+            <e p="User.cs" t="Include" />
+          </e>
+          <e p="services" t="Include">
+            <e p="UserService.cs" t="Include" />
+          </e>
+        </e>
+        <e p="F7System.Api.csproj" t="IncludeRecursive" />
+        <e p="Infrastructure" t="Include">
+          <e p="CQRS" t="Include">
+            <e p="BaseCommand.cs" t="Include" />
+          </e>
+          <e p="Models" t="Include">
+            <e p="AppSettings.cs" t="Include" />
+          </e>
+          <e p="Persistence" t="Include">
+            <e p="F7DbContext.cs" t="Include" />
+          </e>
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="F7System.Api.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="Startup.cs" t="Include" />
+      </e>
+      <e p="F7System.sln" t="IncludeFlat" />
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+    <e p="C:\Users\Frai\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Frai\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_F7System.1895034511.00" t="ExcludeRecursive" />
+  </component>
+</project>

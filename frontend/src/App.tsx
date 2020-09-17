@@ -3,11 +3,12 @@ import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core'
 import { blue } from '@material-ui/core/colors'
 import {
   BrowserRouter as Router,
+  Switch,
   Route
 } from 'react-router-dom'
 import LoginPage from './components/LoginPage'
-import SomePage from './components/SomePage'
 import { PrivateRoute } from './components/PrivateRoute'
+import Layout from './components/Layout'
 
 function App() {
   const classes = useStyles()
@@ -16,9 +17,11 @@ function App() {
     <div className={classes.App}>
       <ThemeProvider theme={theme}>
         <Router>
-          <PrivateRoute exact path="/" component={SomePage} />
-          <Route path="/login" component={LoginPage} />
-        </Router >
+          <Switch>
+            <Route path="/login" component={LoginPage}/>
+            <PrivateRoute path="/" component={Layout}/>
+          </Switch>
+        </Router>
       </ThemeProvider>
     </div>
   )
@@ -42,7 +45,7 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: 'calc(10px + 2vmin)',
+    fontSize: 'calc(10px + 2vmin)'
     // color: 'white'
   }
 })

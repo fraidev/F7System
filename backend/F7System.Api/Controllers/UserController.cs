@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Security;
 using F7System.Api.Domain.Commands;
 using F7System.Api.Domain.Services;
-using F7System.Api.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

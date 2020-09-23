@@ -4,9 +4,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using F7System.Api.Domain.CommandHandlers;
 using F7System.Api.Domain.Services;
 using F7System.Api.Infrastructure.Models;
 using F7System.Api.Infrastructure.Persistence;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -91,7 +93,9 @@ namespace F7System.Api
                     ValidateAudience = false
                 };
             });
-
+            
+            services.AddMediatR(typeof(Startup));
+            services.AddScoped<StudentCommandHandler>();
             services.AddScoped<IUserService, UserService>();
         }
 

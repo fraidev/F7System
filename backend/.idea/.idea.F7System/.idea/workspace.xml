@@ -15,16 +15,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a552ae60-7a85-4503-a510-7422486de496" name="Default Changelist" comment="User Controller">
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/Layout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/Student.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/F7System.Api/Controllers/StudentController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/F7System.Api/Domain/Commands/Student/CreateStudentCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/F7System.Api/Domain/Models/Classroom.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/F7System.IntegrationTests/BaseIntegrationTest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/F7System.IntegrationTests/ContentHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.F7System/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.F7System/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.F7System/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.F7System/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/.env.development" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/.env.development" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/LoginPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/PrivateRoute.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/PrivateRoute.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/SomePage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.F7System/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.F7System/riderModule.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F7System.Api/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/F7System.Api/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F7System.Api/Domain/CommandHandlers/StudentCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/F7System.Api/Domain/CommandHandlers/StudentCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F7System.Api/Domain/Models/Course.cs" beforeDir="false" afterPath="$PROJECT_DIR$/F7System.Api/Domain/Models/Course.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F7System.Api/F7System.Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/F7System.Api/F7System.Api.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F7System.Api/Infrastructure/Persistence/F7DbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/F7System.Api/Infrastructure/Persistence/F7DbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F7System.Api/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/F7System.Api/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F7System.sln" beforeDir="false" afterPath="$PROJECT_DIR$/F7System.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,24 +40,40 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/DA699819-9179-4687-AD9D-6F4A279529C4/9/InMemoryDbContextOptionsExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/128EEF00-630C-4CBB-ABA5-CF9A935C3C6C/A/RequestExceptionProcessorBehavior.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/DB5C90CB-A10C-4BF1-A233-F8E597A889B9/C/CallSiteFactory.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/39D56FAD-9F04-4FF7-AA34-6A96D8021A17/B/SpaOptions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/0E47B3D8-5AF3-476E-A7AA-DC7A9CDD8833/5/Claim.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4A0E8814-DEB8-40F2-817A-211F96ECC092/166/ApiBehaviorApplicationModelProvider.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/39D56FAD-9F04-4FF7-AA34-6A96D8021A17/1B/ISpaBuilder.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/128EEF00-630C-4CBB-ABA5-CF9A935C3C6C/4/ServiceFactory.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4065B38D-0F9F-44D9-8F53-F4C9102AF396/1E0/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4065B38D-0F9F-44D9-8F53-F4C9102AF396/286/TaskAwaiter.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4065B38D-0F9F-44D9-8F53-F4C9102AF396/ff/1520472a/RuntimeMethodInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/14018B03-C41F-4FE0-BAB7-732A6F0C1792/34/80c7f418/TerminatingWithPathSpecimenBuilder.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/39D56FAD-9F04-4FF7-AA34-6A96D8021A17/11/ReactDevelopmentServerMiddlewareExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7B19537B-F065-4C3F-9F78-85C4099CD3AA/1E0/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/128EEF00-630C-4CBB-ABA5-CF9A935C3C6C/0f/1e71ac28/IMediator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/19F/DbContextServices.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/39D56FAD-9F04-4FF7-AA34-6A96D8021A17/B/SpaOptions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/128EEF00-630C-4CBB-ABA5-CF9A935C3C6C/25/67ea77fb/IRequest.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/390A9276-F934-4614-8A29-2BD4FBFD5203/3F/HttpMethod.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1C1E1CF6-49EA-48F2-A650-8AFE828BBD41/2/ServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/128EEF00-630C-4CBB-ABA5-CF9A935C3C6C/F/RequestHandlerWrapper.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4A0E8814-DEB8-40F2-817A-211F96ECC092/166/ApiBehaviorApplicationModelProvider.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/53E4BBFD-57EC-463A-AAF5-4057289EBEA5/20/WebHostBuilder.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/A/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7B19537B-F065-4C3F-9F78-85C4099CD3AA/1E0/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/0E47B3D8-5AF3-476E-A7AA-DC7A9CDD8833/5/Claim.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/12/DbSet.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4065B38D-0F9F-44D9-8F53-F4C9102AF396/2AF/RuntimeAssembly.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/39D56FAD-9F04-4FF7-AA34-6A96D8021A17/1B/ISpaBuilder.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/F7System/Domain/Models/Management.cs" />
-        <option value="$PROJECT_DIR$/F7System/Domain/Models/Administrator.cs" />
-        <option value="$PROJECT_DIR$/F7System/Domain/Models/Configuration.cs" />
-        <option value="$PROJECT_DIR$/F7System/Domain/Models/Course.cs" />
-        <option value="$PROJECT_DIR$/F7System/Domain/Commands.cs" />
         <option value="$PROJECT_DIR$/F7System/Domain/Commands/AddDiciplinesToStudentCommand.cs" />
         <option value="$PROJECT_DIR$/F7System/Infrastructure/CQRS/Command.cs" />
         <option value="$PROJECT_DIR$/F7System/Infrastructure/CQRS/CommandBase.cs" />
@@ -80,17 +101,30 @@
         <option value="$PROJECT_DIR$/F7System/Domain/Services/UserService.cs" />
         <option value="$PROJECT_DIR$/F7System/Startup.cs" />
         <option value="$PROJECT_DIR$/F7System/Controllers/WeatherForecastController.cs" />
-        <option value="$PROJECT_DIR$/F7System.Api/Startup.cs" />
         <option value="$PROJECT_DIR$/F7System.Api/Domain/Models/Configuration.cs" />
-        <option value="$PROJECT_DIR$/F7System.Api/Infrastructure/Persistence/F7DbContext.cs" />
         <option value="$PROJECT_DIR$/F7System.Api/Domain/Models/UserType.cs" />
         <option value="$PROJECT_DIR$/F7System.Api/Domain/Enums/UserType.cs" />
         <option value="$PROJECT_DIR$/F7System.Api/Domain/Commands/LoginCommand.cs" />
         <option value="$PROJECT_DIR$/F7System.Api/Domain/Services/UserService.cs" />
         <option value="$PROJECT_DIR$/F7System.Api/Domain/Models/User.cs" />
-        <option value="$PROJECT_DIR$/F7System.Api/Domain/Models/Student.cs" />
         <option value="$PROJECT_DIR$/F7System.Api/Domain/Models/Teacher.cs" />
+        <option value="$PROJECT_DIR$/F7System.Api/Domain/Models/Class.cs" />
+        <option value="$PROJECT_DIR$/F7System.Api/Domain/Models/Classroom.cs" />
+        <option value="$PROJECT_DIR$/F7System.Api/Domain/Commands/Student/CreateStudentCommand.cs" />
         <option value="$PROJECT_DIR$/F7System.Api/Controllers/UserController.cs" />
+        <option value="$PROJECT_DIR$/F7System.Api/Domain/Models/Course.cs" />
+        <option value="$PROJECT_DIR$/F7System.Api/Domain/Models/Student.cs" />
+        <option value="$PROJECT_DIR$/F7System.IntegrationTests/UnitTest1.cs" />
+        <option value="$PROJECT_DIR$/F7System.UnitTests/UnitTest1.cs" />
+        <option value="$PROJECT_DIR$/F7System.IntegrationTests/F7System.IntegrationTests.csproj" />
+        <option value="$PROJECT_DIR$/F7System.Api/Infrastructure/Persistence/F7DbContext.cs" />
+        <option value="$PROJECT_DIR$/F7System.Api/F7System.Api.csproj" />
+        <option value="$PROJECT_DIR$/F7System.IntegrationTests/ContentHelper.cs" />
+        <option value="$PROJECT_DIR$/F7System.IntegrationTests/BaseIntegrationTest.cs" />
+        <option value="$PROJECT_DIR$/F7System.Api/Startup.cs" />
+        <option value="$PROJECT_DIR$/F7System.Api/Controllers/StudentController.cs" />
+        <option value="$PROJECT_DIR$/F7System.Api/Domain/CommandHandlers/StudentCommandHandler.cs" />
+        <option value="$PROJECT_DIR$/F7System.IntegrationTests/Controllers/StudentControllerTests.cs" />
       </list>
     </option>
   </component>
@@ -184,7 +218,11 @@
       <workItem from="1598322243498" duration="322000" />
       <workItem from="1598371346721" duration="1953000" />
       <workItem from="1600215853116" duration="769000" />
-      <workItem from="1600307569117" duration="1350000" />
+      <workItem from="1600307569117" duration="1947000" />
+      <workItem from="1600638115217" duration="1377000" />
+      <workItem from="1600641924671" duration="2324000" />
+      <workItem from="1600723594510" duration="1355000" />
+      <workItem from="1600827080197" duration="5112000" />
     </task>
     <task id="LOCAL-00001" summary="Init project">
       <created>1598323113890</created>
@@ -245,106 +283,125 @@
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="734" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598371899068" />
-    <state x="1486" y="196" key="#xdebugger.evaluate" timestamp="1598313223544">
+    <state x="1486" y="196" key="#xdebugger.evaluate" timestamp="1600832196027">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="1486" y="196" key="#xdebugger.evaluate/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598313223544" />
-    <state width="526" height="464" key="DebuggerActiveHint" timestamp="1598372882881">
+    <state x="1486" y="196" key="#xdebugger.evaluate/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832196027" />
+    <state width="526" height="464" key="DebuggerActiveHint" timestamp="1600832022724">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="526" height="464" key="DebuggerActiveHint/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598372882881" />
-    <state width="2517" height="299" key="GridCell.Tab.0.bottom" timestamp="1600307903509">
+    <state width="526" height="464" key="DebuggerActiveHint/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832022724" />
+    <state width="2517" height="299" key="GridCell.Tab.0.bottom" timestamp="1600832195437">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.0.bottom/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380515" />
-    <state width="2517" height="299" key="GridCell.Tab.0.bottom/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600307903509" />
-    <state width="2517" height="299" key="GridCell.Tab.0.center" timestamp="1600307903508">
+    <state width="2517" height="299" key="GridCell.Tab.0.bottom/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195437" />
+    <state width="2517" height="299" key="GridCell.Tab.0.center" timestamp="1600832195437">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.0.center/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380515" />
-    <state width="2517" height="299" key="GridCell.Tab.0.center/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600307903508" />
-    <state width="2517" height="299" key="GridCell.Tab.0.left" timestamp="1600307903508">
+    <state width="2517" height="299" key="GridCell.Tab.0.center/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195437" />
+    <state width="2517" height="299" key="GridCell.Tab.0.left" timestamp="1600832195437">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.0.left/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380514" />
-    <state width="2517" height="299" key="GridCell.Tab.0.left/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600307903508" />
-    <state width="2517" height="299" key="GridCell.Tab.0.right" timestamp="1600307903509">
+    <state width="2517" height="299" key="GridCell.Tab.0.left/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195437" />
+    <state width="2517" height="299" key="GridCell.Tab.0.right" timestamp="1600832195437">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.0.right/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380515" />
-    <state width="2517" height="299" key="GridCell.Tab.0.right/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600307903509" />
-    <state width="2517" height="299" key="GridCell.Tab.1.bottom" timestamp="1600308315964">
+    <state width="2517" height="299" key="GridCell.Tab.0.right/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195437" />
+    <state width="2517" height="299" key="GridCell.Tab.1.bottom" timestamp="1600832195438">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.1.bottom/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380515" />
-    <state width="2517" height="299" key="GridCell.Tab.1.bottom/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600308315964" />
-    <state width="2517" height="299" key="GridCell.Tab.1.center" timestamp="1600308315964">
+    <state width="2517" height="299" key="GridCell.Tab.1.bottom/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195438" />
+    <state width="2517" height="299" key="GridCell.Tab.1.center" timestamp="1600832195437">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.1.center/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380515" />
-    <state width="2517" height="299" key="GridCell.Tab.1.center/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600308315964" />
-    <state width="2517" height="299" key="GridCell.Tab.1.left" timestamp="1600308315964">
+    <state width="2517" height="299" key="GridCell.Tab.1.center/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195437" />
+    <state width="2517" height="299" key="GridCell.Tab.1.left" timestamp="1600832195437">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.1.left/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380515" />
-    <state width="2517" height="299" key="GridCell.Tab.1.left/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600308315964" />
-    <state width="2517" height="299" key="GridCell.Tab.1.right" timestamp="1600308315964">
+    <state width="2517" height="299" key="GridCell.Tab.1.left/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195437" />
+    <state width="2517" height="299" key="GridCell.Tab.1.right" timestamp="1600832195438">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.1.right/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380515" />
-    <state width="2517" height="299" key="GridCell.Tab.1.right/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600308315964" />
-    <state width="2517" height="299" key="GridCell.Tab.2.bottom" timestamp="1598383380516">
+    <state width="2517" height="299" key="GridCell.Tab.1.right/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195437" />
+    <state width="2517" height="299" key="GridCell.Tab.2.bottom" timestamp="1600832195438">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.2.bottom/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380516" />
-    <state width="2517" height="299" key="GridCell.Tab.2.center" timestamp="1598383380516">
+    <state width="2517" height="299" key="GridCell.Tab.2.bottom/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195438" />
+    <state width="2517" height="299" key="GridCell.Tab.2.center" timestamp="1600832195438">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.2.center/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380516" />
-    <state width="2517" height="299" key="GridCell.Tab.2.left" timestamp="1598383380516">
+    <state width="2517" height="299" key="GridCell.Tab.2.center/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195438" />
+    <state width="2517" height="299" key="GridCell.Tab.2.left" timestamp="1600832195438">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.2.left/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380516" />
-    <state width="2517" height="299" key="GridCell.Tab.2.right" timestamp="1598383380516">
+    <state width="2517" height="299" key="GridCell.Tab.2.left/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195438" />
+    <state width="2517" height="299" key="GridCell.Tab.2.right" timestamp="1600832195438">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.2.right/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380516" />
-    <state width="2517" height="299" key="GridCell.Tab.3.bottom" timestamp="1598383380516">
+    <state width="2517" height="299" key="GridCell.Tab.2.right/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195438" />
+    <state width="2517" height="299" key="GridCell.Tab.3.bottom" timestamp="1600832195438">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.3.bottom/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380516" />
-    <state width="2517" height="299" key="GridCell.Tab.3.center" timestamp="1598383380516">
+    <state width="2517" height="299" key="GridCell.Tab.3.bottom/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195438" />
+    <state width="2517" height="299" key="GridCell.Tab.3.center" timestamp="1600832195438">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.3.center/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380516" />
-    <state width="2517" height="299" key="GridCell.Tab.3.left" timestamp="1598383380516">
+    <state width="2517" height="299" key="GridCell.Tab.3.center/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195438" />
+    <state width="2517" height="299" key="GridCell.Tab.3.left" timestamp="1600832195438">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.3.left/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380516" />
-    <state width="2517" height="299" key="GridCell.Tab.3.right" timestamp="1598383380516">
+    <state width="2517" height="299" key="GridCell.Tab.3.left/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195438" />
+    <state width="2517" height="299" key="GridCell.Tab.3.right" timestamp="1600832195438">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.3.right/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380516" />
-    <state width="2517" height="299" key="GridCell.Tab.4.bottom" timestamp="1598383380517">
+    <state width="2517" height="299" key="GridCell.Tab.3.right/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195438" />
+    <state width="2517" height="299" key="GridCell.Tab.4.bottom" timestamp="1600832195438">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.4.bottom/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380517" />
-    <state width="2517" height="299" key="GridCell.Tab.4.center" timestamp="1598383380516">
+    <state width="2517" height="299" key="GridCell.Tab.4.bottom/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195438" />
+    <state width="2517" height="299" key="GridCell.Tab.4.center" timestamp="1600832195438">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.4.center/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380516" />
-    <state width="2517" height="299" key="GridCell.Tab.4.left" timestamp="1598383380516">
+    <state width="2517" height="299" key="GridCell.Tab.4.center/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195438" />
+    <state width="2517" height="299" key="GridCell.Tab.4.left" timestamp="1600832195438">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.4.left/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380516" />
-    <state width="2517" height="299" key="GridCell.Tab.4.right" timestamp="1598383380517">
+    <state width="2517" height="299" key="GridCell.Tab.4.left/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195438" />
+    <state width="2517" height="299" key="GridCell.Tab.4.right" timestamp="1600832195438">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="2517" height="299" key="GridCell.Tab.4.right/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598383380517" />
-    <state x="872" y="251" key="Rider.ProjectTemplateDialog.Size" timestamp="1598163241289">
+    <state width="2517" height="299" key="GridCell.Tab.4.right/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832195438" />
+    <state x="872" y="251" key="Rider.ProjectTemplateDialog.Size" timestamp="1600827286774">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="872" y="251" key="Rider.ProjectTemplateDialog.Size/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598163241289" />
+    <state x="872" y="251" key="Rider.ProjectTemplateDialog.Size/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600827286774" />
+    <state x="990" y="198" key="RiderGenerateDialog" timestamp="1600827118684">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="990" y="198" key="RiderGenerateDialog/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600827118684" />
     <state x="92" y="92" width="2376" height="856" key="VCS.FileHistoryDialog" timestamp="1598325587673">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
@@ -365,32 +422,42 @@
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="1097" y="433" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598290793039" />
-    <state x="826" y="249" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1598314966648">
+    <state x="826" y="249" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1600832194425">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="826" y="249" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598314966648" />
+    <state x="826" y="249" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600832194425" />
+    <state x="958" y="253" width="673" height="534" key="find.popup" timestamp="1600829612284">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="958" y="253" width="673" height="534" key="find.popup/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600829612284" />
     <state x="936" y="240" key="run.anything.popup" timestamp="1598281660070">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="936" y="240" key="run.anything.popup/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598281660070" />
-    <state x="936" y="173" width="672" height="676" key="search.everywhere.popup" timestamp="1598282346928">
+    <state x="936" y="173" width="672" height="676" key="search.everywhere.popup" timestamp="1600829704507">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="936" y="173" width="672" height="676" key="search.everywhere.popup/0.0.2560.1040/-1920.0.1536.824@0.0.2560.1040" timestamp="1598282346928" />
+    <state x="936" y="173" width="672" height="676" key="search.everywhere.popup/0.0.2560.1040/2560.0.1536.824@0.0.2560.1040" timestamp="1600829704507" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/F7System/Controllers/WeatherForecastController.cs</url>
-          <line>33</line>
-          <properties documentPath="C:\Git\F7System\src\F7System\Controllers\WeatherForecastController.cs" initialLine="33" />
-          <option name="timeStamp" value="13" />
+          <url>file://$PROJECT_DIR$/F7System.IntegrationTests/Controllers/StudentControllerTests.cs</url>
+          <line>30</line>
+          <properties documentPath="C:\Git\F7System\backend\F7System.IntegrationTests\Controllers\StudentControllerTests.cs" initialLine="30">
+            <startOffsets>
+              <option value="861" />
+            </startOffsets>
+            <endOffsets>
+              <option value="911" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
       </breakpoints>
-      <default-breakpoints>
-        <breakpoint enabled="true" type="DotNet Exception Breakpoints" />
-      </default-breakpoints>
     </breakpoint-manager>
   </component>
 </project>

@@ -6,6 +6,7 @@ namespace F7System.Api.Infrastructure.Persistence
     public class F7DbContext: DbContext
     {
         public DbSet<User> UserDbSet { get; set; }
+        public DbSet<Student> StudentDbSet { get; set; }
         // public DbSet<Manager> ManagerDbSet { get; set; }
 
 

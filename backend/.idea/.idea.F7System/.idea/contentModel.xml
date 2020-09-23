@@ -8,6 +8,7 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
           <e p="ConfigurationController.cs" t="Include" />
+          <e p="StudentController.cs" t="Include" />
           <e p="UserController.cs" t="Include" />
         </e>
         <e p="Domain" t="Include">
@@ -17,12 +18,16 @@
           <e p="Commands" t="Include">
             <e p="AddDisciplinesToStudentCommand.cs" t="Include" />
             <e p="LoginCommand.cs" t="Include" />
+            <e p="Student" t="Include">
+              <e p="CreateStudentCommand.cs" t="Include" />
+            </e>
             <e p="UpdateUserCommand.cs" t="Include" />
           </e>
           <e p="Enums" t="Include">
             <e p="Role.cs" t="Include" />
           </e>
           <e p="Models" t="Include">
+            <e p="Classroom.cs" t="Include" />
             <e p="Configuration.cs" t="Include" />
             <e p="Course.cs" t="Include" />
             <e p="Discipline.cs" t="Include" />
@@ -60,9 +65,45 @@
         </e>
         <e p="Startup.cs" t="Include" />
       </e>
+      <e p="F7System.IntegrationTests" t="IncludeRecursive">
+        <e p="BaseIntegrationTest.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="ContentHelper.cs" t="Include" />
+        <e p="Controllers" t="Include">
+          <e p="StudentControllerTests.cs" t="Include" />
+        </e>
+        <e p="F7System.IntegrationTests.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="F7System.IntegrationTests.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
       <e p="F7System.sln" t="IncludeFlat" />
+      <e p="F7System.UnitTests" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="F7System.UnitTests.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="F7System.UnitTests.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="UnitTest1.cs" t="Include" />
+      </e>
       <e p="packages" t="ExcludeRecursive" />
     </e>
+    <e p="C:\Users\Frai\.nuget\packages\microsoft.net.test.sdk\16.5.0\build\netcoreapp2.1" t="Include">
+      <e p="Microsoft.NET.Test.Sdk.Program.cs" t="Include" />
+    </e>
+    <e p="C:\Users\Frai\.nuget\packages\microsoft.testplatform.testhost\16.5.0\build\netcoreapp2.1\x64\testhost.dll" t="Include" />
+    <e p="C:\Users\Frai\.nuget\packages\microsoft.testplatform.testhost\16.5.0\build\netcoreapp2.1\x64\testhost.exe" t="Include" />
+    <e p="C:\Users\Frai\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.reporters.netcoreapp10.dll" t="Include" />
+    <e p="C:\Users\Frai\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.utility.netcoreapp10.dll" t="Include" />
+    <e p="C:\Users\Frai\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
     <e p="C:\Users\Frai\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
     <e p="C:\Users\Frai\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_F7System.1895034511.00" t="ExcludeRecursive" />
   </component>

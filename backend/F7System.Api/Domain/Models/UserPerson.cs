@@ -2,21 +2,19 @@
 
 namespace F7System.Api.Domain.Models
 {
-    public class User
+    public class UserPerson
     {
-        public User()
+        public UserPerson()
         {
-            UserId = Guid.NewGuid();
+            UserPersonId = Guid.NewGuid();
         }
         
-        public Guid UserId { get; set; }
+        public Guid UserPersonId { get; set; }
         public string Username { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public string Token { get; set; }
         public Role Role { get; set; }
         public string Name { get; set; }
-        public Student Student { get; set; }
-        public Teacher Teacher { get; set; }
     }
 }

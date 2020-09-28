@@ -14,12 +14,14 @@
         <e p="Domain" t="Include">
           <e p="CommandHandlers" t="Include">
             <e p="StudentCommandHandler.cs" t="Include" />
+            <e p="TeacherCommandHandler.cs" t="Include" />
           </e>
           <e p="Commands" t="Include">
             <e p="AddDisciplinesToStudentCommand.cs" t="Include" />
-            <e p="LoginCommand.cs" t="Include" />
             <e p="Student" t="Include">
+              <e p="ChangeStudentCommand.cs" t="Include" />
               <e p="CreateStudentCommand.cs" t="Include" />
+              <e p="DeleteStudentCommand.cs" t="Include" />
             </e>
             <e p="UpdateUserCommand.cs" t="Include" />
           </e>
@@ -34,7 +36,7 @@
             <e p="Period.cs" t="Include" />
             <e p="Student.cs" t="Include" />
             <e p="Teacher.cs" t="Include" />
-            <e p="User.cs" t="Include" />
+            <e p="UserPerson.cs" t="Include" />
           </e>
           <e p="services" t="Include">
             <e p="UserService.cs" t="Include" />
@@ -47,6 +49,8 @@
           </e>
           <e p="Models" t="Include">
             <e p="AppSettings.cs" t="Include" />
+            <e p="LoginModel.cs" t="Include" />
+            <e p="TokenResponse.cs" t="Include" />
           </e>
           <e p="Persistence" t="Include">
             <e p="F7DbContext.cs" t="Include" />

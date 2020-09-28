@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace F7System.Api.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class StudentController: ControllerBase

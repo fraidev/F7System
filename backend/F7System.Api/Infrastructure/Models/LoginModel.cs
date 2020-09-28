@@ -1,4 +1,4 @@
-﻿namespace F7System.Api.Domain.Commands
+﻿namespace F7System.Api.Infrastructure.Models
 {
     public class LoginModel
     {

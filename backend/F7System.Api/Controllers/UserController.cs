@@ -2,6 +2,7 @@
 using System.Linq;
 using F7System.Api.Domain.Commands;
 using F7System.Api.Domain.Services;
+using F7System.Api.Infrastructure.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,13 +40,13 @@ namespace F7System.Api.Controllers
         public IActionResult Authenticate([FromBody] LoginModel loginModel)
         {
             var user = _userService.Authenticate(loginModel);
-            return Ok(new { Id = user.UserId, user.Username, user.Token });
+            return Ok(new TokenResponse{ Id = user.UserPersonId, Username = user.Username, Token = user.Token });
         }
         
         [HttpPost("create")]
         public IActionResult Create([FromBody] LoginModel loginModel)
         {
-            _userService.Create(loginModel);
+            // _userService.GiveAccess(loginModel);
             return Ok();
         }
         

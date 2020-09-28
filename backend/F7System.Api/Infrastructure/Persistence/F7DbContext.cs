@@ -5,10 +5,9 @@ namespace F7System.Api.Infrastructure.Persistence
 {
     public class F7DbContext: DbContext
     {
-        public DbSet<User> UserDbSet { get; set; }
+        public DbSet<UserPerson> UserDbSet { get; set; }
         public DbSet<Student> StudentDbSet { get; set; }
-        // public DbSet<Manager> ManagerDbSet { get; set; }
-
+        public DbSet<Teacher> TeacherDbSet { get; set; }
 
 
         public F7DbContext(DbContextOptions<F7DbContext> options) : base(options)
@@ -19,12 +18,19 @@ namespace F7System.Api.Infrastructure.Persistence
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // modelBuilder.Entity<User>()
-            //     .HasOne(x => x.Manager)
-            //     .WithOne(x => x.User)
-            //     .HasForeignKey<Manager>(x => x.UserId)
+
+            // modelBuilder.Entity<Student>()
+            //     .HasOne(x => x.User)
+            //     .WithOne(x => x.Student)
+            //     .HasForeignKey<User>(x => x.StudentId)
             //     .OnDelete(DeleteBehavior.Restrict);
-            // .IsRequired();
+            //
+            //
+            // modelBuilder.Entity<Teacher>()
+            //     .HasOne(x => x.User)
+            //     .WithOne(x => x.Teacher)
+            //     .HasForeignKey<User>(x => x.TeacherId)
+            //     .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

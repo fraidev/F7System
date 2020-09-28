@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using F7System.Api.Domain.Commands.Student;
 using F7System.Api.Domain.Models;
 using F7System.Api.Domain.Services;
+using F7System.Api.Infrastructure.Models;
 using F7System.Api.Infrastructure.Persistence;
 using MediatR;
 
@@ -24,14 +26,21 @@ namespace F7System.Api.Domain.CommandHandlers
         {
             var student = new Student()
             {
-                Id = Guid.NewGuid(),
+                UserPersonId = request.Id,
+                Name = request.Name
             };
 
             _f7DbContext.Add(student);
             _f7DbContext.SaveChanges();
             
-            // var user = _userService.Authenticate(loginModel);
-
+            var login = new LoginModel()
+            {
+                Username = request.Username,
+                Password = request.Password
+            };
+            
+            _userService.GiveAccess(student, login);
+            
             return Unit.Task;
         }
     }

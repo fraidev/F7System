@@ -24,7 +24,7 @@ const LoginPage: React.FC = () => {
     axios.post(process.env.REACT_APP_BACKEND_BASE_URL + '/user/authenticate', {username, password})
       .then(res => {
         console.log(res)
-        localStorage.setItem('user', JSON.stringify(res))
+        localStorage.setItem('user', JSON.stringify(res.data))
         window.location.pathname = '/'
       })
   }

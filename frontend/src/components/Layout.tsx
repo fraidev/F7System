@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import {makeStyles} from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Drawer from '@material-ui/core/Drawer'
 import AppBar from '@material-ui/core/AppBar'
@@ -9,22 +9,22 @@ import List from '@material-ui/core/List'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
-import Badge from '@material-ui/core/Badge'
 import Container from '@material-ui/core/Container'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import NotificationsIcon from '@material-ui/icons/Notifications'
-
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import PeopleIcon from '@material-ui/icons/People'
 import {
+  useHistory,
   Route,
   Switch,
   useRouteMatch
 } from 'react-router-dom'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import PeopleIcon from '@material-ui/icons/People'
+
 import Student from './Student'
+import { ExitToApp } from '@material-ui/icons'
 
 const drawerWidth = 240
 
@@ -108,9 +108,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Layout: React.FC = () => {
+  const history = useHistory()
   const match = useRouteMatch()
   const classes = useStyles()
-  const [open, setOpen] = React.useState(true)
+  const [open, setOpen] = React.useState(false)
   const handleDrawerOpen = () => {
     setOpen(true)
   }
@@ -118,6 +119,11 @@ const Layout: React.FC = () => {
     setOpen(false)
   }
   const fixedPaperSize = clsx(classes.paper, classes.fixedSize)
+
+  const onExit = () => {
+    localStorage.setItem('user', '')
+    window.location.pathname = '/'
+  }
 
   return (
 
@@ -137,10 +143,13 @@ const Layout: React.FC = () => {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             System F7
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon/>
-            </Badge>
+          {/* <IconButton color="inherit"> */}
+          {/*  <Badge badgeContent={4} color="secondary"> */}
+          {/*    <NotificationsIcon/> */}
+          {/*  </Badge> */}
+          {/* </IconButton> */}
+          <IconButton color="inherit" onClick={onExit}>
+            <ExitToApp/>
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -157,7 +166,7 @@ const Layout: React.FC = () => {
           </IconButton>
         </div>
         <Divider/>
-        <List>{mainListItems}</List>
+        <List>{mainListItems(history)}</List>
         <Divider/>
       </Drawer>
       <main className={classes.content}>
@@ -178,9 +187,14 @@ const Layout: React.FC = () => {
   )
 }
 
-export const mainListItems = (
+const goToStudentPage = (history: any) => {
+  history.push('/student')
+  // window.location.pathname = '/student'
+}
+
+export const mainListItems = (history: any) => (
   <div>
-    <ListItem button>
+    <ListItem button onClick={() => goToStudentPage(history)}>
       <ListItemIcon>
         <PeopleIcon/>
       </ListItemIcon>

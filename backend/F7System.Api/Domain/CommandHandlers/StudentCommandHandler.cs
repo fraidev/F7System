@@ -12,7 +12,10 @@ using MediatR;
 namespace F7System.Api.Domain.CommandHandlers
 {
     public class StudentCommandHandler:
-        IRequestHandler<CreateStudentCommand>
+        IRequestHandler<CreateStudentCommand>,
+        IRequestHandler<ChangeStudentCommand>,
+        IRequestHandler<DeleteStudentCommand>
+        
     {
         private readonly IUserService _userService;
         private readonly F7DbContext _f7DbContext;
@@ -40,6 +43,26 @@ namespace F7System.Api.Domain.CommandHandlers
             };
             
             _userService.GiveAccess(student, login);
+            
+            return Unit.Task;
+        }
+
+        public Task<Unit> Handle(ChangeStudentCommand request, CancellationToken cancellationToken)
+        {
+            var student = _f7DbContext.StudentDbSet.FirstOrDefault(x => x.UserPersonId == request.Id);
+
+            student.Name = request.Name;
+            student.Username = request.Username;
+            _f7DbContext.SaveChanges();
+
+            return Unit.Task;
+        }
+
+        public Task<Unit> Handle(DeleteStudentCommand request, CancellationToken cancellationToken)
+        {
+            var student = _f7DbContext.StudentDbSet.FirstOrDefault(x => x.UserPersonId == request.Id);
+            _f7DbContext.Remove(student);
+            _f7DbContext.SaveChanges();
             
             return Unit.Task;
         }

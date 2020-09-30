@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace F7System.Api.Domain.Models
 {
@@ -7,5 +8,6 @@ namespace F7System.Api.Domain.Models
         public Period ActualPeriod { get; set; }
         public IList<Period> LastPeriods { get; set; }
         public IList<Classroom> Classrooms { get; set; }
+        public DateTime Birth { get; set; }
     }
 }

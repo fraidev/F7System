@@ -143,11 +143,6 @@ const Layout: React.FC = () => {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             System F7
           </Typography>
-          {/* <IconButton color="inherit"> */}
-          {/*  <Badge badgeContent={4} color="secondary"> */}
-          {/*    <NotificationsIcon/> */}
-          {/*  </Badge> */}
-          {/* </IconButton> */}
           <IconButton color="inherit" onClick={onExit}>
             <ExitToApp/>
           </IconButton>
@@ -173,15 +168,15 @@ const Layout: React.FC = () => {
         <div className={classes.appBarSpacer}/>
         <Container maxWidth="lg" className={classes.container}>
 
+          <Switch>
+            <Route path='/student'>
+              <Student/>
+            </Route>
+            <Route path='/'>
+              <h3>Home.</h3>
+            </Route>
+          </Switch>
         </Container>
-        <Switch>
-          <Route path='/student'>
-            <Student/>
-          </Route>
-          <Route path='/'>
-            <h3>Home.</h3>
-          </Route>
-        </Switch>
       </main>
     </div>
   )

@@ -7,30 +7,59 @@ import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import IconButton from '@material-ui/core/IconButton'
 import AddIcon from '@material-ui/icons/Add'
+import {makeStyles} from '@material-ui/core/styles'
+import DateFnsUtils from '@date-io/date-fns';
+import {KeyboardDatePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
+import {useSnackbar} from "notistack";
+import {format, parseISO} from "date-fns";
+import {cpfMask} from "../services/cpf-mask";
 
 export interface Student {
   userPersonId: string,
   username: string,
   password: string,
-  name: string
+  name: string,
+  socialSecurityNumber: string,
+  birth: Date
 }
 
+const useStyles = makeStyles(() => ({
+  fields: {
+    margin: '10px'
+  },
+  cancelButton: {
+    color: "white"
+  }
+}))
+
 const Student: React.FC = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [students, setStudents] = useState([])
   const [editableStudent, setEditableStudent] = useState<Partial<Student>>()
   const [mode, setMode] = useState<'edit' | 'add' | 'none'>('none')
-  // const [username, setUsername] = useState('')
-  // const [password, setPassword] = useState('')
-  // const [name, setName] = useState('')
+  const classes = useStyles()
+
+  const initialState: Student = {
+    userPersonId: '',
+    username: '',
+    password: '',
+    name: '',
+    socialSecurityNumber: '',
+    birth: parseISO('2018-04-01')
+  }
 
   const config = {
     headers: authHeader()
   }
 
   useEffect(() => {
-    axios.get('https://localhost:5001' + '/Student/', config).then((res: any) => {
-      setStudents(res.data)
-    })
+
+    if (config.headers) {
+      axios.get('https://localhost:5001' + '/Student/', config).then((res: any) => {
+        setStudents(res.data)
+      })
+    }
+
   }, [])
 
   const onSave = () => {
@@ -38,12 +67,15 @@ const Student: React.FC = () => {
       axios.post('https://localhost:5001' + '/Student/CreateStudent', {
         username: editableStudent?.username,
         password: editableStudent?.password,
-        name: editableStudent?.name
+        name: editableStudent?.name,
+        socialSecurityNumber: editableStudent?.socialSecurityNumber,
+        birth: editableStudent?.birth,
       }, config)
         .then(() => {
           axios.get('https://localhost:5001' + '/Student/', config).then((res: any) => {
             setStudents(res.data)
             setMode('none')
+            enqueueSnackbar('Estudante criado com sucesso.', {variant: 'success'});
           })
         })
     }
@@ -51,19 +83,22 @@ const Student: React.FC = () => {
       axios.post('https://localhost:5001' + '/Student/ChangeStudent', {
         id: editableStudent?.userPersonId,
         username: editableStudent?.username,
-        name: editableStudent?.name
+        name: editableStudent?.name,
+        socialSecurityNumber: editableStudent?.socialSecurityNumber,
+        birth: editableStudent?.birth,
       }, config)
         .then(() => {
           axios.get('https://localhost:5001' + '/Student/', config).then((res: any) => {
             setStudents(res.data)
             setMode('none')
+            enqueueSnackbar('Estudante alterado com sucesso.', {variant: 'success'});
           })
         })
     }
   }
 
   const openAdd = () => {
-    setEditableStudent({})
+    setEditableStudent(initialState)
     setMode('add')
   }
   const openEdit = (student: any) => {
@@ -76,6 +111,7 @@ const Student: React.FC = () => {
       .then(() => {
         axios.get('https://localhost:5001' + '/Student/', config).then((res: any) => {
           setStudents(res.data)
+          enqueueSnackbar('Estudante excluido com sucesso.', {variant: 'success'});
         })
       })
   }
@@ -90,25 +126,55 @@ const Student: React.FC = () => {
       {mode !== 'none'
         ? <div>
           <form noValidate autoComplete="off">
-            <TextField id="standard-basic" label="Usuario" value={editableStudent?.username}
+
+            <TextField className={classes.fields} id="standard-basic" label="Usuario" value={editableStudent?.username}
                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditableStudent({
                          ...editableStudent,
                          username: e.target?.value
                        })}/>
 
-            {mode === 'add' ? <TextField id="standard-basic" label="Senha" value={editableStudent?.password}
-                                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditableStudent({
-                                           ...editableStudent,
-                                           password: e.target?.value
-                                         })}/> : null}
+            {mode === 'add' ?
+              <TextField className={classes.fields} id="standard-basic" label="Senha" value={editableStudent?.password}
+                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditableStudent({
+                           ...editableStudent,
+                           password: e.target?.value
+                         })}/> : null}
 
-            <TextField id="standard-basic" label="Nome" value={editableStudent?.name}
+            <TextField className={classes.fields} id="standard-basic" label="Nome" value={editableStudent?.name}
                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditableStudent({
                          ...editableStudent,
                          name: e.target?.value
                        })}/>
+
+            <TextField className={classes.fields} id="standard-basic" label="CPF"
+                       value={editableStudent?.socialSecurityNumber}
+                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditableStudent({
+                         ...editableStudent,
+                         socialSecurityNumber: cpfMask(e.target?.value)
+                       })}/>
+
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                className={classes.fields}
+                disableToolbar
+                variant="inline"
+                format="dd/MM/yyyy"
+                margin="normal"
+                id="date-picker-inline"
+                label="Birthday"
+                value={editableStudent?.birth}
+                onChange={(date) => setEditableStudent({
+                  ...editableStudent,
+                  birth: date as Date
+                })}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+              />
+            </MuiPickersUtilsProvider>
+
           </form>
-          <Button variant="contained" color="secondary" onClick={onCancel}>
+          <Button className={classes.cancelButton} variant="contained" color="secondary" onClick={onCancel}>
             Cancel
           </Button>
           <Button variant="contained" color="primary" onClick={onSave}>
@@ -122,6 +188,8 @@ const Student: React.FC = () => {
           <TableRow>
             <TableCell>Nome</TableCell>
             <TableCell align="right">Usuario</TableCell>
+            <TableCell align="right">CPF</TableCell>
+            <TableCell align="right">Data de Nascimento</TableCell>
             <TableCell align="right">
               <div>
                 <IconButton style={{backgroundColor: '#2196f3'}} onClick={openAdd} aria-label="add">
@@ -138,6 +206,8 @@ const Student: React.FC = () => {
                 {student?.name}
               </TableCell>
               <TableCell align="right">{student?.username}</TableCell>
+              <TableCell align="right">{student?.socialSecurityNumber}</TableCell>
+              <TableCell align="right">{format(parseISO(student?.birth), 'dd/MM/yyyy')}</TableCell>
               <TableCell align="right">
 
                 <IconButton color="inherit" onClick={() => openEdit(student)}>

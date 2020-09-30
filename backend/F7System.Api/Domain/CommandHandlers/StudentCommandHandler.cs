@@ -30,7 +30,9 @@ namespace F7System.Api.Domain.CommandHandlers
             var student = new Student()
             {
                 UserPersonId = request.Id,
-                Name = request.Name
+                Name = request.Name,
+                SocialSecurityNumber = request.SocialSecurityNumber,
+                Birth = request.Birth
             };
 
             _f7DbContext.Add(student);
@@ -53,6 +55,8 @@ namespace F7System.Api.Domain.CommandHandlers
 
             student.Name = request.Name;
             student.Username = request.Username;
+            student.SocialSecurityNumber = request.SocialSecurityNumber;
+            student.Birth = request.Birth;
             _f7DbContext.SaveChanges();
 
             return Unit.Task;

@@ -1,29 +1,32 @@
 import React from 'react'
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core'
-import { blue } from '@material-ui/core/colors'
+import {makeStyles, createMuiTheme, ThemeProvider} from '@material-ui/core'
+import {blue} from '@material-ui/core/colors'
 import {
   BrowserRouter as Router,
   Switch,
   Route
 } from 'react-router-dom'
 import LoginPage from './components/LoginPage'
-import { PrivateRoute } from './components/PrivateRoute'
+import {PrivateRoute} from './components/PrivateRoute'
 import Layout from './components/Layout'
+import {SnackbarProvider} from "notistack";
 
 function App() {
   const classes = useStyles()
 
   return (
-    <div className={classes.App}>
-      <ThemeProvider theme={theme}>
-        <Router>
-          <Switch>
-            <Route path="/login" component={LoginPage}/>
-            <PrivateRoute path="/" component={Layout}/>
-          </Switch>
-        </Router>
-      </ThemeProvider>
-    </div>
+    <SnackbarProvider maxSnack={3}>
+      <div className={classes.App}>
+        <ThemeProvider theme={theme}>
+          <Router>
+            <Switch>
+              <Route path="/login" component={LoginPage}/>
+              <PrivateRoute path="/" component={Layout}/>
+            </Switch>
+          </Router>
+        </ThemeProvider>
+      </div>
+    </SnackbarProvider>
   )
 }
 

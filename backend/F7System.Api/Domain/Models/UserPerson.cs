@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace F7System.Api.Domain.Models
@@ -10,10 +9,8 @@ namespace F7System.Api.Domain.Models
         {
             UserPersonId = Guid.NewGuid();
         }
-        
         public Guid UserPersonId { get; set; }
         public string Username { get; set; }
-        
         [JsonIgnore]
         public byte[] PasswordHash { get; set; }
         [JsonIgnore]
@@ -21,5 +18,6 @@ namespace F7System.Api.Domain.Models
         public string Token { get; set; }
         public Role Role { get; set; }
         public string Name { get; set; }
+        public string SocialSecurityNumber { get; set; }
     }
 }

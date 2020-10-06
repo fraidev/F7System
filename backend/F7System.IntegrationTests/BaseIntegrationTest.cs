@@ -60,7 +60,19 @@ namespace F7System.IntegrationTests
                 new AuthenticationHeaderValue("Bearer", tokenResponse.Token);
         }
 
-        protected async Task<HttpResponseMessage> DoRequest(string url, object body)
+        protected async Task<HttpResponseMessage> DoPostRequest(string url, object body)
+        {
+            
+            var request = new
+            {
+                Url = url,
+                Body = body
+            };
+            
+            return await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
+        }
+
+        protected async Task<HttpResponseMessage> DoGetRequest(string url, object body)
         {
             
             var request = new

@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="F7System.Api.Domain.Models.Student">
+    <Position X="13.25" Y="5" Width="1.5" />
+    <InheritanceLine Type="F7System.Api.Domain.Models.UserPerson" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="15.625" Y="3.594" />
+        <Point X="15.625" Y="4.625" />
+        <Point X="13.938" Y="4.625" />
+        <Point X="13.938" Y="5" />
+      </Path>
+    </InheritanceLine>
+    <AssociationLine Name="ActualPeriod" Type="F7System.Api.Domain.Models.Period" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="14" Y="5.997" />
+        <Point X="14" Y="7.228" />
+        <Point X="17.167" Y="7.228" Type="JumpStart" />
+        <Point X="17.333" Y="7.228" Type="JumpEnd" />
+        <Point X="19.75" Y="7.228" />
+        <Point X="19.75" Y="6.853" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="LastPeriods" Type="F7System.Api.Domain.Models.Period" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="14.562" Y="5.997" />
+        <Point X="17.792" Y="5.997" Type="JumpStart" />
+        <Point X="17.958" Y="5.997" Type="JumpEnd" />
+        <Point X="18.114" Y="5.997" />
+        <Point X="18.114" Y="4.393" />
+        <Point X="20" Y="4.393" />
+        <Point X="20" Y="5.75" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAECAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Domain\Models\Student.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ActualPeriod" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Classrooms" />
+      <Property Name="LastPeriods" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="F7System.Api.Domain.Models.Teacher">
+    <Position X="16" Y="5" Width="1.5" />
+    <InheritanceLine Type="F7System.Api.Domain.Models.UserPerson" FixedFromPoint="true">
+      <Path>
+        <Point X="15.625" Y="3.594" />
+        <Point X="15.625" Y="4.625" />
+        <Point X="16.75" Y="4.625" />
+        <Point X="16.75" Y="5" />
+      </Path>
+    </InheritanceLine>
+    <AssociationLine Name="LastPeriods" Type="F7System.Api.Domain.Models.Period" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="17.5" Y="5.499" />
+        <Point X="17.875" Y="5.499" />
+        <Point X="17.875" Y="6.282" />
+        <Point X="19.25" Y="6.282" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="ActualPeriod" Type="F7System.Api.Domain.Models.Period" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="17.188" Y="5" />
+        <Point X="17.188" Y="4.393" />
+        <Point X="21.125" Y="4.393" />
+        <Point X="21.125" Y="6.442" />
+        <Point X="20.75" Y="6.442" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Domain\Models\Teacher.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ActualPeriod" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="LastPeriods" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="F7System.Api.Domain.Models.UserPerson">
+    <Position X="14.25" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>EACAAgAAAAAAAAAAEQAAAAQAAAAABACAAAAAAAABAAA=</HashCode>
+      <FileName>Domain\Models\UserPerson.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F7System.Api.Domain.Models.Course">
+    <Position X="19" Y="1" Width="3" />
+    <AssociationLine Name="ElectiveDisciplines" Type="F7System.Api.Domain.Models.Discipline" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="22" Y="1.397" />
+        <Point X="23.75" Y="1.397" />
+        <Point X="23.75" Y="3" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAABAAAAAAAABAA=</HashCode>
+      <FileName>Domain\Models\Course.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="MandatoryDisciplines" />
+      <Property Name="ElectiveDisciplines" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="F7System.Api.Domain.Models.Discipline">
+    <Position X="23" Y="3" Width="1.5" />
+    <AssociationLine Name="DisciplineTime" Type="F7System.Api.Domain.Models.DisciplineTime" FixedFromPoint="true">
+      <Path>
+        <Point X="24.5" Y="3.381" />
+        <Point X="26.5" Y="3.381" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Prerequisites" Type="F7System.Api.Domain.Models.Discipline" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="24.188" Y="4.68" />
+        <Point X="24.188" Y="4.478" />
+        <Point X="24.875" Y="4.478" />
+        <Point X="24.875" Y="4.428" />
+        <Point X="24.5" Y="4.428" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAICAAAAACAAAAAAACIAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Domain\Models\Discipline.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DisciplineTime" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Prerequisites" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="F7System.Api.Domain.Models.DisciplineTime">
+    <Position X="26.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAICAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Domain\Models\Discipline.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="F7System.Api.Domain.Models.Period">
+    <Position X="19.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Domain\Models\Period.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Classrooms" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="F7System.Api.Domain.Models.Classroom">
+    <Position X="17" Y="7.5" Width="1.5" />
+    <AssociationLine Name="Discipline" Type="F7System.Api.Domain.Models.Discipline" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="18.5" Y="8.405" />
+        <Point X="23.75" Y="8.405" />
+        <Point X="23.75" Y="4.68" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAECAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Domain\Models\Classroom.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Discipline" />
+      <Property Name="Teacher" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

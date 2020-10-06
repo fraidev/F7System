@@ -1,9 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using ContosoUniversity.Data;
 using F7System.Api.Domain.CommandHandlers;
 using F7System.Api.Domain.Services;
 using F7System.Api.Infrastructure.Models;
@@ -12,13 +13,10 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -38,8 +36,11 @@ namespace F7System.Api
         {
             services.AddDbContext<F7DbContext>(x => x.UseInMemoryDatabase("F7DbContext"));
 
-            services.AddControllers();
-           
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1",
@@ -49,13 +50,13 @@ namespace F7System.Api
                         Version = "v1",
                         Description = "F7System Api Endpoints",
                     });
-            }); 
+            });
             services.AddCors();
-            
+
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
-            
+
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
@@ -80,6 +81,7 @@ namespace F7System.Api
                             // return unauthorized if user no longer exists
                             context.Fail("Unauthorized");
                         }
+
                         return Task.CompletedTask;
                     }
                 };
@@ -93,14 +95,15 @@ namespace F7System.Api
                     ValidateAudience = false
                 };
             });
-            
+
             services.AddMediatR(typeof(Startup));
-            services.AddScoped<StudentCommandHandler>();
+            services.AddScoped<PessoaCommandHandler>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IDbInitializer, DbInitializer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IUserService userService)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbInitializer dbInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -115,23 +118,20 @@ namespace F7System.Api
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
-            
+
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-            
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json",
                     "F7 System Api");
             });
-
-            userService.CreateAdminUserWhenDontHaveManagerUsers();
+            
+            dbInitializer.Initialize();
         }
     }
 }

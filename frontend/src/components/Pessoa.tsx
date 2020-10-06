@@ -1,26 +1,27 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Paper from '@material-ui/core/Paper'
-import {TextField, Button, Table, TableHead, TableRow, TableCell, TableBody} from '@material-ui/core'
+import { TextField, Button, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core'
 import axios from 'axios'
-import {authHeader} from '../services/auth-header'
+import { authHeader } from '../services/auth-header'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import IconButton from '@material-ui/core/IconButton'
 import AddIcon from '@material-ui/icons/Add'
-import {makeStyles} from '@material-ui/core/styles'
-import DateFnsUtils from '@date-io/date-fns';
-import {KeyboardDatePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
-import {useSnackbar} from "notistack";
-import {format, parseISO} from "date-fns";
-import {cpfMask} from "../services/cpf-mask";
+import { makeStyles } from '@material-ui/core/styles'
+import DateFnsUtils from '@date-io/date-fns'
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import { useSnackbar } from 'notistack'
+import { format, parseISO } from 'date-fns'
+import { cpfMask } from '../services/cpf-mask'
 
-export interface Student {
-  userPersonId: string,
+export interface Pessoa {
+  id: string,
   username: string,
   password: string,
-  name: string,
-  socialSecurityNumber: string,
-  birth: Date
+  nome: string,
+  cpf: string,
+  dataNascimento: Date,
+  perfil: 'Administrator' | 'Estudante' | 'Professor' | 'Secretario';
 }
 
 const useStyles = makeStyles(() => ({
@@ -28,24 +29,25 @@ const useStyles = makeStyles(() => ({
     margin: '10px'
   },
   cancelButton: {
-    color: "white"
+    color: 'white'
   }
 }))
 
 const Student: React.FC = () => {
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar()
   const [students, setStudents] = useState([])
-  const [editableStudent, setEditableStudent] = useState<Partial<Student>>()
+  const [editableStudent, setEditableStudent] = useState<Partial<Pessoa>>()
   const [mode, setMode] = useState<'edit' | 'add' | 'none'>('none')
   const classes = useStyles()
 
-  const initialState: Student = {
-    userPersonId: '',
+  const initialState: Pessoa = {
+    id: '',
     username: '',
     password: '',
-    name: '',
-    socialSecurityNumber: '',
-    birth: parseISO('2018-04-01')
+    nome: '',
+    cpf: '',
+    dataNascimento: parseISO('2018-04-01'),
+    perfil: 'Estudante'
   }
 
   const config = {
@@ -53,45 +55,45 @@ const Student: React.FC = () => {
   }
 
   useEffect(() => {
-
     if (config.headers) {
-      axios.get('https://localhost:5001' + '/Student/', config).then((res: any) => {
+      axios.get('https://localhost:5001' + '/Pessoa/Estudantes', config).then((res: any) => {
         setStudents(res.data)
       })
     }
-
   }, [])
 
   const onSave = () => {
     if (mode === 'add') {
-      axios.post('https://localhost:5001' + '/Student/CreateStudent', {
+      axios.post('https://localhost:5001' + '/Pessoa/CriarPessoa', {
         username: editableStudent?.username,
         password: editableStudent?.password,
-        name: editableStudent?.name,
-        socialSecurityNumber: editableStudent?.socialSecurityNumber,
-        birth: editableStudent?.birth,
+        nome: editableStudent?.nome,
+        cpf: editableStudent?.cpf,
+        dataNascimento: editableStudent?.dataNascimento,
+        perfil: editableStudent?.perfil
       }, config)
         .then(() => {
-          axios.get('https://localhost:5001' + '/Student/', config).then((res: any) => {
+          axios.get('https://localhost:5001' + '/Pessoa/Estudantes', config).then((res: any) => {
             setStudents(res.data)
             setMode('none')
-            enqueueSnackbar('Estudante criado com sucesso.', {variant: 'success'});
+            enqueueSnackbar('Pessoa criado com sucesso.', { variant: 'success' })
           })
         })
     }
     if (mode === 'edit') {
-      axios.post('https://localhost:5001' + '/Student/ChangeStudent', {
-        id: editableStudent?.userPersonId,
+      axios.post('https://localhost:5001' + '/Pessoa/AlterarPessoa', {
+        id: editableStudent?.id,
         username: editableStudent?.username,
-        name: editableStudent?.name,
-        socialSecurityNumber: editableStudent?.socialSecurityNumber,
-        birth: editableStudent?.birth,
+        nome: editableStudent?.nome,
+        cpf: editableStudent?.cpf,
+        dataNascimento: editableStudent?.dataNascimento,
+        perfil: editableStudent?.perfil
       }, config)
         .then(() => {
-          axios.get('https://localhost:5001' + '/Student/', config).then((res: any) => {
+          axios.get('https://localhost:5001' + '/Pessoa/Estudantes', config).then((res: any) => {
             setStudents(res.data)
             setMode('none')
-            enqueueSnackbar('Estudante alterado com sucesso.', {variant: 'success'});
+            enqueueSnackbar('Pessoa alterado com sucesso.', { variant: 'success' })
           })
         })
     }
@@ -107,11 +109,11 @@ const Student: React.FC = () => {
     console.log(student)
   }
   const onDelete = (student: any) => {
-    axios.post('https://localhost:5001' + '/Student/DeleteStudent', {id: student.userPersonId}, config)
+    axios.post('https://localhost:5001' + '/Pessoa/DeletarPessoa', { id: student.id }, config)
       .then(() => {
-        axios.get('https://localhost:5001' + '/Student/', config).then((res: any) => {
+        axios.get('https://localhost:5001' + '/Pessoa/Estudantes', config).then((res: any) => {
           setStudents(res.data)
-          enqueueSnackbar('Estudante excluido com sucesso.', {variant: 'success'});
+          enqueueSnackbar('Pessoa excluido com sucesso.', { variant: 'success' })
         })
       })
   }
@@ -121,37 +123,37 @@ const Student: React.FC = () => {
   }
 
   return (
-    <Paper style={{width: '80vw', marginLeft: '4vw'}}>
+    <Paper style={{ width: '80vw', marginLeft: '4vw' }}>
 
       {mode !== 'none'
         ? <div>
           <form noValidate autoComplete="off">
 
             <TextField className={classes.fields} id="standard-basic" label="Usuario" value={editableStudent?.username}
-                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditableStudent({
-                         ...editableStudent,
-                         username: e.target?.value
-                       })}/>
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditableStudent({
+                ...editableStudent,
+                username: e.target?.value
+              })}/>
 
-            {mode === 'add' ?
-              <TextField className={classes.fields} id="standard-basic" label="Senha" value={editableStudent?.password}
-                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditableStudent({
-                           ...editableStudent,
-                           password: e.target?.value
-                         })}/> : null}
+            {mode === 'add'
+              ? <TextField className={classes.fields} id="standard-basic" label="Senha" value={editableStudent?.password}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditableStudent({
+                  ...editableStudent,
+                  password: e.target?.value
+                })}/> : null}
 
-            <TextField className={classes.fields} id="standard-basic" label="Nome" value={editableStudent?.name}
-                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditableStudent({
-                         ...editableStudent,
-                         name: e.target?.value
-                       })}/>
+            <TextField className={classes.fields} id="standard-basic" label="Nome" value={editableStudent?.nome}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditableStudent({
+                ...editableStudent,
+                nome: e.target?.value
+              })}/>
 
             <TextField className={classes.fields} id="standard-basic" label="CPF"
-                       value={editableStudent?.socialSecurityNumber}
-                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditableStudent({
-                         ...editableStudent,
-                         socialSecurityNumber: cpfMask(e.target?.value)
-                       })}/>
+              value={editableStudent?.cpf}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditableStudent({
+                ...editableStudent,
+                cpf: cpfMask(e.target?.value)
+              })}/>
 
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <KeyboardDatePicker
@@ -162,13 +164,13 @@ const Student: React.FC = () => {
                 margin="normal"
                 id="date-picker-inline"
                 label="Birthday"
-                value={editableStudent?.birth}
+                value={editableStudent?.dataNascimento}
                 onChange={(date) => setEditableStudent({
                   ...editableStudent,
-                  birth: date as Date
+                  dataNascimento: date as Date
                 })}
                 KeyboardButtonProps={{
-                  'aria-label': 'change date',
+                  'aria-label': 'change date'
                 }}
               />
             </MuiPickersUtilsProvider>
@@ -192,8 +194,8 @@ const Student: React.FC = () => {
             <TableCell align="right">Data de Nascimento</TableCell>
             <TableCell align="right">
               <div>
-                <IconButton style={{backgroundColor: '#2196f3'}} onClick={openAdd} aria-label="add">
-                  <AddIcon style={{color: 'white'}} fontSize="large"/>
+                <IconButton style={{ backgroundColor: '#2196f3' }} onClick={openAdd} aria-label="add">
+                  <AddIcon style={{ color: 'white' }} fontSize="large"/>
                 </IconButton>
               </div>
             </TableCell>
@@ -201,13 +203,13 @@ const Student: React.FC = () => {
         </TableHead>
         <TableBody>
           {students.map((student: any) => (
-            <TableRow key={student?.name}>
+            <TableRow key={student?.id}>
               <TableCell component="th" scope="row">
-                {student?.name}
+                {student?.nome}
               </TableCell>
               <TableCell align="right">{student?.username}</TableCell>
-              <TableCell align="right">{student?.socialSecurityNumber}</TableCell>
-              <TableCell align="right">{format(parseISO(student?.birth), 'dd/MM/yyyy')}</TableCell>
+              <TableCell align="right">{student?.cpf}</TableCell>
+              <TableCell align="right">{format(parseISO(student?.dataNascimento), 'dd/MM/yyyy')}</TableCell>
               <TableCell align="right">
 
                 <IconButton color="inherit" onClick={() => openEdit(student)}>

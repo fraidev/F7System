@@ -3,9 +3,10 @@ using System.Collections.Generic;
 
 namespace F7System.Api.Domain.Models
 {
-    public class Period
+    public class Curso
     {
         public Guid Id { get; set; }
-        public IList<Classroom> Classrooms { get; set; }
+        public string Nome { get; set; }
+        public IList<Grade> Grade { get; set; } = new List<Grade>();
     }
 }

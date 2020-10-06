@@ -27,7 +27,7 @@ namespace F7System.Api.Controllers
 
             if (searchText != null)
             {
-                query = query.Where(x => x.Name.Contains(searchText));
+                query = query.Where(x => x.Nome.Contains(searchText));
             }
 
             query = query.Skip((page - 1) * limit).Take(limit);
@@ -40,7 +40,7 @@ namespace F7System.Api.Controllers
         public IActionResult Authenticate([FromBody] LoginModel loginModel)
         {
             var user = _userService.Authenticate(loginModel);
-            return Ok(new TokenResponse{ Id = user.UserPersonId, Username = user.Username, Token = user.Token });
+            return Ok(new TokenResponse{ Id = user.Id, Username = user.Username, Token = user.Token });
         }
         
         [HttpPost("create")]

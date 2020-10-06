@@ -23,7 +23,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import PeopleIcon from '@material-ui/icons/People'
 
-import Student from './Student'
+import Student from './Pessoa'
 import { ExitToApp } from '@material-ui/icons'
 
 const drawerWidth = 240

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using F7System.Api.Domain.Commands;
+using F7System.Api.Domain.Enums;
 using F7System.Api.Domain.Models;
 using F7System.Api.Infrastructure.Models;
 using F7System.Api.Infrastructure.Persistence;
@@ -13,17 +14,6 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace F7System.Api.Domain.Services
 {
-    public interface IUserService
-    {
-        UserPerson Authenticate(LoginModel loginModel);
-        IQueryable<UserPerson> GetAll();
-        UserPerson GetById(Guid id);
-        void GiveAccess(UserPerson userPerson, LoginModel loginModel);
-        void Update(UpdateUserCommand cmd);
-        void Delete(Guid id);
-        void CreateAdminUserWhenDontHaveManagerUsers();
-    }
-
     public class UserService : IUserService
     {
         private readonly AppSettings _appSettings;
@@ -35,12 +25,12 @@ namespace F7System.Api.Domain.Services
             _f7DbContext = f7DbContext;
         }
 
-        public UserPerson Authenticate(LoginModel loginModel)
+        public PessoaUsuario Authenticate(LoginModel loginModel)
         {
             if (string.IsNullOrEmpty(loginModel.Username) || string.IsNullOrEmpty(loginModel.Password))
                 throw new Exception("Username or password is incorrect");
 
-            var user = _f7DbContext.UserDbSet.FirstOrDefault(x => x.Username == loginModel.Username);
+            var user = _f7DbContext.PessoaUsuarioDbSet.FirstOrDefault(x => x.Username == loginModel.Username);
 
             if (user == null)
                 throw new Exception("Username incorrect");
@@ -52,38 +42,38 @@ namespace F7System.Api.Domain.Services
             return user;
         }
 
-        public void GiveAccess(UserPerson userPerson, LoginModel loginModel)
+        public void GiveAccess(PessoaUsuario pessoaUsuario, LoginModel loginModel)
         {
-            userPerson.Username = loginModel.Username;
+            pessoaUsuario.Username = loginModel.Username;
 
-            if(_f7DbContext.UserDbSet.FirstOrDefault(x => x.Username == userPerson.Username) != null)  
-                throw new Exception("Username \"" + userPerson.Username + "\" is already taken");
+            if(_f7DbContext.PessoaUsuarioDbSet.FirstOrDefault(x => x.Username == pessoaUsuario.Username) != null)  
+                throw new Exception("Username \"" + pessoaUsuario.Username + "\" is already taken");
 
             CreatePasswordHash(loginModel.Password, out var passwordHash, out var passwordSalt);
-            userPerson.PasswordHash = passwordHash;
-            userPerson.PasswordSalt = passwordSalt;
+            pessoaUsuario.PasswordHash = passwordHash;
+            pessoaUsuario.PasswordSalt = passwordSalt;
             
             _f7DbContext.SaveChanges();
         }
 
-        public IQueryable<UserPerson> GetAll()
+        public IQueryable<PessoaUsuario> GetAll()
         {
-            return _f7DbContext.UserDbSet;
+            return _f7DbContext.PessoaUsuarioDbSet;
         }
 
-        public UserPerson GetById(Guid id)
+        public PessoaUsuario GetById(Guid id)
         {
-            return _f7DbContext.UserDbSet.Find(id);
+            return _f7DbContext.PessoaUsuarioDbSet.Find(id);
         }
 
         public void Update(UpdateUserCommand cmd)
         {
-            var user = _f7DbContext.UserDbSet.Find(cmd.UserId);
+            var user = _f7DbContext.PessoaUsuarioDbSet.Find(cmd.UserId);
 
             if (user == null)
                 throw new Exception("User not found");
 
-            if (cmd.Username != user.Username && (_f7DbContext.UserDbSet.FirstOrDefault(x => x.Username == user.Username) != null)){
+            if (cmd.Username != user.Username && (_f7DbContext.PessoaUsuarioDbSet.FirstOrDefault(x => x.Username == user.Username) != null)){
                 throw new Exception("Username " + cmd.Username + " is already taken");
             }
             
@@ -103,7 +93,7 @@ namespace F7System.Api.Domain.Services
 
         public void Delete(Guid id)
         {
-            var user = _f7DbContext.UserDbSet.Find(id);
+            var user = _f7DbContext.PessoaUsuarioDbSet.Find(id);
             if (user != null)
             {
                 _f7DbContext.Remove(user);
@@ -111,7 +101,7 @@ namespace F7System.Api.Domain.Services
             }
         }
 
-        private string GenerateToken(UserPerson userPerson)
+        private string GenerateToken(PessoaUsuario pessoaUsuario)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -119,9 +109,9 @@ namespace F7System.Api.Domain.Services
             {
                 Subject = new ClaimsIdentity(new []
                 {
-                    new Claim(ClaimTypes.NameIdentifier, userPerson.UserPersonId.ToString()),
-                    new Claim(ClaimTypes.Role, userPerson.Role.ToString()),
-                    new Claim(ClaimTypes.Name, userPerson.Username)
+                    new Claim(ClaimTypes.NameIdentifier, pessoaUsuario.Id.ToString()),
+                    new Claim(ClaimTypes.Role, pessoaUsuario.Perfil.ToString()),
+                    new Claim(ClaimTypes.Name, pessoaUsuario.Username)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), 
@@ -162,9 +152,9 @@ namespace F7System.Api.Domain.Services
 
         public void CreateAdminUserWhenDontHaveManagerUsers()
         {
-            if (!_f7DbContext.UserDbSet.Any())
+            if (!_f7DbContext.PessoaUsuarioDbSet.Any())
             {
-                var admin = new UserPerson();
+                var admin = new PessoaUsuario();
                 
                 GiveAccess(admin, new LoginModel()
                 {
@@ -172,7 +162,7 @@ namespace F7System.Api.Domain.Services
                     Password = "admin"
                 });
 
-                admin.Role = Role.Administrator;
+                admin.Perfil = Perfil.Administrator;
                 // user.Manager = new Manager(){UserId = user.UserId};
                 // _f7DbContext.ManagerDbSet.Add(user.Manager);
                 _f7DbContext.Add(admin);

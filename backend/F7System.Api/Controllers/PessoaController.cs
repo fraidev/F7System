@@ -30,6 +30,7 @@ namespace F7System.Api.Controllers
         {
             var estudante = _f7DbContext.PessoaUsuarioDbSet
                 .Include(x => x.Matriculas)
+                .ThenInclude(x => x.Grade)
                 .ThenInclude(x => x.Curso)
                 .Include(x => x.Matriculas)
                 .ThenInclude(x => x.Inscricoes)

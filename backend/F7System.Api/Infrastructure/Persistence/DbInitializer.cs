@@ -82,7 +82,7 @@ namespace ContosoUniversity.Data
         {
             var semestre = new Semestre()
             {
-                Id = Guid.NewGuid(),
+                Id = 1,
                 Ano = 2020,
                 SegundoSemestre = false,
                 Start = new DateTime(2020, 01, 01),
@@ -91,7 +91,7 @@ namespace ContosoUniversity.Data
             
             var semestre2 = new Semestre()
             {
-                Id = Guid.NewGuid(),
+                Id = 2,
                 Ano = 2020,
                 SegundoSemestre = true,
                 Start = new DateTime(2020, 01, 01),
@@ -111,70 +111,70 @@ namespace ContosoUniversity.Data
             {
                 new Horario()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = 1,
                     DayOfWeek = DayOfWeek.Monday,
                     Start = new TimeSpan(18, 30, 00),
                     End = new TimeSpan(20, 30, 00),
                 },
                 new Horario()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = 2,
                     DayOfWeek = DayOfWeek.Monday,
                     Start = new TimeSpan(20, 31, 00),
                     End = new TimeSpan(22, 30, 00),
                 },
                 new Horario()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = 3,
                     DayOfWeek = DayOfWeek.Tuesday,
                     Start = new TimeSpan(18, 30, 00),
                     End = new TimeSpan(20, 30, 00),
                 },
                 new Horario()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = 4,
                     DayOfWeek = DayOfWeek.Tuesday,
                     Start = new TimeSpan(20, 31, 00),
                     End = new TimeSpan(22, 30, 00),
                 },
                 new Horario()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = 5,
                     DayOfWeek = DayOfWeek.Wednesday,
                     Start = new TimeSpan(18, 30, 00),
                     End = new TimeSpan(20, 30, 00),
                 },
                 new Horario()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = 6,
                     DayOfWeek = DayOfWeek.Wednesday,
                     Start = new TimeSpan(20, 31, 00),
                     End = new TimeSpan(22, 30, 00),
                 },
                 new Horario()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = 7,
                     DayOfWeek = DayOfWeek.Thursday,
                     Start = new TimeSpan(18, 30, 00),
                     End = new TimeSpan(20, 30, 00),
                 },
                 new Horario()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = 8,
                     DayOfWeek = DayOfWeek.Thursday,
                     Start = new TimeSpan(20, 31, 00),
                     End = new TimeSpan(22, 30, 00),
                 },
                 new Horario()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = 9,
                     DayOfWeek = DayOfWeek.Friday,
                     Start = new TimeSpan(18, 30, 00),
                     End = new TimeSpan(20, 30, 00),
                 },
                 new Horario()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = 10,
                     DayOfWeek = DayOfWeek.Friday,
                     Start = new TimeSpan(20, 31, 00),
                     End = new TimeSpan(22, 30, 00),

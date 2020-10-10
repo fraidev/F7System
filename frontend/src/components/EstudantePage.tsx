@@ -88,7 +88,9 @@ const EstudantePage: React.FC = () => {
     setAnchorEl(event.currentTarget)
   }
   const handleClose = (estudante) => {
-    history.push(`/matricula/${estudante.id}`)
+    if (estudante?.id) {
+      history.push(`/matricula/${estudante.id}`)
+    }
     setAnchorEl(null)
   }
 

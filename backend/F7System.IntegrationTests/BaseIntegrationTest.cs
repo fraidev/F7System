@@ -30,9 +30,10 @@ namespace F7System.IntegrationTests
             var builder = new DbContextOptionsBuilder<F7DbContext>();
 
             builder.UseInMemoryDatabase("F7DbContext");
-            
+
             _f7DbContext = new F7DbContext(builder.Options);
-            
+            _f7DbContext.Database.EnsureDeleted();
+
             var request = new
             {
                 Url = "/User/Authenticate",

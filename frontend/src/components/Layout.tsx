@@ -171,11 +171,11 @@ const Layout: React.FC = () => {
             <Route path='/estudante'>
               <EstudantePage/>
             </Route>
+            <Route path='/matricula/:estudanteId/inscricao/:matriculaId'>
+              <InscricaoPage/>
+            </Route>
             <Route path='/matricula/:estudanteId'>
               <MatriculaPage/>
-            </Route>
-            <Route path='/inscricao/:matriculaId'>
-              <InscricaoPage/>
             </Route>
             <Route path='/'>
               <h3>Home.</h3>

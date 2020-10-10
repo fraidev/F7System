@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
-import {
-  makeStyles,
-  TextField,
-  Button
-} from '@material-ui/core'
+import { Button, makeStyles, TextField } from '@material-ui/core'
+import { useSnackbar } from 'notistack'
 
 const LoginPage: React.FC = () => {
   const classes = useStyles()
+  const { enqueueSnackbar } = useSnackbar()
   const [state, setState] = useState({
     submitted: false,
     loading: false,
@@ -22,9 +20,10 @@ const LoginPage: React.FC = () => {
     console.log(process.env.REACT_APP_BACKEND_BASE_URL)
     axios.post(process.env.REACT_APP_BACKEND_BASE_URL + '/user/authenticate', { username, password })
       .then(res => {
-        console.log(res)
         localStorage.setItem('user', JSON.stringify(res.data))
         window.location.pathname = '/'
+      }).catch(error => {
+        enqueueSnackbar(error.response.data.error, { variant: 'error' })
       })
   }
 

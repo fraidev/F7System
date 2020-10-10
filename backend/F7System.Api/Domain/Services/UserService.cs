@@ -28,15 +28,15 @@ namespace F7System.Api.Domain.Services
         public PessoaUsuario Authenticate(LoginModel loginModel)
         {
             if (string.IsNullOrEmpty(loginModel.Username) || string.IsNullOrEmpty(loginModel.Password))
-                throw new Exception("Username or password is incorrect");
+                throw new Exception("Usuario ou senha incorretos");
 
             var user = _f7DbContext.PessoaUsuarioDbSet.FirstOrDefault(x => x.Username == loginModel.Username);
 
             if (user == null)
-                throw new Exception("Username incorrect");
-
+                throw new Exception("Usuario incorreto");
+ 
             if (!VerifyPasswordHash(loginModel.Password, user.PasswordHash, user.PasswordSalt))
-                throw new Exception("Password incorrect");
+                throw new Exception("Senha incorreta");
             
             user.Token = GenerateToken(user);
             return user;

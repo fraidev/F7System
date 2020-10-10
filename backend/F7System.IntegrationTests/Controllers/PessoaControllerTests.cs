@@ -96,7 +96,7 @@ namespace F7System.IntegrationTests.Controllers
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             estudante.Should().NotBeNull();
             estudante.Matriculas.Should().HaveCount(1);
-            estudante.Matriculas.First().Curso.Id.Should().Be(cmd.CursoId);
+            estudante.Matriculas.First().Grade.Id.Should().Be(cmd.GradeId);
         }
         
         [Fact]
@@ -130,7 +130,6 @@ namespace F7System.IntegrationTests.Controllers
             
             estudante.Should().NotBeNull();
             estudante?.Matriculas.Should().HaveCount(1);
-            estudante?.Matriculas.First().Curso.Id.Should().Be(cmdMatricula.CursoId);
             estudante?.Matriculas.First().Inscricoes.Should().HaveCount(1);
         }
 
@@ -154,12 +153,12 @@ namespace F7System.IntegrationTests.Controllers
 
         private AddMatriculaEstudanteCommand CriaComandoMatricula(Guid pessoaId)
         {
-            var curso = _f7DbContext.CursoDbSet.First();
+            var curso = _f7DbContext.GradeDbSet.First();
             var cmd = new AddMatriculaEstudanteCommand()
             {
                 MatriculaId = Guid.NewGuid(),
                 PessoaId = pessoaId,
-                CursoId = curso.Id
+                GradeId = curso.Id
             };
             return cmd;
         }

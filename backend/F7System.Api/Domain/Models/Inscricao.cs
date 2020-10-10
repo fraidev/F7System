@@ -10,6 +10,7 @@ namespace F7System.Api.Domain.Models
         public decimal Nota { get; set; }
         public Matricula Matricula { get; set; }
         public Turma Turma { get; set; }
+        public bool Completa { get; set; }
         public Guid MatriculaId { get; set; }
     }
 }

@@ -46,6 +46,10 @@ namespace F7System.Api.Infrastructure.Persistence
             modelBuilder.Entity<Inscricao>()
                 .HasOne(x => x.Turma);
 
+            modelBuilder.Entity<Turma>()
+                .HasOne<Disciplina>(x => x.Disciplina)
+                .WithMany(x => x.Turmas);
+
             // modelBuilder.Entity<Grade>()
             //     .HasOne<Grade>(x => x)
             //     .WithOne(x => x.Curso);

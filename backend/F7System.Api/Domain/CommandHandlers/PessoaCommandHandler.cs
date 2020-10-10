@@ -80,16 +80,16 @@ namespace F7System.Api.Domain.CommandHandlers
         public Task<Unit> Handle(AddMatriculaEstudanteCommand request, CancellationToken cancellationToken)
         {
             var estudante = _f7DbContext.PessoaUsuarioDbSet.FirstOrDefault(x => x.Id == request.PessoaId);
-            var curso = _f7DbContext.CursoDbSet.FirstOrDefault(x => x.Id == request.CursoId);
+            var grade = _f7DbContext.GradeDbSet.FirstOrDefault(x => x.Id == request.GradeId);
 
-            if (estudante != null && curso != null)
+            if (estudante != null && grade != null)
             {
                 var matricula = new Matricula()
                 {
                     Id = request.MatriculaId,
                     PessoaUsuario = estudante,
                     PessoaUsuarioId = estudante.Id,
-                    Curso = curso
+                    Grade = grade
                 };
                 _f7DbContext.Add(matricula);
                 estudante.Matriculas.Add(matricula);

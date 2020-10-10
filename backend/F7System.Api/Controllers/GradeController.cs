@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using F7System.Api.Domain.Enums;
+﻿using System;
+using System.Linq;
 using F7System.Api.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -22,7 +22,16 @@ namespace F7System.Api.Controllers
             _f7DbContext = f7DbContext;
         }
         
-        [HttpGet("Grades")]
+        [HttpGet("GradesByCurso/{cursoId}")]
+        public IActionResult GetGradesByCursoId(Guid cursoId)
+        {
+            var grade = _f7DbContext.GradeDbSet
+                .Include(x => x.Curso)
+                .Where(x => x.CursoId == cursoId);
+            return Ok(grade);
+        }
+        
+        [HttpGet("")]
         public IActionResult GetGrades()
         {
             var estudantes= _f7DbContext.GradeDbSet

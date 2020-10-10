@@ -12,7 +12,9 @@ using F7System.Api.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -114,7 +116,17 @@ namespace F7System.Api
             }
 
             app.UseHttpsRedirection();
-
+            
+            app.UseExceptionHandler(a => a.Run(async context =>
+            {
+                var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+                var exception = exceptionHandlerPathFeature.Error;
+    
+                var result = JsonConvert.SerializeObject(new { error = exception.Message, exception = exception.ToString() });
+                context.Response.ContentType = "application/json";
+                await context.Response.WriteAsync(result);
+            }));
+            
             app.UseRouting();
 
             app.UseCors(x => x

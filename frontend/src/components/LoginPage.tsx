@@ -1,5 +1,4 @@
-/* eslint-disable */
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 
 import {
@@ -21,7 +20,7 @@ const LoginPage: React.FC = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault()
     console.log(process.env.REACT_APP_BACKEND_BASE_URL)
-    axios.post(process.env.REACT_APP_BACKEND_BASE_URL + '/user/authenticate', {username, password})
+    axios.post(process.env.REACT_APP_BACKEND_BASE_URL + '/user/authenticate', { username, password })
       .then(res => {
         console.log(res)
         localStorage.setItem('user', JSON.stringify(res.data))
@@ -29,7 +28,7 @@ const LoginPage: React.FC = () => {
       })
   }
 
-  const {submitted, loading, error} = state
+  const { submitted, loading, error } = state
   return (
     <div>
       <div>

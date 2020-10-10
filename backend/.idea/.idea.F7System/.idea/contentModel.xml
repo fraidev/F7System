@@ -8,6 +8,8 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
           <e p="ConfigurationController.cs" t="Include" />
+          <e p="CursoController.cs" t="Include" />
+          <e p="GradeController.cs" t="Include" />
           <e p="PessoaController.cs" t="Include" />
           <e p="UserController.cs" t="Include" />
         </e>
@@ -17,6 +19,8 @@
           </e>
           <e p="Commands" t="Include">
             <e p="AddDisciplinesToStudentCommand.cs" t="Include" />
+            <e p="AddInscricoesMatriculaEstudanteCommand.cs" t="Include" />
+            <e p="AddMatriculaEstudanteCommand.cs" t="Include" />
             <e p="Pessoa" t="Include">
               <e p="AlterarPessoaCommand.cs" t="Include" />
               <e p="CriarPessoaCommand.cs" t="Include" />

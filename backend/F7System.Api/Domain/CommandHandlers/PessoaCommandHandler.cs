@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using F7System.Api.Domain.Commands;
 using F7System.Api.Domain.Commands.Estudante;
 using F7System.Api.Domain.Models;
 using F7System.Api.Domain.Services;
@@ -10,11 +12,13 @@ using MediatR;
 
 namespace F7System.Api.Domain.CommandHandlers
 {
-    public class PessoaCommandHandler:
+    public class PessoaCommandHandler :
         IRequestHandler<CriarPessoaCommand>,
         IRequestHandler<AlterarPessoaCommand>,
-        IRequestHandler<DeletarPessoaCommand>
-        
+        IRequestHandler<DeletarPessoaCommand>,
+        IRequestHandler<AddMatriculaEstudanteCommand>,
+        IRequestHandler<AddInscricoesMatriculaEstudanteCommand>
+
     {
         private readonly IUserService _userService;
         private readonly F7DbContext _f7DbContext;
@@ -24,6 +28,7 @@ namespace F7System.Api.Domain.CommandHandlers
             _userService = userService;
             _f7DbContext = f7DbContext;
         }
+
         public Task<Unit> Handle(CriarPessoaCommand request, CancellationToken cancellationToken)
         {
             var student = new PessoaUsuario()
@@ -37,15 +42,15 @@ namespace F7System.Api.Domain.CommandHandlers
 
             _f7DbContext.Add(student);
             _f7DbContext.SaveChanges();
-            
+
             var login = new LoginModel()
             {
                 Username = request.Username,
                 Password = request.Password
             };
-            
+
             _userService.GiveAccess(student, login);
-            
+
             return Unit.Task;
         }
 
@@ -68,7 +73,55 @@ namespace F7System.Api.Domain.CommandHandlers
             var estudante = _f7DbContext.PessoaUsuarioDbSet.FirstOrDefault(x => x.Id == request.Id);
             _f7DbContext.Remove(estudante);
             _f7DbContext.SaveChanges();
-            
+
+            return Unit.Task;
+        }
+
+        public Task<Unit> Handle(AddMatriculaEstudanteCommand request, CancellationToken cancellationToken)
+        {
+            var estudante = _f7DbContext.PessoaUsuarioDbSet.FirstOrDefault(x => x.Id == request.PessoaId);
+            var curso = _f7DbContext.CursoDbSet.FirstOrDefault(x => x.Id == request.CursoId);
+
+            if (estudante != null && curso != null)
+            {
+                var matricula = new Matricula()
+                {
+                    Id = request.MatriculaId,
+                    PessoaUsuario = estudante,
+                    PessoaUsuarioId = estudante.Id,
+                    Curso = curso
+                };
+                _f7DbContext.Add(matricula);
+                estudante.Matriculas.Add(matricula);
+            }
+
+            _f7DbContext.SaveChanges();
+
+            return Unit.Task;
+        }
+
+        public Task<Unit> Handle(AddInscricoesMatriculaEstudanteCommand request, CancellationToken cancellationToken)
+        {
+            var matricula = _f7DbContext.MatriculaDbSet.FirstOrDefault(x => x.Id == request.MatriculaId);
+            var turmas = _f7DbContext.TurmaDbSet.Where(x => request.TurmaIds.Contains(x.Id));
+
+
+            if (matricula != null)
+            {
+                var inscricoes = turmas.Select(turma => new Inscricao()
+                {
+                    Id = Guid.NewGuid(),
+                    Matricula = matricula,
+                    MatriculaId = matricula.Id,
+                    Nota = 0,
+                    Turma = turma,
+                    DataInscricao = DateTime.Now
+                });
+
+                _f7DbContext.AddRange(inscricoes);
+                _f7DbContext.SaveChanges();
+            }
+
             return Unit.Task;
         }
     }

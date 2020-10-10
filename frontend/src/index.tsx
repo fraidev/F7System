@@ -3,11 +3,16 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import * as serviceWorker from './serviceWorker'
 import App from './App'
+import axios from 'axios'
+import { authHeader } from './services/auth-header'
+
+axios.interceptors.request.use(function (config) {
+  config.headers = authHeader()
+  return config
+})
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <App/>,
   document.getElementById('root')
 )
 

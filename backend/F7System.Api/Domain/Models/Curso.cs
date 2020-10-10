@@ -7,6 +7,6 @@ namespace F7System.Api.Domain.Models
     {
         public Guid Id { get; set; }
         public string Nome { get; set; }
-        public IList<Grade> Grade { get; set; } = new List<Grade>();
+        public IList<Grade> Grades { get; set; } = new List<Grade>();
     }
 }

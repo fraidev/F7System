@@ -29,18 +29,23 @@ namespace F7System.Api.Infrastructure.Persistence
                 .WithOne(x => x.Professor);
 
             modelBuilder.Entity<PessoaUsuario>()
-                .HasMany<Turma>(x => x.Turmas);
-
-            modelBuilder.Entity<PessoaUsuario>()
-                .HasOne<Matricula>(x => x.Matricula)
+                .HasMany<Matricula>(x => x.Matriculas)
                 .WithOne(x => x.PessoaUsuario)
-                .HasForeignKey<Matricula>(x => x.PessoaUsuarioId);
+                .HasForeignKey(x => x.PessoaUsuarioId);
 
             modelBuilder.Entity<Curso>()
-                .HasMany<Grade>(x => x.Grade)
+                .HasMany<Grade>(x => x.Grades)
                 .WithOne(x => x.Curso)
                 .HasForeignKey(x => x.CursoId);
             
+            modelBuilder.Entity<Matricula>()
+                .HasMany(x => x.Inscricoes)
+                .WithOne(x => x.Matricula)
+                .HasForeignKey(x => x.MatriculaId);
+
+            modelBuilder.Entity<Inscricao>()
+                .HasOne(x => x.Turma);
+
             // modelBuilder.Entity<Grade>()
             //     .HasOne<Grade>(x => x)
             //     .WithOne(x => x.Curso);

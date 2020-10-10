@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Paper from '@material-ui/core/Paper'
-import { TextField, Button, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core'
-import axios from 'axios'
-import { authHeader } from '../services/auth-header'
+import { Button, Menu, MenuItem, Table, TableBody, TableCell, TableHead, TableRow, TextField } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import IconButton from '@material-ui/core/IconButton'
@@ -13,16 +11,11 @@ import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/picker
 import { useSnackbar } from 'notistack'
 import { format, parseISO } from 'date-fns'
 import { cpfMask } from '../services/cpf-mask'
-
-export interface Pessoa {
-  id: string,
-  username: string,
-  password: string,
-  nome: string,
-  cpf: string,
-  dataNascimento: Date,
-  perfil: 'Administrator' | 'Estudante' | 'Professor' | 'Secretario';
-}
+import { EstudanteModel, initialStateEstudante } from '../model/estudante-model'
+import { createPessoa, deletePessoa, getEstudantes, updatePessoa } from '../services/pessoa-service'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
+import Fade from '@material-ui/core/Fade'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(() => ({
   fields: {
@@ -33,110 +26,89 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const Student: React.FC = () => {
+const EstudantePage: React.FC = () => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
+  const history = useHistory()
   const { enqueueSnackbar } = useSnackbar()
   const [students, setStudents] = useState([])
-  const [editableStudent, setEditableStudent] = useState<Partial<Pessoa>>()
+  const [editableStudent, setEditableStudent] = useState<Partial<EstudanteModel>>()
   const [mode, setMode] = useState<'edit' | 'add' | 'none'>('none')
   const classes = useStyles()
 
-  const initialState: Pessoa = {
-    id: '',
-    username: '',
-    password: '',
-    nome: '',
-    cpf: '',
-    dataNascimento: parseISO('2018-04-01'),
-    perfil: 'Estudante'
-  }
-
-  const config = {
-    headers: authHeader()
-  }
-
   useEffect(() => {
-    if (config.headers) {
-      axios.get('https://localhost:5001' + '/Pessoa/Estudantes', config).then((res: any) => {
-        setStudents(res.data)
-      })
-    }
+    getEstudantes().then((res: any) => {
+      setStudents(res.data)
+    })
   }, [])
 
   const onSave = () => {
     if (mode === 'add') {
-      axios.post('https://localhost:5001' + '/Pessoa/CriarPessoa', {
-        username: editableStudent?.username,
-        password: editableStudent?.password,
-        nome: editableStudent?.nome,
-        cpf: editableStudent?.cpf,
-        dataNascimento: editableStudent?.dataNascimento,
-        perfil: editableStudent?.perfil
-      }, config)
-        .then(() => {
-          axios.get('https://localhost:5001' + '/Pessoa/Estudantes', config).then((res: any) => {
-            setStudents(res.data)
-            setMode('none')
-            enqueueSnackbar('Pessoa criado com sucesso.', { variant: 'success' })
-          })
+      createPessoa(editableStudent).then(() => {
+        getEstudantes().then((res: any) => {
+          setStudents(res.data)
+          setMode('none')
+          enqueueSnackbar('Pessoa criado com sucesso.', { variant: 'success' })
         })
+      })
     }
     if (mode === 'edit') {
-      axios.post('https://localhost:5001' + '/Pessoa/AlterarPessoa', {
-        id: editableStudent?.id,
-        username: editableStudent?.username,
-        nome: editableStudent?.nome,
-        cpf: editableStudent?.cpf,
-        dataNascimento: editableStudent?.dataNascimento,
-        perfil: editableStudent?.perfil
-      }, config)
-        .then(() => {
-          axios.get('https://localhost:5001' + '/Pessoa/Estudantes', config).then((res: any) => {
-            setStudents(res.data)
-            setMode('none')
-            enqueueSnackbar('Pessoa alterado com sucesso.', { variant: 'success' })
-          })
+      updatePessoa(editableStudent).then(() => {
+        getEstudantes().then((res: any) => {
+          setStudents(res.data)
+          setMode('none')
+          enqueueSnackbar('Pessoa alterado com sucesso.', { variant: 'success' })
         })
+      })
     }
   }
 
   const openAdd = () => {
-    setEditableStudent(initialState)
+    setEditableStudent(initialStateEstudante)
     setMode('add')
   }
   const openEdit = (student: any) => {
     setEditableStudent(student)
     setMode('edit')
-    console.log(student)
   }
+
   const onDelete = (student: any) => {
-    axios.post('https://localhost:5001' + '/Pessoa/DeletarPessoa', { id: student.id }, config)
-      .then(() => {
-        axios.get('https://localhost:5001' + '/Pessoa/Estudantes', config).then((res: any) => {
-          setStudents(res.data)
-          enqueueSnackbar('Pessoa excluido com sucesso.', { variant: 'success' })
-        })
+    deletePessoa(student.id).then(() => {
+      getEstudantes().then((res: any) => {
+        setStudents(res.data)
+        enqueueSnackbar('Pessoa excluido com sucesso.', { variant: 'success' })
       })
+    })
   }
 
   const onCancel = () => {
     setMode('none')
   }
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = (estudante) => {
+    history.push(`/matricula/${estudante.id}`)
+    setAnchorEl(null)
+  }
 
   return (
-    <Paper style={{ width: '80vw', marginLeft: '4vw' }}>
-
+    <Paper style={{ minHeight: '80vh', marginLeft: '4vw' }}>
       {mode !== 'none'
         ? <div>
           <form noValidate autoComplete="off">
 
-            <TextField className={classes.fields} id="standard-basic" label="Usuario" value={editableStudent?.username}
+            <TextField className={classes.fields} id="standard-basic" label="Usuario"
+              value={editableStudent?.username}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditableStudent({
                 ...editableStudent,
                 username: e.target?.value
               })}/>
 
             {mode === 'add'
-              ? <TextField className={classes.fields} id="standard-basic" label="Senha" value={editableStudent?.password}
+              ? <TextField className={classes.fields} id="standard-basic" label="Senha"
+                value={editableStudent?.password}
+                type='password'
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditableStudent({
                   ...editableStudent,
                   password: e.target?.value
@@ -185,7 +157,7 @@ const Student: React.FC = () => {
         </div>
         : null}
 
-      <Table aria-label="simple table">
+      <Table>
         <TableHead>
           <TableRow>
             <TableCell>Nome</TableCell>
@@ -202,22 +174,35 @@ const Student: React.FC = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {students.map((student: any) => (
-            <TableRow key={student?.id}>
+          {students.map((estudante: any) => (
+            <TableRow key={estudante?.id}>
               <TableCell component="th" scope="row">
-                {student?.nome}
+                {estudante?.nome}
               </TableCell>
-              <TableCell align="right">{student?.username}</TableCell>
-              <TableCell align="right">{student?.cpf}</TableCell>
-              <TableCell align="right">{format(parseISO(student?.dataNascimento), 'dd/MM/yyyy')}</TableCell>
+              <TableCell align="right">{estudante?.username}</TableCell>
+              <TableCell align="right">{estudante?.cpf}</TableCell>
+              <TableCell align="right">{format(parseISO(estudante?.dataNascimento), 'dd/MM/yyyy')}</TableCell>
               <TableCell align="right">
 
-                <IconButton color="inherit" onClick={() => openEdit(student)}>
+                <IconButton color="inherit" onClick={() => openEdit(estudante)}>
                   <EditIcon/>
                 </IconButton>
-                <IconButton color="inherit" onClick={() => onDelete(student)}>
+                <IconButton color="inherit" onClick={() => onDelete(estudante)}>
                   <DeleteIcon/>
                 </IconButton>
+                <IconButton color="inherit" onClick={handleClick}>
+                  <MoreVertIcon/>
+                </IconButton>
+                <Menu
+                  id="fade-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={open}
+                  onClose={handleClose}
+                  TransitionComponent={Fade}>
+
+                  <MenuItem onClick={() => handleClose(estudante)}>Matriculas</MenuItem>
+                </Menu>
               </TableCell>
             </TableRow>
           ))}
@@ -228,4 +213,4 @@ const Student: React.FC = () => {
   )
 }
 
-export default Student
+export default EstudantePage

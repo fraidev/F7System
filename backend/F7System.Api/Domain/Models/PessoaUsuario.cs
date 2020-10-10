@@ -22,7 +22,7 @@ namespace F7System.Api.Domain.Models
         public string Nome { get; set; }
         public string CPF { get; set; }
         public DateTime DataNascimento { get; set; }
-        public Matricula Matricula { get; set; }
+        public IList<Matricula> Matriculas { get; set; } = new List<Matricula>();
         public IList<Turma> Turmas { get; set; } = new List<Turma>();
     }
 }

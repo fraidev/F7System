@@ -15,16 +15,17 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import {
   useHistory,
   Route,
-  Switch,
-  useRouteMatch
+  Switch
 } from 'react-router-dom'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import PeopleIcon from '@material-ui/icons/People'
-
-import Student from './Pessoa'
+import AssignmentIcon from '@material-ui/icons/Assignment'
+import EstudantePage from './EstudantePage'
 import { ExitToApp } from '@material-ui/icons'
+import MatriculaPage from './MatriculaPage'
+import InscricaoPage from './IncricaoPage'
 
 const drawerWidth = 240
 
@@ -89,7 +90,8 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     height: '100vh',
-    overflow: 'auto'
+    overflow: 'auto',
+    width: '75vw'
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -109,7 +111,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Layout: React.FC = () => {
   const history = useHistory()
-  const match = useRouteMatch()
   const classes = useStyles()
   const [open, setOpen] = React.useState(false)
   const handleDrawerOpen = () => {
@@ -118,8 +119,6 @@ const Layout: React.FC = () => {
   const handleDrawerClose = () => {
     setOpen(false)
   }
-  const fixedPaperSize = clsx(classes.paper, classes.fixedSize)
-
   const onExit = () => {
     localStorage.setItem('user', '')
     window.location.pathname = '/'
@@ -166,11 +165,17 @@ const Layout: React.FC = () => {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer}/>
-        <Container maxWidth="lg" className={classes.container}>
+        <Container maxWidth="xl" className={classes.container}>
 
           <Switch>
-            <Route path='/student'>
-              <Student/>
+            <Route path='/estudante'>
+              <EstudantePage/>
+            </Route>
+            <Route path='/matricula/:estudanteId'>
+              <MatriculaPage/>
+            </Route>
+            <Route path='/inscricao/:matriculaId'>
+              <InscricaoPage/>
             </Route>
             <Route path='/'>
               <h3>Home.</h3>
@@ -182,19 +187,20 @@ const Layout: React.FC = () => {
   )
 }
 
-const goToStudentPage = (history: any) => {
-  history.push('/student')
-  // window.location.pathname = '/student'
-}
-
 export const mainListItems = (history: any) => (
   <div>
-    <ListItem button onClick={() => goToStudentPage(history)}>
+    <ListItem button onClick={() => history.push('/estudante')}>
       <ListItemIcon>
         <PeopleIcon/>
       </ListItemIcon>
       <ListItemText primary="Estudantes"/>
     </ListItem>
+    {/* <ListItem button onClick={() => history.push('/matricula')}> */}
+    {/*  <ListItemIcon> */}
+    {/*    <AssignmentIcon/> */}
+    {/*  </ListItemIcon> */}
+    {/*  <ListItemText primary="Matricula"/> */}
+    {/* </ListItem> */}
   </div>
 )
 

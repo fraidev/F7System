@@ -4,7 +4,8 @@
         "es2020": true
     },
     "extends": [
-        "plugin:react/recommended",
+        "plugin:react/recommended", // Uses the recommended rules from @eslint-plugin-react
+        "plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
         "standard"
     ],
     "parser": "@typescript-eslint/parser",
@@ -12,7 +13,7 @@
         "ecmaFeatures": {
             "jsx": true
         },
-        "ecmaVersion": 11,
+        "ecmaVersion": 2020,
         "sourceType": "module"
     },
     "plugins": [
@@ -24,5 +25,10 @@
         "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": "error",
         "react/prop-types": "off"
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     }
 }

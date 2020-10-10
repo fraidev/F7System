@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using F7System.Api.Domain.Enums;
 using F7System.Api.Domain.Models;
 using F7System.Api.Domain.Services;
 using F7System.Api.Infrastructure.Persistence;
@@ -26,8 +27,9 @@ namespace ContosoUniversity.Data
         {
             _userService.CreateAdminUserWhenDontHaveManagerUsers();
 
-            SalvaSemestres();
-            SalvaHorarios();
+            var semestres = SalvaSemestres();
+            var horarios = SalvaHorarios();
+            
             
             var disciplina = new Disciplina()
             {
@@ -49,17 +51,34 @@ namespace ContosoUniversity.Data
             {
                 Id = Guid.NewGuid(),
                 Nome = "Engenharia da Computação",
-                Grade = new[] {grade},
+                Grades = new[] {grade},
             };
 
             grade.Curso = curso;
             _f7DbContext.Add(curso);
             
             
+            var professor = new PessoaUsuario()
+            {
+                Id = Guid.NewGuid(),
+                Nome = "Rogerio",
+                Perfil = Perfil.Professor,
+            };
+            
+            var turma = new Turma()
+            {
+                Id = Guid.NewGuid(),
+                Disciplina = disciplina,
+                Semestre = semestres.semestre,
+                Professor = professor,
+                Horarios = new[] {horarios[0]}, 
+            };
+            _f7DbContext.Add(turma);
+            
             _f7DbContext.SaveChanges();
         }
 
-        private void SalvaSemestres()
+        private (Semestre semestre, Semestre semestre2) SalvaSemestres()
         {
             var semestre = new Semestre()
             {
@@ -81,10 +100,12 @@ namespace ContosoUniversity.Data
 
             _f7DbContext.Add(semestre);
             _f7DbContext.Add(semestre2);
+
+            return (semestre, semestre2);
         }
 
 
-        private void SalvaHorarios()
+        private List<Horario> SalvaHorarios()
         {
             var horarios = new List<Horario>()
             {
@@ -161,6 +182,8 @@ namespace ContosoUniversity.Data
             };
             
             _f7DbContext.AddRange(horarios);
+
+            return horarios;
         }
     }
 }

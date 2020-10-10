@@ -8,6 +8,7 @@ namespace F7System.Api.Domain.Models
         public Guid Id { get; set; }
         public string Nome { get; set; }
         public int Creditos { get; set; }
+        
         // public IList<Disciplina> Prerequisites { get; set; } = new List<Disciplina>();
     }
 }

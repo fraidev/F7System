@@ -38,10 +38,6 @@ export const addMatricula = (cmd) => {
   return axios.post(process.env.REACT_APP_BACKEND_BASE_URL + '/Pessoa/AddMatriculaEstudante', cmd)
 }
 
-export const updateMatricula = (matricula) => {
-  console.log(matricula)
-}
-
-export const deleteMatricula = (matricula) => {
-  console.log(matricula)
+export const addInscricoesMatriculaEstudante = (cmd) => {
+  return axios.post(process.env.REACT_APP_BACKEND_BASE_URL + '/Pessoa/AddInscricoesMatriculaEstudante', cmd)
 }

@@ -50,6 +50,17 @@ namespace F7System.Api.Infrastructure.Persistence
                 .HasOne<Disciplina>(x => x.Disciplina)
                 .WithMany(x => x.Turmas);
 
+            modelBuilder.Entity<Turma>()
+                .HasMany(x => x.Horarios);
+            
+            modelBuilder.Entity<TurmaHorario>()
+                .HasKey(bc => new { bc.HorarioId, bc.TurmaId });  
+            
+            modelBuilder.Entity<TurmaHorario>()
+                .HasOne(bc => bc.Turma)
+                .WithMany(b => b.TurmaHorarios)
+                .HasForeignKey(bc => bc.TurmaId);  
+
             // modelBuilder.Entity<Grade>()
             //     .HasOne<Grade>(x => x)
             //     .WithOne(x => x.Curso);

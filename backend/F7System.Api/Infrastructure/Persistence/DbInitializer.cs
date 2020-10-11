@@ -26,24 +26,52 @@ namespace ContosoUniversity.Data
         public void Initialize()
         {
             _userService.CreateAdminUserWhenDontHaveManagerUsers();
+            
+            var estudante = new PessoaUsuario()
+            {
+                Perfil = Perfil.Estudante,
+                Id = Guid.NewGuid(),
+                Nome = "Felipe",
+                Username = "felipe",
+                CPF = "12345678901",
+                DataNascimento = DateTime.Now.AddYears(-23)
+            };
+
+            _f7DbContext.Add(estudante);
 
             var semestres = SalvaSemestres();
             var horarios = SalvaHorarios();
             
             
-            var disciplina = new Disciplina()
+            var calculo = new Disciplina()
             {
                 Id = Guid.NewGuid(),
                 Creditos = 80,
                 Nome = "Calculo"
             };
-            _f7DbContext.Add(disciplina);
+            _f7DbContext.Add(calculo);
+            
+            var algoritmos = new Disciplina()
+            {
+                Id = Guid.NewGuid(),
+                Creditos = 80,
+                Nome = "Algoritmos"
+            };
+            _f7DbContext.Add(calculo);
+            
+            var logicaMatematica = new Disciplina()
+            {
+                Id = Guid.NewGuid(),
+                Creditos = 80,
+                Nome = "Logica Matematica"
+            };
+            _f7DbContext.Add(calculo);
             
             var grade = new Grade()
             {
                 Id = Guid.NewGuid(),
                 Ano = 2020,
-                Disciplinas = new List<Disciplina>(){disciplina}
+                Disciplinas = new List<Disciplina>(){calculo, algoritmos, logicaMatematica}
             };
             _f7DbContext.Add(grade);
 
@@ -58,22 +86,58 @@ namespace ContosoUniversity.Data
             _f7DbContext.Add(curso);
             
             
-            var professor = new PessoaUsuario()
+            var professorRogerio = new PessoaUsuario()
             {
                 Id = Guid.NewGuid(),
                 Nome = "Rogerio",
                 Perfil = Perfil.Professor,
             };
-            
-            var turma = new Turma()
+            var professorAfonso = new PessoaUsuario()
             {
                 Id = Guid.NewGuid(),
-                Disciplina = disciplina,
-                Semestre = semestres.semestre,
-                Professor = professor,
-                Horarios = new[] {horarios[0]}, 
+                Nome = "Afonso",
+                Perfil = Perfil.Professor,
             };
-            _f7DbContext.Add(turma);
+
+            var turmaDeCalculo = new Turma()
+            {
+                Sala = "101A",
+                Id = Guid.NewGuid(),
+                Disciplina = calculo,
+                Semestre = semestres.semestre,
+                Professor = professorAfonso,
+            };
+            _f7DbContext.TurmaDbSet.Add(turmaDeCalculo);
+
+            var turmaDeLogicaMatematica = new Turma()
+            {
+                Sala = "102A",
+                Id = Guid.NewGuid(),
+                Disciplina = logicaMatematica,
+                Semestre = semestres.semestre,
+                Professor = professorRogerio,
+            };
+            var turmaDeAlgoritmos = new Turma()
+            {
+                Sala = "103A",
+                Id = Guid.NewGuid(),
+                Disciplina = algoritmos,
+                Semestre = semestres.semestre,
+                Professor = professorRogerio
+            };
+
+            var turmaDeCalculoHorarios = new List<TurmaHorario>
+            {
+                new TurmaHorario {Horario = horarios[0], Turma = turmaDeCalculo},
+                new TurmaHorario {Horario = horarios[1], Turma = turmaDeCalculo},
+                
+                new TurmaHorario {Horario = horarios[1], Turma = turmaDeLogicaMatematica},
+                new TurmaHorario {Horario = horarios[2], Turma = turmaDeLogicaMatematica},
+                
+                new TurmaHorario {Horario = horarios[4], Turma = turmaDeAlgoritmos},
+                new TurmaHorario {Horario = horarios[5], Turma = turmaDeAlgoritmos}
+            };
+            _f7DbContext.AddRange(turmaDeCalculoHorarios);
             
             _f7DbContext.SaveChanges();
         }

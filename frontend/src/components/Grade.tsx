@@ -32,19 +32,21 @@ const initialState = [
   ''
 ]
 
-const genarateGradeType = (turma: Turma, state: string[]) => {
-  const disciplinaNome = turma.disciplina.nome
-  const sala = turma.sala
-  const professor = turma?.professor?.nome
-  const horariosIds = turma.horarios.map(x => x.id)
+const genarateGradeType = (turmas: Turma[]) => {
+  const state = [...initialState]
 
-  const newState = [...state]
+  turmas.forEach(turma => {
+    const disciplinaNome = turma.disciplina.nome
+    const sala = turma.sala
+    const professor = turma?.professor?.nome
+    const horariosIds = turma.horarios.map(x => x.id)
 
-  horariosIds.forEach(horariosId => {
-    newState[horariosId - 1] = disciplinaNome + ' - Sala: ' + sala + ' - Professor: ' + professor
+    horariosIds.forEach(horariosId => {
+      state[horariosId - 1] = disciplinaNome + ' - Sala: ' + sala + ' - Professor: ' + professor
+    })
   })
 
-  return newState
+  return state
 }
 
 const Grade: React.FC<GradeProps> = (props) => {
@@ -52,13 +54,9 @@ const Grade: React.FC<GradeProps> = (props) => {
   const [state, setState] = useState(initialState)
 
   useEffect(() => {
-    setState([])
-
-    props.selectedTurmas.forEach(turma => {
-      const newState = genarateGradeType(turma, state)
-      setState(newState)
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setState([...initialState])
+    const newState = genarateGradeType(props.selectedTurmas)
+    setState(newState)
   }, [props])
 
   return (

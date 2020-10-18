@@ -38,8 +38,21 @@ const InscricaoPage: React.FC = () => {
     setOpen(true)
   }
 
+  const onDelete = (turma: any) => {
+    const index = selectedTurmas.findIndex(x => x.id === turma.id)
+    if (index > -1) {
+      selectedTurmas.splice(index, 1)
+      setSelectedTurmas([...selectedTurmas])
+    }
+  }
+
   const handleClose = (turma: Turma) => {
     setOpen(false)
+
+    const ids = selectedTurmas.map(x => x.horarios.map(x => x.id))
+
+    console.log(ids)
+
     if (turma?.id) {
       if (!selectedTurmas.find(x => x.id === turma.id)) {
         selectedTurmas.push(turma)
@@ -91,14 +104,6 @@ const InscricaoPage: React.FC = () => {
     })
   }
 
-  const onDelete = (turma: any) => {
-    const index = selectedTurmas.findIndex(x => x.id === turma.id)
-    if (index > -1) {
-      selectedTurmas.splice(index, 1)
-      setSelectedTurmas([...selectedTurmas])
-    }
-  }
-
   return (
     <Paper style={{ minHeight: '80vh', marginLeft: '4vw', padding: '20px' }}>
       {/* {estudante?.nome} */}
@@ -119,7 +124,7 @@ const InscricaoPage: React.FC = () => {
           <ol className="planetas-list">
             {selectedTurmas.map((turma: any) => (
               <li key={turma.id}
-                style={{ fontSize: '18px', textAlign: 'start' }}>  {'Disciplina : ' + turma?.disciplina?.nome + ' - Sala: ' + turma?.sala + ' - Professor: ' + turma?.professor?.nome +
+                style={{ fontSize: '16px', textAlign: 'start' }}>  {'Disciplina : ' + turma?.disciplina?.nome + ' - Sala: ' + turma?.sala + ' - Professor: ' + turma?.professor?.nome +
               turma?.horarios.reduce((acc, cur, idx) => acc + (idx === 0 ? ' ' : ' - ') +
                 cur.diaDaSemana + ' ' + cur.start + ' - ' + cur.end, ' - Horarios: ')}
 

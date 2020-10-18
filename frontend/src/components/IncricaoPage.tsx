@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Paper from '@material-ui/core/Paper'
-import { makeStyles } from '@material-ui/core/styles'
 import { useParams } from 'react-router-dom'
 import { getMatriculaById } from '../services/matricula-service'
 import SaveIcon from '@material-ui/icons/Save'
 import {
   Button,
-  Dialog,
-  DialogTitle,
-  List,
-  ListItem,
-  ListItemText,
   Table,
   TableBody,
   TableCell,
@@ -20,44 +14,33 @@ import {
 import IconButton from '@material-ui/core/IconButton'
 import { addInscricoesMatriculaEstudante } from '../services/pessoa-service'
 import { useSnackbar } from 'notistack'
-
-const useStyles = makeStyles(() => ({
-  fields: {
-    margin: '10px'
-  },
-  cancelButton: {
-    color: 'white'
-  }
-}))
+import Grade from './Grade'
+import { Disciplina, Turma } from '../model/estudante-model'
+import TurmasDialog from './TurmasDialog'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 const InscricaoPage: React.FC = () => {
-  const classes = useStyles()
   const [matricula, setMatricula] = useState<any>({})
-  const { estudanteId, matriculaId } = useParams()
+  const { matriculaId } = useParams()
   const [open, setOpen] = React.useState(false)
-  const [selectedTurmas, setSelectedTurmas] = React.useState<any[]>([])
-  const [dialogTurmas, setDialogTurmas] = React.useState<any[]>([])
+  const [selectedTurmas, setSelectedTurmas] = React.useState<Turma[]>([])
+  const [dialogTurmas, setDialogTurmas] = React.useState<any>([])
   const { enqueueSnackbar } = useSnackbar()
 
   useEffect(() => {
-    // getEstudanteById(estudanteId).then((res: any) => {
-    //   setEstudante(res.data)
-    // })
-
     getMatriculaById(matriculaId).then((res: any) => {
       setMatricula(res.data)
     })
   }, [matriculaId])
 
-  function addDisciplina(turmas: any[]) {
-    setDialogTurmas(turmas)
+  function addDisciplina(disciplina: Disciplina) {
+    setDialogTurmas(disciplina)
     setOpen(true)
   }
 
-  const handleClose = (turma: any, disciplina: any) => {
+  const handleClose = (turma: Turma) => {
     setOpen(false)
     if (turma?.id) {
-      turma.disciplina = disciplina
       if (!selectedTurmas.find(x => x.id === turma.id)) {
         selectedTurmas.push(turma)
         setSelectedTurmas(selectedTurmas)
@@ -85,11 +68,11 @@ const InscricaoPage: React.FC = () => {
               {disciplina?.creditos}
             </TableCell>
             <TableCell align="right">
-              <Button variant="contained" color="primary" onClick={() => addDisciplina(disciplina?.turmas)}>
+              <Button variant="contained" color="primary" onClick={() => addDisciplina(disciplina)}>
                 escolher turmas
               </Button>
-              <TurmasDialog open={open} onClose={(turma) => handleClose(turma, disciplina)}
-                turmas={dialogTurmas}/>
+              <TurmasDialog open={open} onClose={(turma) => handleClose(turma)}
+                disciplina={dialogTurmas}/>
 
             </TableCell>
           </TableRow>
@@ -108,12 +91,20 @@ const InscricaoPage: React.FC = () => {
     })
   }
 
+  const onDelete = (turma: any) => {
+    const index = selectedTurmas.findIndex(x => x.id === turma.id)
+    if (index > -1) {
+      selectedTurmas.splice(index, 1)
+      setSelectedTurmas([...selectedTurmas])
+    }
+  }
+
   return (
-    <Paper style={{ height: '80vh', marginLeft: '4vw', padding: '20px' }}>
+    <Paper style={{ minHeight: '80vh', marginLeft: '4vw', padding: '20px' }}>
       {/* {estudante?.nome} */}
 
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-        <div style={{ height: '40%' }}>
+        <div >
           <div style={{ display: 'flex', position: 'relative' }}>
 
             <div style={{ flex: '1' }}>Inscrições</div>
@@ -128,14 +119,21 @@ const InscricaoPage: React.FC = () => {
           <ol className="planetas-list">
             {selectedTurmas.map((turma: any) => (
               <li key={turma.id}
-                style={{ fontSize: '18px' }}>  {'Disciplina : ' + turma?.disciplina?.nome + ' - Sala: ' + turma?.sala + ' - Professor: ' + turma?.professor?.nome +
+                style={{ fontSize: '18px', textAlign: 'start' }}>  {'Disciplina : ' + turma?.disciplina?.nome + ' - Sala: ' + turma?.sala + ' - Professor: ' + turma?.professor?.nome +
               turma?.horarios.reduce((acc, cur, idx) => acc + (idx === 0 ? ' ' : ' - ') +
-                cur.diaDaSemana + ' ' + cur.start + ' - ' + cur.end, ' - Horarios: ')}</li>
+                cur.diaDaSemana + ' ' + cur.start + ' - ' + cur.end, ' - Horarios: ')}
+
+                <IconButton color="inherit" onClick={() => onDelete(turma)}>
+                  <DeleteIcon/>
+                </IconButton>
+              </li>
             ))}
           </ol>
+
+          <Grade selectedTurmas={selectedTurmas}/>
         </div>
 
-        <div>
+        <div style={{ paddingTop: '20px' }}>
           <div>Disciplinas</div>
           {table}
         </div>
@@ -145,40 +143,6 @@ const InscricaoPage: React.FC = () => {
       {/* ))} */}
 
     </Paper>
-  )
-}
-
-export interface SimpleDialogProps {
-  open: boolean;
-  // selectedValue: string;
-  onClose: (value: any | null) => void;
-  turmas: any[]
-}
-
-const TurmasDialog = (props: SimpleDialogProps) => {
-  const classes = useStyles()
-  const { onClose, turmas, open } = props
-
-  const handleClose = () => {
-    onClose(null)
-  }
-
-  const handleListItemClick = (value: any) => {
-    onClose(value)
-  }
-
-  return (
-    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-      <DialogTitle id="simple-dialog-title">Selecione uma turma</DialogTitle>
-      <List>
-        {turmas.map((turma: any) => (
-          <ListItem button onClick={() => handleListItemClick(turma)} key={turma}>
-            <ListItemText primary={'Sala: ' + turma?.sala + ' - Professor: ' + turma?.professor?.nome}
-              secondary={turma?.horarios.reduce((acc, cur, idx) => acc + (idx === 0 ? ' ' : ' - ') + cur.diaDaSemana + ' ' + cur.start + ' - ' + cur.end, 'Horarios: ')}/>
-          </ListItem>
-        ))}
-      </List>
-    </Dialog>
   )
 }
 

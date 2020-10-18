@@ -3,14 +3,7 @@ import Paper from '@material-ui/core/Paper'
 import { useParams } from 'react-router-dom'
 import { getMatriculaById } from '../services/matricula-service'
 import SaveIcon from '@material-ui/icons/Save'
-import {
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow
-} from '@material-ui/core'
+import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton'
 import { addInscricoesMatriculaEstudante } from '../services/pessoa-service'
 import { useSnackbar } from 'notistack'
@@ -49,15 +42,20 @@ const InscricaoPage: React.FC = () => {
   const handleClose = (turma: Turma) => {
     setOpen(false)
 
-    const ids = selectedTurmas.map(x => x.horarios.map(x => x.id))
+    const selectedTurmasIds = selectedTurmas.flatMap(x => x.horarios.map(x => x.id))
+    const turmaIds = turma.horarios.map(x => x.id)
+    let horarioIndisponivel = false
 
-    console.log(ids)
-
-    if (turma?.id) {
-      if (!selectedTurmas.find(x => x.id === turma.id)) {
-        selectedTurmas.push(turma)
-        setSelectedTurmas(selectedTurmas)
+    turmaIds.forEach(id => {
+      if (selectedTurmasIds.includes(id)) {
+        enqueueSnackbar('Horario indisponivel', { variant: 'error' })
+        horarioIndisponivel = true
       }
+    })
+
+    if (!horarioIndisponivel && !selectedTurmas.find(x => x.id === turma?.id)) {
+      selectedTurmas.push(turma)
+      setSelectedTurmas(selectedTurmas)
     }
   }
 
@@ -109,7 +107,7 @@ const InscricaoPage: React.FC = () => {
       {/* {estudante?.nome} */}
 
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-        <div >
+        <div>
           <div style={{ display: 'flex', position: 'relative' }}>
 
             <div style={{ flex: '1' }}>Inscrições</div>
@@ -124,7 +122,10 @@ const InscricaoPage: React.FC = () => {
           <ol className="planetas-list">
             {selectedTurmas.map((turma: any) => (
               <li key={turma.id}
-                style={{ fontSize: '16px', textAlign: 'start' }}>  {'Disciplina : ' + turma?.disciplina?.nome + ' - Sala: ' + turma?.sala + ' - Professor: ' + turma?.professor?.nome +
+                style={{
+                  fontSize: '16px',
+                  textAlign: 'start'
+                }}>  {'Disciplina : ' + turma?.disciplina?.nome + ' - Sala: ' + turma?.sala + ' - Professor: ' + turma?.professor?.nome +
               turma?.horarios.reduce((acc, cur, idx) => acc + (idx === 0 ? ' ' : ' - ') +
                 cur.diaDaSemana + ' ' + cur.start + ' - ' + cur.end, ' - Horarios: ')}
 

@@ -18,14 +18,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a552ae60-7a85-4503-a510-7422486de496" name="Default Changelist" comment="Create User">
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/Grade.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/TurmasDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Class Diagram F7System.asta.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.F7System/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.F7System/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/components/IncricaoPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/IncricaoPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/LoginPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/model/estudante-model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/model/estudante-model.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -235,7 +228,7 @@
       <workItem from="1602290433433" duration="16395000" />
       <workItem from="1602353391696" duration="21827000" />
       <workItem from="1602855044951" duration="6000" />
-      <workItem from="1602964292272" duration="6378000" />
+      <workItem from="1602964292272" duration="6702000" />
     </task>
     <task id="LOCAL-00001" summary="Init project">
       <created>1598323113890</created>

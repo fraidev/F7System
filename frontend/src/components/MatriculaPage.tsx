@@ -85,8 +85,11 @@ const MatriculaPage: React.FC = () => {
               {matricula?.grade?.ano}
             </TableCell>
             <TableCell align="right">
-              <Button variant="contained" color="primary" onClick={() => history.push(`/matricula/${estudanteId}/inscricao/${matricula.id}`)}>
-              Inscrições
+              <Button variant="contained" color="primary" onClick={() => history.push(`/matricula/${estudanteId}/inscricaotodos/${matricula.id}`)}>
+                Todas Inscrições
+              </Button>
+              <Button style={{ marginLeft: 5 }} variant="contained" color="primary" onClick={() => history.push(`/matricula/${estudanteId}/inscricaoatual/${matricula.id}`)}>
+              Inscrições Desse Semestre
               </Button>
             </TableCell>
           </TableRow>
@@ -120,7 +123,7 @@ const MatriculaPage: React.FC = () => {
 
       {mode !== 'none'
         ? <div>
-          <form noValidate autoComplete="off">
+          <form style={{ display: 'flex', justifyContent: 'center' }} noValidate autoComplete="off">
 
             <Autocomplete
               value={selectedCurso}
@@ -130,7 +133,7 @@ const MatriculaPage: React.FC = () => {
               id="combo-box-demo"
               options={cursos}
               getOptionLabel={(option) => option.nome}
-              style={{ width: 300 }}
+              style={{ width: 300, margin: 10 }}
               renderInput={(params) => <TextField {...params} label="Curso" />}
             />
 
@@ -142,7 +145,7 @@ const MatriculaPage: React.FC = () => {
               id="combo-box-demo"
               options={grades}
               getOptionLabel={(option) => option?.ano ? '' + option?.ano : option?.ano}
-              style={{ width: 300 }}
+              style={{ width: 300, margin: 10 }}
               renderInput={(params) => <TextField {...params} label="Grade" />}
             />
 

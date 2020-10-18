@@ -11,12 +11,4 @@ namespace F7System.Api.Domain.Models
         public TimeSpan Start { get; set; }
         public TimeSpan End { get; set; }
     }
-
-    public class TurmaHorario
-    {
-        public int HorarioId { get; set; }
-        public Horario Horario { get; set; }
-        public Guid TurmaId { get; set; }
-        public Turma Turma { get; set; }
-    }
 }

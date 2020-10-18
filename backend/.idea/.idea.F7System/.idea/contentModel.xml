@@ -43,6 +43,7 @@
             <e p="PessoaUsuario.cs" t="Include" />
             <e p="Semestre.cs" t="Include" />
             <e p="Turma.cs" t="Include" />
+            <e p="TurmaHorario.cs" t="Include" />
           </e>
           <e p="services" t="Include">
             <e p="IUserService.cs" t="Include" />

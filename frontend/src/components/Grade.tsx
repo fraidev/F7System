@@ -55,7 +55,7 @@ const Grade: React.FC<GradeProps> = (props) => {
 
   useEffect(() => {
     setState([...initialState])
-    const newState = genarateGradeType(props.selectedTurmas)
+    const newState = genarateGradeType(props?.selectedTurmas ?? [])
     setState(newState)
   }, [props])
 

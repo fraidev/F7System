@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import Paper from '@material-ui/core/Paper'
 import { useParams } from 'react-router-dom'
-import { getMatriculaById } from '../services/matricula-service'
+import { getMatriculaAtualById, getMatriculaById } from '../services/matricula-service'
 import SaveIcon from '@material-ui/icons/Save'
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton'
 import { addInscricoesMatriculaEstudante } from '../services/pessoa-service'
 import { useSnackbar } from 'notistack'
 import Grade from './Grade'
-import { Disciplina, Turma } from '../model/estudante-model'
+import { Disciplina, Matricula, Turma } from '../model/estudante-model'
 import TurmasDialog from './TurmasDialog'
 import DeleteIcon from '@material-ui/icons/Delete'
 
-const InscricaoPage: React.FC = () => {
-  const [matricula, setMatricula] = useState<any>({})
+const InscricaoAtualPage: React.FC = () => {
+  const [matricula, setMatricula] = useState<Matricula>()
   const { matriculaId } = useParams()
   const [open, setOpen] = React.useState(false)
   const [selectedTurmas, setSelectedTurmas] = React.useState<Turma[]>([])
@@ -21,8 +21,10 @@ const InscricaoPage: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar()
 
   useEffect(() => {
-    getMatriculaById(matriculaId).then((res: any) => {
+    getMatriculaAtualById(matriculaId).then((res: any) => {
       setMatricula(res.data)
+
+      setSelectedTurmas(res.data?.inscricoes?.flatMap(x => x.turma))
     })
   }, [matriculaId])
 
@@ -35,7 +37,11 @@ const InscricaoPage: React.FC = () => {
     const index = selectedTurmas.findIndex(x => x.id === turma.id)
     if (index > -1) {
       selectedTurmas.splice(index, 1)
-      setSelectedTurmas([...selectedTurmas])
+
+      const turmas = [...selectedTurmas]
+
+      setSelectedTurmas([])
+      setSelectedTurmas(turmas)
     }
   }
 
@@ -43,19 +49,21 @@ const InscricaoPage: React.FC = () => {
     setOpen(false)
 
     const selectedTurmasIds = selectedTurmas.flatMap(x => x.horarios.map(x => x.id))
-    const turmaIds = turma.horarios.map(x => x.id)
+    const turmaIds = turma?.horarios.map(x => x.id)
     let horarioIndisponivel = false
 
-    turmaIds.forEach(id => {
-      if (selectedTurmasIds.includes(id)) {
-        enqueueSnackbar('Horario indisponivel', { variant: 'error' })
-        horarioIndisponivel = true
-      }
-    })
+    if (turmaIds) {
+      turmaIds.forEach(id => {
+        if (selectedTurmasIds.includes(id)) {
+          enqueueSnackbar('Horario indisponivel', { variant: 'error' })
+          horarioIndisponivel = true
+        }
+      })
 
-    if (!horarioIndisponivel && !selectedTurmas.find(x => x.id === turma?.id)) {
-      selectedTurmas.push(turma)
-      setSelectedTurmas(selectedTurmas)
+      if (!horarioIndisponivel && !selectedTurmas.find(x => x.id === turma?.id)) {
+        selectedTurmas.push(turma)
+        setSelectedTurmas(selectedTurmas)
+      }
     }
   }
 
@@ -110,9 +118,9 @@ const InscricaoPage: React.FC = () => {
         <div>
           <div style={{ display: 'flex', position: 'relative' }}>
 
-            <div style={{ flex: '1' }}>Inscrições</div>
+            <div style={{ flex: '1' }}>Inscrições desse semestre</div>
 
-            <IconButton style={{ backgroundColor: '#2196f3', position: 'absolute', right: '5px' }} onClick={onSave}
+            <IconButton style={{ backgroundColor: '#2196f3', position: 'absolute', right: '5px', padding: '5px' }} onClick={onSave}
               aria-label="add">
               <SaveIcon style={{ color: 'white' }} fontSize="large"/>
             </IconButton>
@@ -120,7 +128,7 @@ const InscricaoPage: React.FC = () => {
           </div>
 
           <ol className="planetas-list">
-            {selectedTurmas.map((turma: any) => (
+            {selectedTurmas?.map((turma: any) => (
               <li key={turma.id}
                 style={{
                   fontSize: '16px',
@@ -140,7 +148,7 @@ const InscricaoPage: React.FC = () => {
         </div>
 
         <div style={{ paddingTop: '20px' }}>
-          <div>Disciplinas</div>
+          <div>Disciplinas desse semestre</div>
           {table}
         </div>
       </div>
@@ -152,4 +160,4 @@ const InscricaoPage: React.FC = () => {
   )
 }
 
-export default InscricaoPage
+export default InscricaoAtualPage

@@ -104,7 +104,7 @@ namespace ContosoUniversity.Data
                 Sala = "101A",
                 Id = Guid.NewGuid(),
                 Disciplina = calculo,
-                Semestre = semestres.semestre,
+                Semestre = semestres.semestre2,
                 Professor = professorAfonso,
             };
             _f7DbContext.TurmaDbSet.Add(turmaDeCalculo);
@@ -114,7 +114,7 @@ namespace ContosoUniversity.Data
                 Sala = "102A",
                 Id = Guid.NewGuid(),
                 Disciplina = logicaMatematica,
-                Semestre = semestres.semestre,
+                Semestre = semestres.semestre2,
                 Professor = professorRogerio,
             };
             var turmaDeAlgoritmos = new Turma()
@@ -122,7 +122,7 @@ namespace ContosoUniversity.Data
                 Sala = "103A",
                 Id = Guid.NewGuid(),
                 Disciplina = algoritmos,
-                Semestre = semestres.semestre,
+                Semestre = semestres.semestre2,
                 Professor = professorRogerio
             };
 
@@ -138,6 +138,14 @@ namespace ContosoUniversity.Data
                 new TurmaHorario {Horario = horarios[5], Turma = turmaDeAlgoritmos}
             };
             _f7DbContext.AddRange(turmaDeCalculoHorarios);
+            
+            var config = new Configuration()
+            {
+                NotaMedia = 6,
+                SemestreAtual = semestres.semestre2
+            };
+
+            _f7DbContext.Configurations.Add(config);
             
             _f7DbContext.SaveChanges();
         }

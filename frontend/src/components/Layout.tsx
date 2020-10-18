@@ -24,7 +24,8 @@ import PeopleIcon from '@material-ui/icons/People'
 import EstudantePage from './EstudantePage'
 import { ExitToApp } from '@material-ui/icons'
 import MatriculaPage from './MatriculaPage'
-import InscricaoPage from './IncricaoPage'
+import InscricaoTodosPage from './InscricaoTodasPage'
+import InscricaoAtualPage from './InscricaoAtualPage'
 
 const drawerWidth = 240
 
@@ -170,8 +171,11 @@ const Layout: React.FC = () => {
             <Route path='/estudante'>
               <EstudantePage/>
             </Route>
-            <Route path='/matricula/:estudanteId/inscricao/:matriculaId'>
-              <InscricaoPage/>
+            <Route path='/matricula/:estudanteId/inscricaotodos/:matriculaId'>
+              <InscricaoTodosPage/>
+            </Route>
+            <Route path='/matricula/:estudanteId/inscricaoatual/:matriculaId'>
+              <InscricaoAtualPage/>
             </Route>
             <Route path='/matricula/:estudanteId'>
               <MatriculaPage/>

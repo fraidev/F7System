@@ -54,10 +54,10 @@ export interface Turma {
   id: string;
   sala: string;
   professor: Professor;
+  disciplina: Disciplina;
   semestre?: any;
   horarios: Horario[];
   turmaHorarios: TurmaHorario[];
-  disciplina: Disciplina;
 }
 
 export interface Disciplina {
@@ -85,8 +85,17 @@ export interface PessoaUsuario {
   nome: string;
   cpf: string;
   dataNascimento: Date;
-  matriculas: any[];
-  turmas: any[];
+  matriculas: Matricula[];
+  turmas: Turma[];
+}
+
+export interface Inscricao {
+  id: string;
+  dataInscricao: Date;
+  nota: number;
+  turma: Turma;
+  completa: boolean;
+  matriculaId: string;
 }
 
 export interface Matricula {
@@ -94,5 +103,5 @@ export interface Matricula {
   grade: Grade;
   pessoaUsuarioId: string;
   pessoaUsuario: PessoaUsuario;
-  inscricoes: any[];
+  inscricoes: Inscricao[];
 }

@@ -1,7 +1,12 @@
-﻿namespace F7System.Api.Domain.Models
+﻿using System;
+
+namespace F7System.Api.Domain.Models
 {
     public class Configuration
     {
-        public decimal AverageGrade { get; set; } = 5;
+        public int Id { get; set; } = 1;
+        public decimal NotaMedia { get; set; } = 6;
+
+        public Semestre SemestreAtual { get; set; }
     }
 }

@@ -1,9 +1,10 @@
-﻿using F7System.Api.Domain.Models;
+﻿using System.Linq;
+using F7System.Api.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace F7System.Api.Infrastructure.Persistence
 {
-    public class F7DbContext: DbContext
+    public class F7DbContext : DbContext
     {
         public DbSet<PessoaUsuario> PessoaUsuarioDbSet { get; set; }
         public DbSet<Curso> CursoDbSet { get; set; }
@@ -14,16 +15,18 @@ namespace F7System.Api.Infrastructure.Persistence
         public DbSet<Matricula> MatriculaDbSet { get; set; }
         public DbSet<Semestre> SemestreDbSet { get; set; }
         public DbSet<Turma> TurmaDbSet { get; set; }
-        
+        public DbSet<Configuration> Configurations { get; set; }
+        public Configuration Configuration => Configurations.Include(x => x.SemestreAtual).FirstOrDefault(x => x.Id == 1);
+
+
         public F7DbContext(DbContextOptions<F7DbContext> options) : base(options)
         {
             Database.EnsureCreated();
         }
-        
-        
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<PessoaUsuario>()
                 .HasMany<Turma>(x => x.Turmas)
                 .WithOne(x => x.Professor);
@@ -37,7 +40,7 @@ namespace F7System.Api.Infrastructure.Persistence
                 .HasMany<Grade>(x => x.Grades)
                 .WithOne(x => x.Curso)
                 .HasForeignKey(x => x.CursoId);
-            
+
             modelBuilder.Entity<Matricula>()
                 .HasMany(x => x.Inscricoes)
                 .WithOne(x => x.Matricula)
@@ -52,14 +55,14 @@ namespace F7System.Api.Infrastructure.Persistence
 
             modelBuilder.Entity<Turma>()
                 .HasMany(x => x.Horarios);
-            
+
             modelBuilder.Entity<TurmaHorario>()
-                .HasKey(bc => new { bc.HorarioId, bc.TurmaId });  
-            
+                .HasKey(bc => new {bc.HorarioId, bc.TurmaId});
+
             modelBuilder.Entity<TurmaHorario>()
                 .HasOne(bc => bc.Turma)
                 .WithMany(b => b.TurmaHorarios)
-                .HasForeignKey(bc => bc.TurmaId);  
+                .HasForeignKey(bc => bc.TurmaId);
 
             // modelBuilder.Entity<Grade>()
             //     .HasOne<Grade>(x => x)

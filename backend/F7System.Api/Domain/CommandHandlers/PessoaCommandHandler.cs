@@ -9,6 +9,7 @@ using F7System.Api.Domain.Services;
 using F7System.Api.Infrastructure.Models;
 using F7System.Api.Infrastructure.Persistence;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace F7System.Api.Domain.CommandHandlers
 {
@@ -102,7 +103,7 @@ namespace F7System.Api.Domain.CommandHandlers
 
         public Task<Unit> Handle(AddInscricoesMatriculaEstudanteCommand request, CancellationToken cancellationToken)
         {
-            var matricula = _f7DbContext.MatriculaDbSet.FirstOrDefault(x => x.Id == request.MatriculaId);
+            var matricula = _f7DbContext.MatriculaDbSet.Include(x => x.Inscricoes).FirstOrDefault(x => x.Id == request.MatriculaId);
             var turmas = _f7DbContext.TurmaDbSet.Where(x => request.TurmaIds.Contains(x.Id));
 
 
@@ -116,7 +117,10 @@ namespace F7System.Api.Domain.CommandHandlers
                     Nota = 0,
                     Turma = turma,
                     DataInscricao = DateTime.Now
-                });
+                }).ToList();
+
+                _f7DbContext.RemoveRange(matricula.Inscricoes);
+                matricula.Inscricoes = inscricoes;
 
                 _f7DbContext.AddRange(inscricoes);
                 _f7DbContext.SaveChanges();

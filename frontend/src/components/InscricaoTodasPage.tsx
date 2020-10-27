@@ -16,8 +16,14 @@ const InscricaoTodosPage: React.FC = () => {
   }, [matriculaId])
 
   return (
-    <Paper style={{ minHeight: '80vh', marginLeft: '4vw', padding: '20px' }}>
-      {/* {estudante?.nome} */}
+    <Paper style={{ minHeight: '80vh', marginLeft: '4vw' }}>
+      <div style={{
+        padding: '10px',
+        textAlign: 'left',
+        borderBottom: '1px solid rgb(224, 224, 224)',
+        backgroundColor: '#2196F3',
+        color: 'white'
+      }}> Todas Inscrições</div>
 
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
         <div>

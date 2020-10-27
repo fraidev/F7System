@@ -95,7 +95,16 @@ const EstudantePage: React.FC = () => {
   }
 
   return (
+
     <Paper style={{ minHeight: '80vh', marginLeft: '4vw' }}>
+      <div style={{
+        padding: '10px',
+        textAlign: 'left',
+        borderBottom: '1px solid rgb(224, 224, 224)',
+        backgroundColor: '#2196F3',
+        color: 'white'
+      }}>Estudantes</div>
+
       {mode !== 'none'
         ? <div>
           <form noValidate autoComplete="off">

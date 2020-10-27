@@ -118,8 +118,15 @@ const MatriculaPage: React.FC = () => {
   }
 
   return (
-    <Paper style={{ height: '80vh', marginLeft: '4vw', padding: '20px' }}>
-      {estudante?.nome}
+    <Paper style={{ height: '80vh', marginLeft: '4vw' }}>
+
+      <div style={{
+        padding: '10px',
+        textAlign: 'left',
+        borderBottom: '1px solid rgb(224, 224, 224)',
+        backgroundColor: '#2196F3',
+        color: 'white'
+      }}>Matriculas do {estudante?.nome}</div>
 
       {mode !== 'none'
         ? <div>

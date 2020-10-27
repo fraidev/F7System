@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Paper from '@material-ui/core/Paper'
 import { useParams } from 'react-router-dom'
-import { getMatriculaAtualById, getMatriculaById } from '../services/matricula-service'
+import { getMatriculaAtualById } from '../services/matricula-service'
 import SaveIcon from '@material-ui/icons/Save'
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton'
@@ -111,19 +111,31 @@ const InscricaoAtualPage: React.FC = () => {
   }
 
   return (
-    <Paper style={{ minHeight: '80vh', marginLeft: '4vw', padding: '20px' }}>
+    <Paper style={{ minHeight: '80vh', marginLeft: '4vw' }}>
       {/* {estudante?.nome} */}
+
+      <div style={{
+        padding: '10px',
+        textAlign: 'left',
+        borderBottom: '1px solid rgb(224, 224, 224)',
+        backgroundColor: '#2196F3',
+        color: 'white',
+        display: 'flex'
+      }}>
+        <span> Inscrições desse semestre</span>
+
+        <div style={{ flex: 1 }}></div>
+
+        <IconButton style={{ backgroundColor: '#2196f3', padding: '5px' }} onClick={onSave}
+          aria-label="add">
+          <SaveIcon style={{ color: 'white' }} fontSize="large"/>
+        </IconButton>
+      </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
         <div>
+
           <div style={{ display: 'flex', position: 'relative' }}>
-
-            <div style={{ flex: '1' }}>Inscrições desse semestre</div>
-
-            <IconButton style={{ backgroundColor: '#2196f3', position: 'absolute', right: '5px', padding: '5px' }} onClick={onSave}
-              aria-label="add">
-              <SaveIcon style={{ color: 'white' }} fontSize="large"/>
-            </IconButton>
 
           </div>
 
@@ -148,7 +160,17 @@ const InscricaoAtualPage: React.FC = () => {
         </div>
 
         <div style={{ paddingTop: '20px' }}>
-          <div>Disciplinas desse semestre</div>
+
+          <div style={{
+            padding: '10px',
+            textAlign: 'left',
+            borderBottom: '1px solid rgb(224, 224, 224)',
+            backgroundColor: '#2196F3',
+            color: 'white',
+            display: 'flex'
+          }}>
+            <span> Disciplinas desse semestre</span>
+          </div>
           {table}
         </div>
       </div>

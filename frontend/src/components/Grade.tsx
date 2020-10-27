@@ -11,7 +11,11 @@ const useStyles = makeStyles(() => ({
     fontSize: '12px'
   },
   grid: {
-    border: '1px solid #a7a7a7'
+    height: '80px',
+    border: '1px solid #a7a7a7',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 }))
 
@@ -61,7 +65,7 @@ const Grade: React.FC<GradeProps> = (props) => {
 
   return (
     <div style={{ flex: '1' }}>
-      <Grid container spacing={3}>
+      <Grid container >
         <Grid className={classes.grid} item xs={2}>
         </Grid>
         <Grid className={classes.grid} item xs={2}>

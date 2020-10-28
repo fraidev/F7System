@@ -51,6 +51,15 @@ namespace ContosoUniversity.Data
             };
             _f7DbContext.Add(calculo);
             
+            var calculo2 = new Disciplina()
+            {
+                Id = Guid.NewGuid(),
+                Creditos = 80,
+                Nome = "Calculo 2",
+                Prerequisites = {calculo}
+            };
+            _f7DbContext.Add(calculo);
+            
             var algoritmos = new Disciplina()
             {
                 Id = Guid.NewGuid(),
@@ -71,7 +80,7 @@ namespace ContosoUniversity.Data
             {
                 Id = Guid.NewGuid(),
                 Ano = 2020,
-                Disciplinas = new List<Disciplina>(){calculo, algoritmos, logicaMatematica}
+                Disciplinas = new List<Disciplina>(){calculo, calculo2, algoritmos, logicaMatematica}
             };
             _f7DbContext.Add(grade);
 
@@ -104,6 +113,16 @@ namespace ContosoUniversity.Data
                 Sala = "101A",
                 Id = Guid.NewGuid(),
                 Disciplina = calculo,
+                Semestre = semestres.semestre,
+                Professor = professorAfonso,
+            };
+            _f7DbContext.TurmaDbSet.Add(turmaDeCalculo);
+            
+            var turmaDeCalculo2 = new Turma()
+            {
+                Sala = "101A",
+                Id = Guid.NewGuid(),
+                Disciplina = calculo2,
                 Semestre = semestres.semestre2,
                 Professor = professorAfonso,
             };
@@ -131,6 +150,9 @@ namespace ContosoUniversity.Data
                 new TurmaHorario {Horario = horarios[0], Turma = turmaDeCalculo},
                 new TurmaHorario {Horario = horarios[1], Turma = turmaDeCalculo},
                 
+                new TurmaHorario {Horario = horarios[6], Turma = turmaDeCalculo2},
+                new TurmaHorario {Horario = horarios[7], Turma = turmaDeCalculo2},
+                
                 new TurmaHorario {Horario = horarios[1], Turma = turmaDeLogicaMatematica},
                 new TurmaHorario {Horario = horarios[2], Turma = turmaDeLogicaMatematica},
                 
@@ -138,6 +160,28 @@ namespace ContosoUniversity.Data
                 new TurmaHorario {Horario = horarios[5], Turma = turmaDeAlgoritmos}
             };
             _f7DbContext.AddRange(turmaDeCalculoHorarios);
+
+            var inscricao = new Inscricao()
+            {
+                Completa = true,
+                Nota = 10,
+                Turma = turmaDeCalculo,
+                DataInscricao = DateTime.Now.AddMonths(-6),
+                Id = Guid.NewGuid(),
+            };
+
+            var matricula = new Matricula()
+            {
+                Grade = grade,
+                Id = Guid.NewGuid(),
+                PessoaUsuario = estudante,
+                Inscricoes = new[] {inscricao},
+            };
+
+            inscricao.MatriculaId = matricula.Id;
+            
+            _f7DbContext.Add(matricula);
+            _f7DbContext.Add(inscricao);
             
             var config = new Configuration()
             {

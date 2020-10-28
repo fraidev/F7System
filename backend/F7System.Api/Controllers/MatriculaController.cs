@@ -62,15 +62,23 @@ namespace F7System.Api.Controllers
                 .Include(x => x.PessoaUsuario)
                 .FirstOrDefault(x => x.Id == id);
 
-            //Somente primeiro semestre atual
             if (matricula != null)
             {
+
+                //Somente disciplinas com Pre-requisitos
+                var disciplinasCompletas = matricula.Inscricoes.Where(x => x.Completa).Select(x => x.Turma.Disciplina.Id).ToList();
+                matricula.Grade.Disciplinas = matricula.Grade.Disciplinas.Where(disciplina =>
+                {
+                    return disciplina.Prerequisites.Select(x => x.Id).All(ids => disciplinasCompletas.Contains(ids));
+                }).ToList();
+                
+                
+                //Somente turmas para o semestre atual
                 foreach (var disciplina in matricula.Grade.Disciplinas)
                 {
                     disciplina.Turmas = disciplina.Turmas.Where(x => x.Semestre.Id == config.SemestreAtual.Id).ToList();
                 }
             }
-
 
             return Ok(matricula);
         }

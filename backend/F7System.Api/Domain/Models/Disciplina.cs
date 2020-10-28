@@ -10,6 +10,6 @@ namespace F7System.Api.Domain.Models
         public int Creditos { get; set; }
         public IList<Turma> Turmas { get; set; } = new List<Turma>();
  
-        // public IList<Disciplina> Prerequisites { get; set; } = new List<Disciplina>();
+        public IList<Disciplina> Prerequisites { get; set; } = new List<Disciplina>();
     }
 }

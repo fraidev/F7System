@@ -73,6 +73,7 @@ const InscricaoAtualPage: React.FC = () => {
         <TableRow>
           <TableCell>Nome</TableCell>
           <TableCell>Creditos</TableCell>
+          <TableCell>Pré-Requisitos</TableCell>
           <TableCell align="right">
           </TableCell>
         </TableRow>
@@ -85,6 +86,9 @@ const InscricaoAtualPage: React.FC = () => {
             </TableCell>
             <TableCell component="th" scope="row">
               {disciplina?.creditos}
+            </TableCell>
+            <TableCell component="th" scope="row">
+              {disciplina?.prerequisites.map(x => x.nome)?.reduce((previousValue, currentValue) => previousValue ? currentValue + ', ' + previousValue : currentValue, '')}
             </TableCell>
             <TableCell align="right">
               <Button variant="contained" color="primary" onClick={() => addDisciplina(disciplina)}>
@@ -169,7 +173,7 @@ const InscricaoAtualPage: React.FC = () => {
             color: 'white',
             display: 'flex'
           }}>
-            <span> Disciplinas desse semestre</span>
+            <span> Disciplinas disponíveis</span>
           </div>
           {table}
         </div>

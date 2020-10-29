@@ -103,12 +103,15 @@ namespace F7System.Api.Domain.CommandHandlers
 
         public Task<Unit> Handle(AddInscricoesMatriculaEstudanteCommand request, CancellationToken cancellationToken)
         {
-            var matricula = _f7DbContext.MatriculaDbSet.Include(x => x.Inscricoes).FirstOrDefault(x => x.Id == request.MatriculaId);
-            var turmas = _f7DbContext.TurmaDbSet.Where(x => request.TurmaIds.Contains(x.Id));
+            var matricula = _f7DbContext.MatriculaDbSet.Include(x => x.Inscricoes).ThenInclude(x => x.Turma).FirstOrDefault(x => x.Id == request.MatriculaId);
 
 
             if (matricula != null)
             {
+                var turmasAtuais = matricula.Inscricoes.Select(x => x.Turma.Id).ToList();
+                var novasTurmasIds = request.TurmaIds.Except(turmasAtuais);
+                
+                var turmas = _f7DbContext.TurmaDbSet.Where(x => novasTurmasIds.Contains(x.Id));
                 var inscricoes = turmas.Select(turma => new Inscricao()
                 {
                     Id = Guid.NewGuid(),
@@ -119,8 +122,7 @@ namespace F7System.Api.Domain.CommandHandlers
                     DataInscricao = DateTime.Now
                 }).ToList();
 
-                _f7DbContext.RemoveRange(matricula.Inscricoes);
-                matricula.Inscricoes = inscricoes;
+                matricula.Inscricoes.AddRange(inscricoes);
 
                 _f7DbContext.AddRange(inscricoes);
                 _f7DbContext.SaveChanges();

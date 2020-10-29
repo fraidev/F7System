@@ -34,6 +34,7 @@ const drawerWidth = 240
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    width: '100%',
     display: 'flex'
   },
   toolbar: {

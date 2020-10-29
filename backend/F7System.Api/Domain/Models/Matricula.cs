@@ -9,6 +9,6 @@ namespace F7System.Api.Domain.Models
         public Grade Grade { get; set; }
         public Guid PessoaUsuarioId { get; set; }
         public PessoaUsuario PessoaUsuario { get; set; }
-        public IList<Inscricao> Inscricoes { get; set; } = new List<Inscricao>();
+        public List<Inscricao> Inscricoes { get; set; } = new List<Inscricao>();
     }
 }

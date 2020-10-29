@@ -64,6 +64,7 @@ export interface Disciplina {
   id: string;
   nome: string;
   creditos: number;
+  prerequisites: Disciplina[];
   turmas: Turma[];
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using F7System.Api.Domain.Models;
 using F7System.Api.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -65,19 +66,27 @@ namespace F7System.Api.Controllers
             if (matricula != null)
             {
 
+                
+                var d = matricula.Inscricoes.Where(x => !x.Completa).Select(x => x.Turma.Disciplina.Id).ToList();
+                
+                
                 //Somente disciplinas com Pre-requisitos
                 var disciplinasCompletas = matricula.Inscricoes.Where(x => x.Completa).Select(x => x.Turma.Disciplina.Id).ToList();
                 matricula.Grade.Disciplinas = matricula.Grade.Disciplinas.Where(disciplina =>
                 {
-                    return disciplina.Prerequisites.Select(x => x.Id).All(ids => disciplinasCompletas.Contains(ids));
+                    return disciplina.Prerequisites.Select(x => x.Id).All(ids => disciplinasCompletas.Contains(ids)) 
+                           && disciplina.Turmas.Any(x => x.Semestre == config.SemestreAtual);
                 }).ToList();
                 
                 
+                
+                matricula.Inscricoes = matricula.Inscricoes.Where(x => !x.Completa && x.Turma.Semestre == config.SemestreAtual).ToList();
+                
                 //Somente turmas para o semestre atual
-                foreach (var disciplina in matricula.Grade.Disciplinas)
-                {
-                    disciplina.Turmas = disciplina.Turmas.Where(x => x.Semestre.Id == config.SemestreAtual.Id).ToList();
-                }
+                // foreach (var disciplina in matricula.Grade.Disciplinas)
+                // {
+                //     disciplina.Turmas = disciplina.Turmas.Where(x => x.Semestre.Id == config.SemestreAtual.Id).ToList();
+                // }
             }
 
             return Ok(matricula);

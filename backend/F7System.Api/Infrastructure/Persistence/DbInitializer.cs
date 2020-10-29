@@ -175,7 +175,7 @@ namespace ContosoUniversity.Data
                 Grade = grade,
                 Id = Guid.NewGuid(),
                 PessoaUsuario = estudante,
-                Inscricoes = new[] {inscricao},
+                Inscricoes = new List<Inscricao>() {inscricao},
             };
 
             inscricao.MatriculaId = matricula.Id;

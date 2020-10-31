@@ -11,4 +11,12 @@ namespace F7System.Api.Domain.Models
         public int Ano { get; set; }
         public IList<Disciplina> Disciplinas { get; set; } = new List<Disciplina>();
     }
+
+    public class SemestreDisciplinas
+    {
+        public Guid Id { get; set; }
+        public int Semestre { get; set; }
+        public Disciplina Disciplina { get; set; }
+    }
+    
 }

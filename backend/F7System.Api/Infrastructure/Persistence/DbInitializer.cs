@@ -164,7 +164,8 @@ namespace ContosoUniversity.Data
             var inscricao = new Inscricao()
             {
                 Completa = true,
-                Nota = 10,
+                P1 = 10,
+                P2 = 9,
                 Turma = turmaDeCalculo,
                 DataInscricao = DateTime.Now.AddMonths(-6),
                 Id = Guid.NewGuid(),

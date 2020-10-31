@@ -103,21 +103,23 @@ namespace F7System.Api.Domain.CommandHandlers
 
         public Task<Unit> Handle(AddInscricoesMatriculaEstudanteCommand request, CancellationToken cancellationToken)
         {
-            var matricula = _f7DbContext.MatriculaDbSet.Include(x => x.Inscricoes).ThenInclude(x => x.Turma).FirstOrDefault(x => x.Id == request.MatriculaId);
+            var matricula = _f7DbContext.MatriculaDbSet.Include(x => x.Inscricoes).ThenInclude(x => x.Turma)
+                .FirstOrDefault(x => x.Id == request.MatriculaId);
 
 
             if (matricula != null)
             {
                 var turmasAtuais = matricula.Inscricoes.Select(x => x.Turma.Id).ToList();
                 var novasTurmasIds = request.TurmaIds.Except(turmasAtuais);
-                
+
                 var turmas = _f7DbContext.TurmaDbSet.Where(x => novasTurmasIds.Contains(x.Id));
                 var inscricoes = turmas.Select(turma => new Inscricao()
                 {
                     Id = Guid.NewGuid(),
                     Matricula = matricula,
                     MatriculaId = matricula.Id,
-                    Nota = 0,
+                    P1 = 10,
+                    P2 = 9,
                     Turma = turma,
                     DataInscricao = DateTime.Now
                 }).ToList();

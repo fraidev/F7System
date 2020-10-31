@@ -11,7 +11,6 @@ const InscricaoTodosPage: React.FC = () => {
   useEffect(() => {
     getMatriculaById(matriculaId).then((res: any) => {
       setMatricula(res.data)
-      console.log(res.data.inscricoes.flatMap(x => x.turma))
     })
   }, [matriculaId])
 
@@ -21,7 +20,7 @@ const InscricaoTodosPage: React.FC = () => {
         padding: '10px',
         textAlign: 'left',
         borderBottom: '1px solid rgb(224, 224, 224)',
-        backgroundColor: '#2196F3',
+        backgroundColor: '#2196f3',
         color: 'white'
       }}> Todas Inscrições</div>
 

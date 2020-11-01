@@ -10,7 +10,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import _ from 'lodash'
 
-const InscricaoTodosPage: React.FC = () => {
+const HistoricoEstudante: React.FC = () => {
   const [matricula, setMatricula] = useState<Matricula>()
   const { matriculaId } = useParams()
 
@@ -24,12 +24,12 @@ const InscricaoTodosPage: React.FC = () => {
     const semestreDisciplinas = _.groupBy(matricula?.grade?.semestreDisciplinas, x => x.semestre)
 
     const inscricoesInfoById = (id) => {
-      const inscricao = matricula.inscricoes.find(x => x?.turma?.disciplina.id === id && x.completa)
+      const inscricao = matricula.inscricoes.find(x => x?.turma?.disciplina.id === id)
 
       if (inscricao) {
         return {
-          completa: inscricao ? (inscricao.completa ? 'Concluido' : 'Pendente') : 'Pendente',
-          nota: inscricao ? inscricao.notaFinal : '-'
+          completa: inscricao ? (inscricao.completa ? 'Concluido' : 'Cursando') : 'Pendente',
+          nota: inscricao && inscricao.notaFinal ? inscricao.notaFinal : '-'
         }
       }
     }
@@ -100,4 +100,4 @@ const InscricaoTodosPage: React.FC = () => {
   )
 }
 
-export default InscricaoTodosPage
+export default HistoricoEstudante

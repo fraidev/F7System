@@ -20,7 +20,7 @@ import PeopleIcon from '@material-ui/icons/People'
 import EstudantePage from './EstudantePage'
 import { ExitToApp } from '@material-ui/icons'
 import MatriculaPage from './MatriculaPage'
-import InscricaoTodosPage from './InscricaoTodasPage'
+import HistoricoEstudante from './HistoricoEstudante'
 import InscricaoAtualPage from './InscricaoAtualPage'
 import PersonIcon from '@material-ui/icons/Person'
 import TurmaPage from './TurmaPage'
@@ -175,7 +175,7 @@ const Layout: React.FC = () => {
               <EstudantePage/>
             </Route>
             <Route path='/matricula/:estudanteId/inscricaotodos/:matriculaId'>
-              <InscricaoTodosPage/>
+              <HistoricoEstudante/>
             </Route>
             <Route path='/matricula/:estudanteId/inscricaoatual/:matriculaId'>
               <InscricaoAtualPage/>

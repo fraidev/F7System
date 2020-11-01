@@ -134,8 +134,6 @@ namespace F7System.Api.Domain.CommandHandlers
                     Id = Guid.NewGuid(),
                     Matricula = matricula,
                     MatriculaId = matricula.Id,
-                    P1 = 10,
-                    P2 = 9,
                     Turma = turma,
                     DataInscricao = DateTime.Now
                 }).ToList();

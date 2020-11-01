@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using F7System.Api.Domain.Commands.Estudante;
 using F7System.Api.Domain.Enums;
 using F7System.Api.Domain.Models;
 using F7System.Api.Domain.Services;
 using F7System.Api.Infrastructure.Persistence;
+using MediatR;
 
 namespace ContosoUniversity.Data
 {
@@ -16,28 +19,31 @@ namespace ContosoUniversity.Data
     {
         private readonly IUserService _userService;
         private readonly F7DbContext _f7DbContext;
+        private readonly IMediator _mediator;
 
-        public DbInitializer(IUserService userService, F7DbContext f7DbContext)
+        public DbInitializer(IUserService userService, F7DbContext f7DbContext, IMediator mediator)
         {
             _userService = userService;
             _f7DbContext = f7DbContext;
+            _mediator = mediator;
         }
 
         public void Initialize()
         {
             _userService.CreateAdminUserWhenDontHaveManagerUsers();
-            
-            var estudante = new PessoaUsuario()
+
+            var criarEstudante = new CriarPessoaCommand()
             {
                 Perfil = Perfil.Estudante,
                 Id = Guid.NewGuid(),
                 Nome = "Felipe",
                 Username = "felipe",
+                Password = "felipe", 
                 CPF = "12345678901",
                 DataNascimento = DateTime.Now.AddYears(-23)
             };
 
-            _f7DbContext.Add(estudante);
+            _mediator.Send(criarEstudante);
 
             var semestres = SalvaSemestres();
             var horarios = SalvaHorarios();
@@ -200,7 +206,7 @@ namespace ContosoUniversity.Data
             {
                 Grade = grade,
                 Id = Guid.NewGuid(),
-                PessoaUsuario = estudante,
+                PessoaUsuarioId = criarEstudante.Id,
                 Ativo = true,
                 Inscricoes = new List<Inscricao>() {inscricao},
             };

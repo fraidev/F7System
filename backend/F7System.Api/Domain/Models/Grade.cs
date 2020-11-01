@@ -9,14 +9,6 @@ namespace F7System.Api.Domain.Models
         public Curso Curso { get; set; }
         public Guid CursoId { get; set; }
         public int Ano { get; set; }
-        public IList<Disciplina> Disciplinas { get; set; } = new List<Disciplina>();
+        public IList<SemestreDisciplina> SemestreDisciplinas { get; set; } = new List<SemestreDisciplina>();
     }
-
-    public class SemestreDisciplinas
-    {
-        public Guid Id { get; set; }
-        public int Semestre { get; set; }
-        public Disciplina Disciplina { get; set; }
-    }
-    
 }

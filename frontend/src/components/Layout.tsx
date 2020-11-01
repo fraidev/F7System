@@ -12,12 +12,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Container from '@material-ui/core/Container'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import {
-  useHistory,
-  Route,
-  Switch,
-  Redirect
-} from 'react-router-dom'
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -29,6 +24,7 @@ import InscricaoTodosPage from './InscricaoTodasPage'
 import InscricaoAtualPage from './InscricaoAtualPage'
 import PersonIcon from '@material-ui/icons/Person'
 import TurmaPage from './TurmaPage'
+import AppsIcon from '@material-ui/icons/Apps'
 
 const drawerWidth = 240
 
@@ -173,7 +169,7 @@ const Layout: React.FC = () => {
 
           <Switch>
             <Route exact path="/">
-              <Redirect to="/estudante" />
+              <Redirect to="/estudante"/>
             </Route>
             <Route path='/estudante'>
               <EstudantePage/>
@@ -216,12 +212,14 @@ export const mainListItems = (history: any) => (
       </ListItemIcon>
       <ListItemText primary="Turmas"/>
     </ListItem>
-    {/* <ListItem button onClick={() => history.push('/matricula')}> */}
-    {/*  <ListItemIcon> */}
-    {/*    <AssignmentIcon/> */}
-    {/*  </ListItemIcon> */}
-    {/*  <ListItemText primary="Matricula"/> */}
-    {/* </ListItem> */}
+    <Divider/>
+
+    <ListItem button onClick={() => history.push('/matricula/:estudante/inscricaotodos/:matriculaId')}>
+      <ListItemIcon>
+        <AppsIcon/>
+      </ListItemIcon>
+      <ListItemText primary="Grade Curricular"/>
+    </ListItem>
   </div>
 )
 

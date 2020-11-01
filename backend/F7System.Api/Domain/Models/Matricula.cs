@@ -10,5 +10,6 @@ namespace F7System.Api.Domain.Models
         public Guid PessoaUsuarioId { get; set; }
         public PessoaUsuario PessoaUsuario { get; set; }
         public List<Inscricao> Inscricoes { get; set; } = new List<Inscricao>();
+        public bool Ativo { get; set; }
     }
 }

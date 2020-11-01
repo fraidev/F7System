@@ -26,7 +26,7 @@ namespace F7System.Api.Controllers
         {
             var estudantes= _f7DbContext.CursoDbSet
                 .Include(x => x.Grades)
-                .ThenInclude(x => x.Disciplinas).ToList();
+                .ThenInclude(x => x.SemestreDisciplinas).ThenInclude(x => x.Disciplina).ToList();
             return Ok(estudantes);
         }
     }

@@ -4,18 +4,16 @@ import TextField from '@material-ui/core/TextField'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton'
-import { EstudanteModel } from '../model/estudante-model'
+import { EstudanteModel, Matricula } from '../model/estudante-model'
 import AddIcon from '@material-ui/icons/Add'
 import { makeStyles } from '@material-ui/core/styles'
 import { addMatricula, getEstudanteById } from '../services/pessoa-service'
 import { useSnackbar } from 'notistack'
 import { getCursos } from '../services/cursos-service'
 import { v4 as uuidv4 } from 'uuid'
-import {
-  useHistory,
-  useParams
-} from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { getGradesByCursoId } from '../services/grades-service'
+import { ativarMatricula } from '../services/matricula-service'
 
 const useStyles = makeStyles(() => ({
   fields: {
@@ -62,12 +60,22 @@ const MatriculaPage: React.FC = () => {
     setMode('add')
   }
 
+  const onAtivarMatricula = (matriculaId) => {
+    ativarMatricula(matriculaId).then(() => {
+      getEstudanteById(estudanteId).then((res: any) => {
+        setEstudante(res.data)
+        enqueueSnackbar('Matricula ativada com sucesso.', { variant: 'success' })
+      })
+    })
+  }
+
   const table = estudante?.matriculas
     ? <Table>
       <TableHead>
         <TableRow>
           <TableCell>Nome</TableCell>
           <TableCell>Grade</TableCell>
+          <TableCell>Situação</TableCell>
           <TableCell align="right">
             <IconButton style={{ backgroundColor: '#2196f3' }} onClick={openAdd} aria-label="add">
               <AddIcon style={{ color: 'white' }} fontSize="large"/>
@@ -76,7 +84,7 @@ const MatriculaPage: React.FC = () => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {estudante.matriculas.map((matricula: any) => (
+        {estudante.matriculas.map((matricula: Matricula) => (
           <TableRow key={matricula?.id}>
             <TableCell component="th" scope="row">
               {matricula?.grade?.curso?.nome}
@@ -84,19 +92,27 @@ const MatriculaPage: React.FC = () => {
             <TableCell component="th" scope="row">
               {matricula?.grade?.ano}
             </TableCell>
+            <TableCell component="th" scope="row">
+              {matricula?.ativo ? 'Ativada' : 'Desativada'}
+            </TableCell>
             <TableCell align="right">
-              <Button variant="contained" color="primary" onClick={() => history.push(`/matricula/${estudanteId}/inscricaotodos/${matricula.id}`)}>
-                Todas Inscrições
+              <Button variant="contained" color="primary" onClick={() => onAtivarMatricula(matricula?.id)}>
+                Ativar
               </Button>
-              <Button style={{ marginLeft: 5 }} variant="contained" color="primary" onClick={() => history.push(`/matricula/${estudanteId}/inscricaoatual/${matricula.id}`)}>
-              Inscrições Desse Semestre
+              <Button style={{ marginLeft: 5 }} variant="contained" color="primary"
+                onClick={() => history.push(`/matricula/${estudanteId}/inscricaotodos/${matricula.id}`)}>
+                Histórico do Aluno
+              </Button>
+              <Button style={{ marginLeft: 5 }} variant="contained" color="primary"
+                onClick={() => history.push(`/matricula/${estudanteId}/inscricaoatual/${matricula.id}`)}>
+                Inscrições Desse Semestre
               </Button>
             </TableCell>
           </TableRow>
         ))}
       </TableBody>
     </Table>
-    : <div> </div>
+    : <div></div>
 
   const onSave = () => {
     const cmd = {
@@ -141,7 +157,7 @@ const MatriculaPage: React.FC = () => {
               options={cursos}
               getOptionLabel={(option) => option.nome}
               style={{ width: 300, margin: 10 }}
-              renderInput={(params) => <TextField {...params} label="Curso" />}
+              renderInput={(params) => <TextField {...params} label="Curso"/>}
             />
 
             <Autocomplete
@@ -153,7 +169,7 @@ const MatriculaPage: React.FC = () => {
               options={grades}
               getOptionLabel={(option) => option?.ano ? '' + option?.ano : option?.ano}
               style={{ width: 300, margin: 10 }}
-              renderInput={(params) => <TextField {...params} label="Grade" />}
+              renderInput={(params) => <TextField {...params} label="Grade"/>}
             />
 
           </form>

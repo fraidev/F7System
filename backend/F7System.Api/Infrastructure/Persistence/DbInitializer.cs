@@ -75,12 +75,37 @@ namespace ContosoUniversity.Data
                 Nome = "Logica Matematica"
             };
             _f7DbContext.Add(calculo);
+
+            var semestreDisciplinaCalculo = new SemestreDisciplina()
+            {
+                Id = Guid.NewGuid(),
+                Disciplina = calculo,
+                Semestre = 1
+            };
+            var semestreDisciplinaAlgoritmos = new SemestreDisciplina()
+            {
+                Id = Guid.NewGuid(),
+                Disciplina = algoritmos,
+                Semestre = 1
+            };
+            var semestreDisciplinaLogicaMatematica = new SemestreDisciplina()
+            {
+                Id = Guid.NewGuid(),
+                Disciplina = logicaMatematica,
+                Semestre = 1
+            };
+            var semestreDisciplinaCalculo2 = new SemestreDisciplina()
+            {
+                Id = Guid.NewGuid(),
+                Disciplina = calculo2,
+                Semestre = 2
+            };
             
             var grade = new Grade()
             {
                 Id = Guid.NewGuid(),
                 Ano = 2020,
-                Disciplinas = new List<Disciplina>(){calculo, calculo2, algoritmos, logicaMatematica}
+                SemestreDisciplinas = new List<SemestreDisciplina>(){semestreDisciplinaCalculo, semestreDisciplinaAlgoritmos, semestreDisciplinaLogicaMatematica, semestreDisciplinaCalculo2}
             };
             _f7DbContext.Add(grade);
 
@@ -176,6 +201,7 @@ namespace ContosoUniversity.Data
                 Grade = grade,
                 Id = Guid.NewGuid(),
                 PessoaUsuario = estudante,
+                Ativo = true,
                 Inscricoes = new List<Inscricao>() {inscricao},
             };
 

@@ -35,7 +35,7 @@ namespace F7System.Api.Controllers
         public IActionResult GetGrades()
         {
             var estudantes= _f7DbContext.GradeDbSet
-                .Include(x => x.Disciplinas).ToList();
+                .Include(x => x.SemestreDisciplinas).ThenInclude(x => x.Disciplina).ToList();
             return Ok(estudantes);
         }
     }

@@ -108,8 +108,6 @@ namespace F7System.IntegrationTests.Controllers
             var cmdMatricula = CriaComandoMatricula(cmdCriaEstudante.Id);
             await CriaMatricula(cmdMatricula);
             
-            var curso = _f7DbContext.CursoDbSet.First();
-
             var turma = _f7DbContext.TurmaDbSet
                 .Include(x => x.Disciplina)
                 .Include(x => x.Horarios)

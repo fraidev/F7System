@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using F7System.Api.Domain.Commands;
 using F7System.Api.Domain.Commands.Estudante;
+using F7System.Api.Domain.Commands.Matricula;
 using F7System.Api.Domain.Models;
 using F7System.Api.Domain.Services;
 using F7System.Api.Infrastructure.Models;
@@ -23,11 +24,13 @@ namespace F7System.Api.Domain.CommandHandlers
     {
         private readonly IUserService _userService;
         private readonly F7DbContext _f7DbContext;
+        private readonly IMediator _mediator;
 
-        public PessoaCommandHandler(IUserService userService, F7DbContext f7DbContext)
+        public PessoaCommandHandler(IUserService userService, F7DbContext f7DbContext, IMediator mediator)
         {
             _userService = userService;
             _f7DbContext = f7DbContext;
+            _mediator = mediator;
         }
 
         public Task<Unit> Handle(CriarPessoaCommand request, CancellationToken cancellationToken)
@@ -96,6 +99,13 @@ namespace F7System.Api.Domain.CommandHandlers
                 estudante.Matriculas.Add(matricula);
             }
 
+            var cmd = new AtivarMatriculaCommand()
+            {
+                MatriculaId = request.MatriculaId
+            };
+
+            _mediator.Send(cmd, cancellationToken);
+
             _f7DbContext.SaveChanges();
 
             return Unit.Task;
@@ -103,15 +113,21 @@ namespace F7System.Api.Domain.CommandHandlers
 
         public Task<Unit> Handle(AddInscricoesMatriculaEstudanteCommand request, CancellationToken cancellationToken)
         {
+            var config = _f7DbContext.Configuration;
+            
             var matricula = _f7DbContext.MatriculaDbSet.Include(x => x.Inscricoes).ThenInclude(x => x.Turma)
                 .FirstOrDefault(x => x.Id == request.MatriculaId);
 
 
             if (matricula != null)
             {
-                var turmasAtuais = matricula.Inscricoes.Select(x => x.Turma.Id).ToList();
+                var turmasAtuais = matricula.Inscricoes.Where(x => x.Turma.Semestre == config.SemestreAtual).Select(x => x.Turma.Id).ToList();
                 var novasTurmasIds = request.TurmaIds.Except(turmasAtuais);
 
+                var turmasExcluidas = turmasAtuais.Except(request.TurmaIds);
+
+                matricula.Inscricoes.RemoveAll(x => x.Turma.Semestre == config.SemestreAtual && turmasExcluidas.Contains(x.Turma.Id));
+                
                 var turmas = _f7DbContext.TurmaDbSet.Where(x => novasTurmasIds.Contains(x.Id));
                 var inscricoes = turmas.Select(turma => new Inscricao()
                 {

@@ -68,12 +68,18 @@ export interface Disciplina {
   turmas: Turma[];
 }
 
+export interface SemestreDisciplina {
+  id: string;
+  semestre: number;
+  disciplina: Disciplina;
+}
+
 export interface Grade {
   id: string;
   curso?: any;
   cursoId: string;
   ano: number;
-  disciplinas: Disciplina[];
+  semestreDisciplinas: SemestreDisciplina[];
 }
 
 export interface PessoaUsuario {
@@ -93,13 +99,14 @@ export interface PessoaUsuario {
 export interface Inscricao {
   id: string;
   dataInscricao: Date;
-  nota: number;
+  notaFinal: number;
   turma: Turma;
   completa: boolean;
   matriculaId: string;
 }
 
 export interface Matricula {
+  ativo: boolean;
   id: string;
   grade: Grade;
   pessoaUsuarioId: string;

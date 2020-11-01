@@ -103,6 +103,7 @@ namespace F7System.Api
 
             services.AddMediatR(typeof(Startup));
             services.AddScoped<PessoaCommandHandler>();
+            services.AddScoped<MatriculaCommandHandler>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IDbInitializer, DbInitializer>();
         }

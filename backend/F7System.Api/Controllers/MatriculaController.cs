@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using F7System.Api.Domain.Commands.Matricula;
 using F7System.Api.Domain.Models;
 using F7System.Api.Infrastructure.Persistence;
 using MediatR;
@@ -29,15 +30,19 @@ namespace F7System.Api.Controllers
             var config = _f7DbContext.Configuration;
 
             var matricula = _f7DbContext.MatriculaDbSet
-                .Include(x => x.Grade).ThenInclude(x => x.Disciplinas).ThenInclude(x => x.Turmas)
+                .Include(x => x.Grade).ThenInclude(x => x.SemestreDisciplinas).ThenInclude(x => x.Disciplina).ThenInclude(x => x.Turmas)
                 .ThenInclude(x => x.TurmaHorarios).ThenInclude(x => x.Horario)
-                .Include(x => x.Grade).ThenInclude(x => x.Disciplinas).ThenInclude(x => x.Turmas)
+                .Include(x => x.Grade).ThenInclude(x => x.SemestreDisciplinas).ThenInclude(x => x.Disciplina).ThenInclude(x => x.Turmas)
                 .ThenInclude(x => x.Professor)
-                .Include(x => x.Grade).ThenInclude(x => x.Disciplinas).ThenInclude(x => x.Turmas)
+                .Include(x => x.Grade).ThenInclude(x => x.SemestreDisciplinas).ThenInclude(x => x.Disciplina).ThenInclude(x => x.Turmas)
                 .ThenInclude(x => x.Disciplina)
-                .Include(x => x.Grade).ThenInclude(x => x.Disciplinas).ThenInclude(x => x.Turmas)
+                .Include(x => x.Grade).ThenInclude(x => x.SemestreDisciplinas).ThenInclude(x => x.Disciplina).ThenInclude(x => x.Turmas)
                 .ThenInclude(x => x.Semestre)
-                .Include(x => x.Inscricoes)
+                .Include(x => x.Grade)
+                .Include(x => x.Inscricoes).ThenInclude(x => x.Turma).ThenInclude(x => x.TurmaHorarios).ThenInclude(x => x.Horario)
+                .Include(x => x.Inscricoes).ThenInclude(x => x.Turma).ThenInclude(x => x.Professor)
+                .Include(x => x.Inscricoes).ThenInclude(x => x.Turma).ThenInclude(x => x.Disciplina)
+                .Include(x => x.Inscricoes).ThenInclude(x => x.Turma).ThenInclude(x => x.Semestre)
                 .Include(x => x.PessoaUsuario)
                 .FirstOrDefault(x => x.Id == id);
 
@@ -51,15 +56,18 @@ namespace F7System.Api.Controllers
             var config = _f7DbContext.Configuration;
 
             var matricula = _f7DbContext.MatriculaDbSet
-                .Include(x => x.Grade).ThenInclude(x => x.Disciplinas).ThenInclude(x => x.Turmas)
+                .Include(x => x.Grade).ThenInclude(x => x.SemestreDisciplinas).ThenInclude(x => x.Disciplina).ThenInclude(x => x.Turmas)
                 .ThenInclude(x => x.TurmaHorarios).ThenInclude(x => x.Horario)
-                .Include(x => x.Grade).ThenInclude(x => x.Disciplinas).ThenInclude(x => x.Turmas)
+                .Include(x => x.Grade).ThenInclude(x => x.SemestreDisciplinas).ThenInclude(x => x.Disciplina).ThenInclude(x => x.Turmas)
                 .ThenInclude(x => x.Professor)
-                .Include(x => x.Grade).ThenInclude(x => x.Disciplinas).ThenInclude(x => x.Turmas)
+                .Include(x => x.Grade).ThenInclude(x => x.SemestreDisciplinas).ThenInclude(x => x.Disciplina).ThenInclude(x => x.Turmas)
                 .ThenInclude(x => x.Disciplina)
-                .Include(x => x.Grade).ThenInclude(x => x.Disciplinas).ThenInclude(x => x.Turmas)
+                .Include(x => x.Grade).ThenInclude(x => x.SemestreDisciplinas).ThenInclude(x => x.Disciplina).ThenInclude(x => x.Turmas)
                 .ThenInclude(x => x.Semestre)
-                .Include(x => x.Inscricoes)
+                .Include(x => x.Inscricoes).ThenInclude(x => x.Turma).ThenInclude(x => x.TurmaHorarios).ThenInclude(x => x.Horario)
+                .Include(x => x.Inscricoes).ThenInclude(x => x.Turma).ThenInclude(x => x.Professor)
+                .Include(x => x.Inscricoes).ThenInclude(x => x.Turma).ThenInclude(x => x.Disciplina)
+                .Include(x => x.Inscricoes).ThenInclude(x => x.Turma).ThenInclude(x => x.Semestre)
                 .Include(x => x.PessoaUsuario)
                 .FirstOrDefault(x => x.Id == id);
 
@@ -72,10 +80,10 @@ namespace F7System.Api.Controllers
                 
                 //Somente disciplinas com Pre-requisitos
                 var disciplinasCompletas = matricula.Inscricoes.Where(x => x.Completa).Select(x => x.Turma.Disciplina.Id).ToList();
-                matricula.Grade.Disciplinas = matricula.Grade.Disciplinas.Where(disciplina =>
+                matricula.Grade.SemestreDisciplinas = matricula.Grade.SemestreDisciplinas.Where(sd =>
                 {
-                    return disciplina.Prerequisites.Select(x => x.Id).All(ids => disciplinasCompletas.Contains(ids)) 
-                           && disciplina.Turmas.Any(x => x.Semestre == config.SemestreAtual);
+                    return sd.Disciplina.Prerequisites.Select(x => x.Id).All(ids => disciplinasCompletas.Contains(ids)) 
+                           && sd.Disciplina.Turmas.Any(x => x.Semestre == config.SemestreAtual);
                 }).ToList();
                 
                 
@@ -90,6 +98,15 @@ namespace F7System.Api.Controllers
             }
 
             return Ok(matricula);
+        }
+        
+
+        [HttpPost("Ativar")]
+        public IActionResult Ativar([FromBody] AtivarMatriculaCommand cmd)
+        {
+            _mediator.Send(cmd);
+
+            return Ok();
         }
     }
 }

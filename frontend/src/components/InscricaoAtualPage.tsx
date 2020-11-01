@@ -67,7 +67,7 @@ const InscricaoAtualPage: React.FC = () => {
     }
   }
 
-  const table = matricula?.grade?.disciplinas
+  const table = matricula?.grade?.semestreDisciplinas
     ? <Table>
       <TableHead>
         <TableRow>
@@ -79,19 +79,19 @@ const InscricaoAtualPage: React.FC = () => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {matricula?.grade?.disciplinas.map((disciplina: any) => (
-          <TableRow key={disciplina?.id}>
+        {matricula?.grade?.semestreDisciplinas.map((sd) => (
+          <TableRow key={sd?.id}>
             <TableCell component="th" scope="row">
-              {disciplina?.nome}
+              {sd?.disciplina?.nome}
             </TableCell>
             <TableCell component="th" scope="row">
-              {disciplina?.creditos}
+              {sd?.disciplina?.creditos}
             </TableCell>
             <TableCell component="th" scope="row">
-              {disciplina?.prerequisites.map(x => x.nome)?.reduce((previousValue, currentValue) => previousValue ? currentValue + ', ' + previousValue : currentValue, '')}
+              {sd?.disciplina?.prerequisites.map(x => x.nome)?.reduce((previousValue, currentValue) => previousValue ? currentValue + ', ' + previousValue : currentValue, '')}
             </TableCell>
             <TableCell align="right">
-              <Button variant="contained" color="primary" onClick={() => addDisciplina(disciplina)}>
+              <Button variant="contained" color="primary" onClick={() => addDisciplina(sd.disciplina)}>
                 escolher turmas
               </Button>
               <TurmasDialog open={open} onClose={(turma) => handleClose(turma)}

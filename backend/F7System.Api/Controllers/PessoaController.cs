@@ -51,14 +51,14 @@ namespace F7System.Api.Controllers
             var professores= _f7DbContext.PessoaUsuarioDbSet.Where(x => x.Perfil == Perfil.Professor).ToList();
             return Ok(professores);
         }
-        //
-        //
-        // [HttpGet("Matricula")]
-        // public IActionResult GetProfessores()
-        // {
-        //     var professores= _f7DbContext.PessoaUsuarioDbSet.Where(x => x.Perfil == Perfil.Professor).ToList();
-        //     return Ok(professores);
-        // }
+        
+        
+        [HttpGet("Eu/{username}")]
+        public IActionResult GetEu(string username)
+        {
+            var eu = _f7DbContext.PessoaUsuarioDbSet.Include(x => x.Matriculas).First(x => x.Username == username);
+            return Ok(eu);
+        }
         
         [HttpPost("CriarPessoa")]
         public IActionResult CriarPessoa([FromBody] CriarPessoaCommand cmd)

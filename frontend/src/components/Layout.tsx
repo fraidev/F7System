@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -25,6 +25,9 @@ import InscricaoAtualPage from './InscricaoAtualPage'
 import PersonIcon from '@material-ui/icons/Person'
 import TurmaPage from './TurmaPage'
 import AppsIcon from '@material-ui/icons/Apps'
+import { getEu } from '../services/pessoa-service'
+import { PessoaUsuario } from '../model/estudante-model'
+import AssignmentIcon from '@material-ui/icons/Assignment'
 
 const drawerWidth = 240
 
@@ -111,6 +114,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Layout: React.FC = () => {
   const history = useHistory()
+  const [pessoa, setPessoa] = useState<PessoaUsuario>()
   const classes = useStyles()
   const [open, setOpen] = React.useState(false)
   const handleDrawerOpen = () => {
@@ -124,6 +128,21 @@ const Layout: React.FC = () => {
     window.location.pathname = '/'
   }
 
+  useEffect(() => {
+    const user: { username: string } = JSON.parse(localStorage.getItem('user'))
+    getEu(user?.username).then(res => {
+      setPessoa(res.data)
+    })
+  }, [])
+
+  const homepage = () => {
+    switch (pessoa?.perfil) {
+      case 'Administrator':
+        return '/estudante'
+      case 'Estudante':
+        return `/matricula/${pessoa?.id}/inscricaotodos/${pessoa?.matriculas?.find(x => x.ativo)?.id}`
+    }
+  }
   return (
 
     <div className={classes.root}>
@@ -160,7 +179,7 @@ const Layout: React.FC = () => {
           </IconButton>
         </div>
         <Divider/>
-        <List>{mainListItems(history)}</List>
+        <List>{mainListItems(history, pessoa)}</List>
         <Divider/>
       </Drawer>
       <main className={classes.content}>
@@ -169,7 +188,7 @@ const Layout: React.FC = () => {
 
           <Switch>
             <Route exact path="/">
-              <Redirect to="/estudante"/>
+              <Redirect to={homepage()}/>
             </Route>
             <Route path='/estudante'>
               <EstudantePage/>
@@ -195,32 +214,64 @@ const Layout: React.FC = () => {
   )
 }
 
-export const mainListItems = (history: any) => (
-  <div>
+export const mainListItems = (history: any, pessoa: PessoaUsuario) => {
+  const menuEstudante = () => {
+    if (pessoa?.perfil === 'Estudante') {
+      return (
+        <div>
+          <ListItem button
+            onClick={() => history.push(`/matricula/${pessoa?.id}/inscricaotodos/${pessoa?.matriculas?.find(x => x.ativo)?.id}`)}>
+            <ListItemIcon>
+              <AppsIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Grade Curricular"/>
+          </ListItem>
+          <Divider/>
 
-    <ListItem button onClick={() => history.push('/estudante')}>
-      <ListItemIcon>
-        <PersonIcon/>
-      </ListItemIcon>
-      <ListItemText primary="Estudantes"/>
-    </ListItem>
-    <Divider/>
+          <ListItem button
+            onClick={() => history.push(`/matricula/${pessoa?.id}/inscricaoatual/${pessoa?.matriculas?.find(x => x.ativo)?.id}`)}>
+            <ListItemIcon>
+              <AssignmentIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Inscricão"/>
+          </ListItem>
+        </div>
+      )
+    }
+  }
 
-    <ListItem button onClick={() => history.push('/turma')}>
-      <ListItemIcon>
-        <PeopleIcon/>
-      </ListItemIcon>
-      <ListItemText primary="Turmas"/>
-    </ListItem>
-    <Divider/>
+  const menuAdmin = () => {
+    if (pessoa?.perfil === 'Administrator') {
+      return (
+        <div>
+          <ListItem button onClick={() => history.push('/estudante')}>
+            <ListItemIcon>
+              <PersonIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Estudantes"/>
+          </ListItem>
+          <Divider/>
 
-    <ListItem button onClick={() => history.push('/matricula/:estudante/inscricaotodos/:matriculaId')}>
-      <ListItemIcon>
-        <AppsIcon/>
-      </ListItemIcon>
-      <ListItemText primary="Grade Curricular"/>
-    </ListItem>
-  </div>
-)
+          <ListItem button onClick={() => history.push('/turma')}>
+            <ListItemIcon>
+              <PeopleIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Turmas"/>
+          </ListItem>
+        </div>
+      )
+    }
+  }
+
+  return (
+    <div>
+
+      {menuEstudante()}
+
+      {menuAdmin()}
+
+    </div>
+  )
+}
 
 export default Layout

@@ -1,5 +1,9 @@
 import axios from 'axios'
 
+export const getEu = (id: string) => {
+  return axios.get(process.env.REACT_APP_BACKEND_BASE_URL + `/Pessoa/Eu/${id}`)
+}
+
 export const getEstudanteById = (id: string) => {
   return axios.get(process.env.REACT_APP_BACKEND_BASE_URL + `/Pessoa/Estudante/${id}`)
 }

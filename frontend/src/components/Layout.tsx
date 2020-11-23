@@ -28,6 +28,7 @@ import AppsIcon from '@material-ui/icons/Apps'
 import { getEu } from '../services/pessoa-service'
 import { PessoaUsuario } from '../model/estudante-model'
 import AssignmentIcon from '@material-ui/icons/Assignment'
+import GradeIlustradaPage from './GradeIlustradaPage'
 
 const drawerWidth = 240
 
@@ -198,6 +199,9 @@ const Layout: React.FC = () => {
             </Route>
             <Route path='/matricula/:estudanteId/inscricaoatual/:matriculaId'>
               <InscricaoAtualPage/>
+            </Route>
+            <Route path='/matricula/:estudanteId/gradeilustrada/:matriculaId'>
+              <GradeIlustradaPage/>
             </Route>
             <Route path='/matricula/:estudanteId'>
               <MatriculaPage/>

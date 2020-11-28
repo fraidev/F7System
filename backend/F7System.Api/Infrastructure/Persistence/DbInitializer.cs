@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using Castle.Core.Internal;
 using F7System.Api.Domain.Commands.Estudante;
 using F7System.Api.Domain.Enums;
 using F7System.Api.Domain.Models;
@@ -47,67 +49,33 @@ namespace ContosoUniversity.Data
 
             var semestres = SalvaSemestres();
             var horarios = SalvaHorarios();
-            
-            
-            var calculo = new Disciplina()
-            {
-                Id = Guid.NewGuid(),
-                Creditos = 80,
-                Nome = "Calculo"
-            };
-            
-            var calculo2 = new Disciplina()
-            {
-                Id = Guid.NewGuid(),
-                Creditos = 80,
-                Nome = "Calculo 2",
-                Prerequisites = {calculo}
-            };
-            
-            var algoritmos = new Disciplina()
-            {
-                Id = Guid.NewGuid(),
-                Creditos = 80,
-                Nome = "Algoritmos"
-            };
-            
-            var logicaMatematica = new Disciplina()
-            {
-                Id = Guid.NewGuid(),
-                Creditos = 80,
-                Nome = "Logica Matematica"
-            };
 
-            var semestreDisciplinaCalculo = new SemestreDisciplina()
-            {
-                Id = Guid.NewGuid(),
-                Disciplina = calculo,
-                Semestre = 1
-            };
-            var semestreDisciplinaAlgoritmos = new SemestreDisciplina()
-            {
-                Id = Guid.NewGuid(),
-                Disciplina = algoritmos,
-                Semestre = 1
-            };
-            var semestreDisciplinaLogicaMatematica = new SemestreDisciplina()
-            {
-                Id = Guid.NewGuid(),
-                Disciplina = logicaMatematica,
-                Semestre = 1
-            };
-            var semestreDisciplinaCalculo2 = new SemestreDisciplina()
-            {
-                Id = Guid.NewGuid(),
-                Disciplina = calculo2,
-                Semestre = 2
-            };
+            var computacaoCienciaProfissao = CriarSemestreDisciplina("Computação, Ciência e Profissão", 40, 1);
+            var metodologiaCientifica = CriarSemestreDisciplina("Metodologia Científica", 40, 1);
+            var calculo = CriarSemestreDisciplina("Calculo", 80, 1);
+            var calcVelotorialGeometriaAnaliticaPlana = CriarSemestreDisciplina("Calc. Vetorial e Geometria Analítica Plana", 80, 1);
+            var algoritmos = CriarSemestreDisciplina("Algoritmos", 80, 1);
+            var logicaMatematica = CriarSemestreDisciplina("Introdução Logica Matematica", 80, 1);
+            
+            var calculo2 = CriarSemestreDisciplina("Calculo 2", 80, 2, calculo);
+            var calcVetorialGeometriaAnaliticaEspacial = CriarSemestreDisciplina("Calc. Vetorial e Geometria Analítica Espacial", 80, 2, calcVelotorialGeometriaAnaliticaPlana);
             
             var grade = new Grade()
             {
                 Id = Guid.NewGuid(),
                 Ano = 2020,
-                SemestreDisciplinas = new List<SemestreDisciplina>(){semestreDisciplinaCalculo, semestreDisciplinaAlgoritmos, semestreDisciplinaLogicaMatematica, semestreDisciplinaCalculo2}
+                SemestreDisciplinas = new List<SemestreDisciplina>()
+                {
+                    computacaoCienciaProfissao,
+                    metodologiaCientifica,
+                    calculo,
+                    calcVelotorialGeometriaAnaliticaPlana,
+                    algoritmos,
+                    logicaMatematica,
+                    
+                    calculo2,
+                    calcVetorialGeometriaAnaliticaEspacial
+                }
             };
             _f7DbContext.Add(grade);
 
@@ -139,7 +107,7 @@ namespace ContosoUniversity.Data
             {
                 Sala = "101A",
                 Id = Guid.NewGuid(),
-                Disciplina = calculo,
+                Disciplina = calculo.Disciplina,
                 Semestre = semestres.semestre,
                 Professor = professorAfonso,
             };
@@ -149,7 +117,7 @@ namespace ContosoUniversity.Data
             {
                 Sala = "101A",
                 Id = Guid.NewGuid(),
-                Disciplina = calculo2,
+                Disciplina = calculo2.Disciplina,
                 Semestre = semestres.semestre2,
                 Professor = professorAfonso,
             };
@@ -159,7 +127,7 @@ namespace ContosoUniversity.Data
             {
                 Sala = "102A",
                 Id = Guid.NewGuid(),
-                Disciplina = logicaMatematica,
+                Disciplina = logicaMatematica.Disciplina,
                 Semestre = semestres.semestre2,
                 Professor = professorRogerio,
             };
@@ -167,7 +135,7 @@ namespace ContosoUniversity.Data
             {
                 Sala = "103A",
                 Id = Guid.NewGuid(),
-                Disciplina = algoritmos,
+                Disciplina = algoritmos.Disciplina,
                 Semestre = semestres.semestre2,
                 Professor = professorRogerio
             };
@@ -223,6 +191,30 @@ namespace ContosoUniversity.Data
             _f7DbContext.SaveChanges();
         }
 
+        private SemestreDisciplina CriarSemestreDisciplina(string nome, int creditos, int semestre,
+            params SemestreDisciplina[] prerequisito)
+        {
+            var disciplina = new Disciplina()
+            {
+                Id = Guid.NewGuid(),
+                Creditos = creditos,
+                Nome = nome
+            };
+            
+
+            if (!prerequisito.IsNullOrEmpty())
+            {
+                disciplina.Prerequisites = prerequisito.Select(x => x.Disciplina).ToList();
+            }
+
+            return new SemestreDisciplina()
+            {
+                Id = Guid.NewGuid(),
+                Disciplina = disciplina,
+                Semestre = semestre
+            };
+        }
+        
         private (Semestre semestre, Semestre semestre2) SalvaSemestres()
         {
             var semestre = new Semestre()

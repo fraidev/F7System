@@ -24,14 +24,15 @@ const GradeIlustradaPage: React.FC = () => {
           return {
             // id: `horizontal-${key}-${index}`,
             id: semestreDisciplina?.disciplina?.id,
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
             draggable: false,
             data: {
-              label: <div>
-                <div>{semestreDisciplina?.disciplina?.nome}</div>
-                <div>{semestreDisciplina?.disciplina?.creditos}</div>
-              </div>
+              label:
+                <div style={{ width: '100%', height: '55px', display: 'flex', flexDirection: 'column', placeContent: 'center' }}>
+                  <div>{semestreDisciplina?.disciplina?.nome}</div>
+                  <div>{semestreDisciplina?.disciplina?.creditos}</div>
+                </div>
             },
             position: { x: 200 * (parseInt(key) - 1), y: 100 * index }
           }
@@ -47,8 +48,7 @@ const GradeIlustradaPage: React.FC = () => {
             nodesColumn.push({
               id: 'horizontal-' + semestreDisciplina?.disciplina.id + '-' + prerequisiteId,
               source: semestreDisciplina?.disciplina.id,
-              target: prerequisiteId,
-              animated: true
+              target: prerequisiteId
             })
           })
         })
@@ -59,21 +59,6 @@ const GradeIlustradaPage: React.FC = () => {
       setElements([...elements, ...edgesAndNodes])
     })
   }, [matriculaId])
-
-  // const elements = [
-  //   { id: 'horizontal-1', sourcePosition: Position.Right, targetPosition: Position.Left, draggable: false, data: { label: 'Node 1' }, position: { x: 50, y: 5 } },
-  //   { id: 'horizontal-2', sourcePosition: Position.Right, targetPosition: Position.Left, draggable: false, data: { label: () => <div>Node 2</div> }, position: { x: 50, y: 105 } },
-  //   { id: 'horizontal-3', sourcePosition: Position.Left, targetPosition: Position.Right, draggable: false, data: { label: () => <div>Node 2</div> }, position: { x: 50, y: 205 } },
-  //   { id: 'horizontal-4', sourcePosition: Position.Right, targetPosition: Position.Left, draggable: false, data: { label: () => <div>Node 2</div> }, position: { x: 50, y: 305 } },
-  //   { id: 'horizontal-5', sourcePosition: Position.Right, targetPosition: Position.Left, draggable: false, data: { label: () => <div>Node 2</div> }, position: { x: 50, y: 405 } },
-  //
-  //   { id: 'horizontal-6', sourcePosition: Position.Left, targetPosition: Position.Right, draggable: false, data: { label: 'Node 1' }, position: { x: 250, y: 5 } },
-  //   { id: 'horizontal-7', sourcePosition: Position.Right, targetPosition: Position.Left, draggable: false, data: { label: () => <div>Node 2</div> }, position: { x: 250, y: 105 } },
-  //   { id: 'horizontal-8', sourcePosition: Position.Right, targetPosition: Position.Left, draggable: false, data: { label: () => <div>Node 2</div> }, position: { x: 250, y: 205 } },
-  //   { id: 'horizontal-9', sourcePosition: Position.Right, targetPosition: Position.Left, draggable: false, data: { label: () => <div>Node 2</div> }, position: { x: 250, y: 305 } },
-  //   { id: 'horizontal-10', sourcePosition: Position.Right, targetPosition: Position.Left, draggable: false, data: { label: () => <div>Node 2</div> }, position: { x: 250, y: 405 } },
-  //   { id: 'horizontal-e6-1', source: 'horizontal-6', target: 'horizontal-3', animated: true }
-  // ]
 
   const BasicFlow = () => <ReactFlow nodesDraggable={false} selectNodesOnDrag={false} draggable={false}
     zoomOnDoubleClick={false} style={{ overflow: 'visible' }} elements={elements}>

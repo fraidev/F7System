@@ -17,24 +17,46 @@ const GradeIlustradaPage: React.FC = () => {
 
       const semestreDisciplinas = _.groupBy(res.data?.grade?.semestreDisciplinas, x => x.semestre)
 
-      const el = []
+      const edgesAndNodes = []
 
       for (const key in semestreDisciplinas) {
-        const a = semestreDisciplinas[key].map((semestreDisciplina, index) => {
+        const edgesColumn = semestreDisciplinas[key].map((semestreDisciplina, index) => {
           return {
-            id: `horizontal-${key}-${index}`,
+            // id: `horizontal-${key}-${index}`,
+            id: semestreDisciplina?.disciplina?.id,
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
             draggable: false,
-            data: { label: <div><div>{semestreDisciplina?.disciplina?.nome}</div><div>{semestreDisciplina?.disciplina?.creditos}</div></div> },
-            position: { x: 200 * (parseInt(key) - 1), y: 50 * index }
+            data: {
+              label: <div>
+                <div>{semestreDisciplina?.disciplina?.nome}</div>
+                <div>{semestreDisciplina?.disciplina?.creditos}</div>
+              </div>
+            },
+            position: { x: 200 * (parseInt(key) - 1), y: 100 * index }
           }
         })
+        const nodesColumn = []
 
-        el.push(...a)
+        semestreDisciplinas[key].forEach(semestreDisciplina => {
+          const preRequisiteIds = semestreDisciplina.disciplina.prerequisites.map(preRequisite => {
+            return preRequisite.id
+          })
+
+          preRequisiteIds.forEach(prerequisiteId => {
+            nodesColumn.push({
+              id: 'horizontal-' + semestreDisciplina?.disciplina.id + '-' + prerequisiteId,
+              source: semestreDisciplina?.disciplina.id,
+              target: prerequisiteId,
+              animated: true
+            })
+          })
+        })
+        edgesAndNodes.push(...edgesColumn)
+        edgesAndNodes.push(...nodesColumn)
       }
 
-      setElements([...elements, ...el])
+      setElements([...elements, ...edgesAndNodes])
     })
   }, [matriculaId])
 

@@ -55,7 +55,6 @@ namespace ContosoUniversity.Data
                 Creditos = 80,
                 Nome = "Calculo"
             };
-            _f7DbContext.Add(calculo);
             
             var calculo2 = new Disciplina()
             {
@@ -64,7 +63,6 @@ namespace ContosoUniversity.Data
                 Nome = "Calculo 2",
                 Prerequisites = {calculo}
             };
-            _f7DbContext.Add(calculo);
             
             var algoritmos = new Disciplina()
             {
@@ -72,7 +70,6 @@ namespace ContosoUniversity.Data
                 Creditos = 80,
                 Nome = "Algoritmos"
             };
-            _f7DbContext.Add(calculo);
             
             var logicaMatematica = new Disciplina()
             {
@@ -80,7 +77,6 @@ namespace ContosoUniversity.Data
                 Creditos = 80,
                 Nome = "Logica Matematica"
             };
-            _f7DbContext.Add(calculo);
 
             var semestreDisciplinaCalculo = new SemestreDisciplina()
             {

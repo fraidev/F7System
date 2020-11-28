@@ -57,9 +57,65 @@ namespace ContosoUniversity.Data
             var algoritmos = CriarSemestreDisciplina("Algoritmos", 80, 1);
             var logicaMatematica = CriarSemestreDisciplina("Introdução Logica Matematica", 80, 1);
             
-            var calculo2 = CriarSemestreDisciplina("Calculo 2", 80, 2, calculo);
+            var calculo2 = CriarSemestreDisciplina("Calculo II", 80, 2, calculo);
             var calcVetorialGeometriaAnaliticaEspacial = CriarSemestreDisciplina("Calc. Vetorial e Geometria Analítica Espacial", 80, 2, calcVelotorialGeometriaAnaliticaPlana);
+            var fisica = CriarSemestreDisciplina("Física I", 80, 2);
+            var labSO = CriarSemestreDisciplina("Lab SO", 40, 2);
+            var labProgConstSoftware = CriarSemestreDisciplina("Lab Prog e Const Software", 80, 2, algoritmos);
             
+            var redacaoEmpresarial = CriarSemestreDisciplina("Redação Empresarial", 40, 3);
+            var psicologiaOrganizacional = CriarSemestreDisciplina("Psicologia Organizacional", 40, 3);
+            var calculo3 = CriarSemestreDisciplina("Cálculo III", 80, 3, calculo2);
+            var fisica2 = CriarSemestreDisciplina("Física II", 80, 3, fisica);
+            var arqComputadores = CriarSemestreDisciplina("Arq. Computadores", 80, 3, labSO);
+            var estruturaDados1  = CriarSemestreDisciplina("Estrutura Dados I ", 80, 3);
+            
+            var algebraLinear = CriarSemestreDisciplina("Álgebra Linear", 80, 4);
+            var fisica3 = CriarSemestreDisciplina("Física III", 80, 4, fisica2);
+            var fundamentosEngDeSoftware = CriarSemestreDisciplina("Fundamentos de Eng. De Software", 80, 4);
+            var programacaoWeb = CriarSemestreDisciplina("Programação Web", 80, 4);
+            var estruturaDados2 = CriarSemestreDisciplina("Estrutura de Dados II", 80, 4, estruturaDados1);
+            
+            var eqDifSeries = CriarSemestreDisciplina("Eq Diferen Séries", 80, 5);
+            var fundProbabEstatística = CriarSemestreDisciplina("Fund Probab Estatística", 40, 5);
+            var teoriaDaComputacao = CriarSemestreDisciplina("Teoria da Computação", 40, 5);
+            var bancoDeDados = CriarSemestreDisciplina("Banco de Dados I", 80, 5);
+            var fundamentosDeAutomacao = CriarSemestreDisciplina("Fundamentos de Automação", 80, 5);
+            var fundSistEletroEletronicos = CriarSemestreDisciplina("Fund Sist ElétroEletrônicos", 80, 5);
+            
+            var bancoDeDados2 = CriarSemestreDisciplina("Banco de Dados II", 40, 6, bancoDeDados); 
+            var sistemasOperacionais = CriarSemestreDisciplina("Sistemas Operacionais", 80, 6); 
+            var labProgConstSoftOO = CriarSemestreDisciplina("Lab Prog Const Soft OO", 80, 6);
+            var sistemasDeControle = CriarSemestreDisciplina("Sistemas de Controle", 80, 6);
+            var fundSistDigitais = CriarSemestreDisciplina("Fund Sist Digitais", 80, 6);
+            
+            var eticaNaEngenharia = CriarSemestreDisciplina("Ética na Engenharia", 40, 7);  
+            var fisica4 = CriarSemestreDisciplina("Física IV", 80, 7, fisica3);  
+            var arquiteturaModelagemDeSoftware = CriarSemestreDisciplina("Arquitetura e Modelagem de Software", 80, 7, fisica3);  
+            var labProjSistDig = CriarSemestreDisciplina("Lab Proj Sist Dig", 80, 7);  
+            var engenhariaDeSistemasEmbarcados = CriarSemestreDisciplina("Engenharia de Sistemas Embarcados", 80, 7);  
+            
+            var fundamentosDeAdministracao = CriarSemestreDisciplina("Fundamentos de Administração", 40, 8);   
+            var redesDeComputadores = CriarSemestreDisciplina("Redes de Computadores", 80, 8);   
+            var dispositivosProgramáveisMicroMicro = CriarSemestreDisciplina("Dispositivos Programáveis e Micro & micro", 80, 8);   
+            var projetoIntegração = CriarSemestreDisciplina("Projeto de Integração", 80, 8);
+            var tcc1 = CriarSemestreDisciplina("TCC I", 40, 8);   
+            
+            var gereneciaDeProjeto = CriarSemestreDisciplina("Gerência de Projetos", 80, 9);   
+            var oHomemFenomenoReligioso = CriarSemestreDisciplina("O Homem e o Fenômeno Religioso", 40, 9);   
+            var sistemaOperacionaisDeTempoReal = CriarSemestreDisciplina("Sistemas Operacionais de Tempo Real", 40, 9);   
+            var teleprocessamento = CriarSemestreDisciplina("Teleprocessamento", 40, 9);   
+            var fundamentosDeRobotica = CriarSemestreDisciplina("Fundamentos de Robótica", 80, 9);   
+            var laboratorioDeSistemasEmbarcados = CriarSemestreDisciplina("Laboratório de Sistemas Embarcados", 80, 9);   
+            var tcc2 = CriarSemestreDisciplina("TCC II", 40, 9, tcc1);
+            
+            var fundamentosDeEconomia = CriarSemestreDisciplina("Fundamentos de Economia", 40, 10);
+            var inteligenciaArtifical = CriarSemestreDisciplina("Inteligência Artificial", 40, 10);   
+            var sistemaDistribuidos = CriarSemestreDisciplina("Sistemas Distribuídos", 40, 10);   
+            var auditoriaSegurancaDeRedes = CriarSemestreDisciplina("Auditoria e Segurança de Redes", 40, 10);   
+            var estagioSupervisionado = CriarSemestreDisciplina("Estágio Supervisionado", 80, 10); 
+            var tcc3 = CriarSemestreDisciplina("TCC II", 40, 10, tcc2);   
+ 
             var grade = new Grade()
             {
                 Id = Guid.NewGuid(),
@@ -72,9 +128,56 @@ namespace ContosoUniversity.Data
                     calcVelotorialGeometriaAnaliticaPlana,
                     algoritmos,
                     logicaMatematica,
-                    
                     calculo2,
-                    calcVetorialGeometriaAnaliticaEspacial
+                    calcVetorialGeometriaAnaliticaEspacial,
+                    fisica,
+                    labSO,
+                    labProgConstSoftware,
+                    redacaoEmpresarial,
+                    psicologiaOrganizacional,
+                    calculo3,
+                    fisica2,
+                    arqComputadores,
+                    estruturaDados1,
+                    algebraLinear, 
+                    fisica3, 
+                    fundamentosEngDeSoftware, 
+                    programacaoWeb, 
+                    estruturaDados2, 
+                    eqDifSeries, 
+                    fundProbabEstatística, 
+                    teoriaDaComputacao, 
+                    bancoDeDados, 
+                    fundamentosDeAutomacao, 
+                    fundSistEletroEletronicos, 
+                    bancoDeDados2, 
+                    sistemasOperacionais, 
+                    labProgConstSoftOO, 
+                    sistemasDeControle, 
+                    fundSistDigitais, 
+                    eticaNaEngenharia, 
+                    fisica4, 
+                    arquiteturaModelagemDeSoftware, 
+                    labProjSistDig, 
+                    engenhariaDeSistemasEmbarcados, 
+                    fundamentosDeAdministracao, 
+                    redesDeComputadores, 
+                    dispositivosProgramáveisMicroMicro, 
+                    projetoIntegração, 
+                    tcc1, 
+                    gereneciaDeProjeto, 
+                    oHomemFenomenoReligioso, 
+                    sistemaOperacionaisDeTempoReal, 
+                    teleprocessamento, 
+                    fundamentosDeRobotica, 
+                    laboratorioDeSistemasEmbarcados, 
+                    tcc2, 
+                    fundamentosDeEconomia, 
+                    inteligenciaArtifical, 
+                    sistemaDistribuidos, 
+                    auditoriaSegurancaDeRedes, 
+                    estagioSupervisionado, 
+                    tcc3
                 }
             };
             _f7DbContext.Add(grade);

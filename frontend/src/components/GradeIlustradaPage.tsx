@@ -5,36 +5,44 @@ import { useParams } from 'react-router-dom'
 import { getMatriculaById } from '../services/matricula-service'
 import _ from 'lodash'
 import ReactFlow, { Elements, Position } from 'react-flow-renderer'
+import { TableCell, TableRow } from '@material-ui/core'
 
 const GradeIlustradaPage: React.FC = () => {
   const [elements, setElements] = useState<Elements>([])
-  const [matricula, setMatricula] = useState<Matricula>()
-  const { matriculaId, estudanteId } = useParams()
+  const { matriculaId } = useParams()
 
   useEffect(() => {
     getMatriculaById(matriculaId).then((res: { data: Matricula }) => {
-      setMatricula(res.data)
+      const matricula = res.data
 
-      const semestreDisciplinas = _.groupBy(res.data?.grade?.semestreDisciplinas, x => x.semestre)
+      const semestreDisciplinas = _.groupBy(matricula?.grade?.semestreDisciplinas, x => x.semestre)
+
+      const inscricoesInfoById = (id) => {
+        const inscricao = matricula.inscricoes.find(x => x?.turma?.disciplina.id === id)
+
+        return inscricao
+          ? (inscricao.completa ? <div style={{ color: 'green' }}>Concluido</div> : <div style={{ color: 'yellow' }}>Cursando</div>)
+          : <div style={{ color: 'gray' }}>Pendente</div>
+      }
 
       const edgesAndNodes = []
 
       for (const key in semestreDisciplinas) {
         const edgesColumn = semestreDisciplinas[key].map((semestreDisciplina, index) => {
           return {
-            // id: `horizontal-${key}-${index}`,
             id: semestreDisciplina?.disciplina?.id,
             sourcePosition: Position.Left,
             targetPosition: Position.Right,
             draggable: false,
             data: {
               label:
-                <div style={{ width: '100%', height: '55px', display: 'flex', flexDirection: 'column', placeContent: 'center' }}>
+                <div style={{ width: '100%', height: '60px', display: 'flex', flexDirection: 'column', placeContent: 'center' }}>
                   <div>{semestreDisciplina?.disciplina?.nome}</div>
                   <div>{semestreDisciplina?.disciplina?.creditos}</div>
+                  {inscricoesInfoById(semestreDisciplina?.disciplina?.id)}
                 </div>
             },
-            position: { x: 200 * (parseInt(key) - 1), y: 100 * index }
+            position: { x: 180 * (parseInt(key) - 1), y: 100 * (index + 1) }
           }
         })
         const nodesColumn = []
@@ -60,8 +68,9 @@ const GradeIlustradaPage: React.FC = () => {
     })
   }, [matriculaId])
 
-  const BasicFlow = () => <ReactFlow nodesDraggable={false} selectNodesOnDrag={false} draggable={false}
-    zoomOnDoubleClick={false} style={{ overflow: 'visible' }} elements={elements}>
+  const BasicFlow = () => <ReactFlow nodesDraggable={false} selectNodesOnDrag={false} draggable={false} zoomOnScroll={false}
+    snapGrid={[15, 15]}
+    defaultZoom={0.9} zoomOnDoubleClick={false} style={{ overflow: 'visible', height: '78vh', display: 'flex' }} elements={elements}>
   </ReactFlow>
 
   return (

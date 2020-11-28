@@ -4,46 +4,58 @@ import { Matricula } from '../model/estudante-model'
 import { useParams } from 'react-router-dom'
 import { getMatriculaById } from '../services/matricula-service'
 import _ from 'lodash'
+import ReactFlow, { Elements, Position } from 'react-flow-renderer'
 
 const GradeIlustradaPage: React.FC = () => {
+  const [elements, setElements] = useState<Elements>([])
   const [matricula, setMatricula] = useState<Matricula>()
   const { matriculaId, estudanteId } = useParams()
 
   useEffect(() => {
     getMatriculaById(matriculaId).then((res: { data: Matricula }) => {
       setMatricula(res.data)
+
+      const semestreDisciplinas = _.groupBy(res.data?.grade?.semestreDisciplinas, x => x.semestre)
+
+      const el = []
+
+      for (const key in semestreDisciplinas) {
+        const a = semestreDisciplinas[key].map((semestreDisciplina, index) => {
+          return {
+            id: `horizontal-${key}-${index}`,
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            draggable: false,
+            data: { label: <div><div>{semestreDisciplina?.disciplina?.nome}</div><div>{semestreDisciplina?.disciplina?.creditos}</div></div> },
+            position: { x: 200 * (parseInt(key) - 1), y: 50 * index }
+          }
+        })
+
+        el.push(...a)
+      }
+
+      setElements([...elements, ...el])
     })
   }, [matriculaId])
 
-  const disciplines = () => {
-    const semestreDisciplinas = _.groupBy(matricula?.grade?.semestreDisciplinas, x => x.semestre)
+  // const elements = [
+  //   { id: 'horizontal-1', sourcePosition: Position.Right, targetPosition: Position.Left, draggable: false, data: { label: 'Node 1' }, position: { x: 50, y: 5 } },
+  //   { id: 'horizontal-2', sourcePosition: Position.Right, targetPosition: Position.Left, draggable: false, data: { label: () => <div>Node 2</div> }, position: { x: 50, y: 105 } },
+  //   { id: 'horizontal-3', sourcePosition: Position.Left, targetPosition: Position.Right, draggable: false, data: { label: () => <div>Node 2</div> }, position: { x: 50, y: 205 } },
+  //   { id: 'horizontal-4', sourcePosition: Position.Right, targetPosition: Position.Left, draggable: false, data: { label: () => <div>Node 2</div> }, position: { x: 50, y: 305 } },
+  //   { id: 'horizontal-5', sourcePosition: Position.Right, targetPosition: Position.Left, draggable: false, data: { label: () => <div>Node 2</div> }, position: { x: 50, y: 405 } },
+  //
+  //   { id: 'horizontal-6', sourcePosition: Position.Left, targetPosition: Position.Right, draggable: false, data: { label: 'Node 1' }, position: { x: 250, y: 5 } },
+  //   { id: 'horizontal-7', sourcePosition: Position.Right, targetPosition: Position.Left, draggable: false, data: { label: () => <div>Node 2</div> }, position: { x: 250, y: 105 } },
+  //   { id: 'horizontal-8', sourcePosition: Position.Right, targetPosition: Position.Left, draggable: false, data: { label: () => <div>Node 2</div> }, position: { x: 250, y: 205 } },
+  //   { id: 'horizontal-9', sourcePosition: Position.Right, targetPosition: Position.Left, draggable: false, data: { label: () => <div>Node 2</div> }, position: { x: 250, y: 305 } },
+  //   { id: 'horizontal-10', sourcePosition: Position.Right, targetPosition: Position.Left, draggable: false, data: { label: () => <div>Node 2</div> }, position: { x: 250, y: 405 } },
+  //   { id: 'horizontal-e6-1', source: 'horizontal-6', target: 'horizontal-3', animated: true }
+  // ]
 
-    const inscricoesInfoById = (id) => {
-      const inscricao = matricula.inscricoes.find(x => x?.turma?.disciplina.id === id)
-
-      if (inscricao) {
-        return {
-          completa: inscricao ? (inscricao.completa ? 'Concluido' : 'Cursando') : 'Pendente',
-          nota: inscricao && inscricao.notaFinal ? inscricao.notaFinal : '-'
-        }
-      }
-    }
-
-    const retval = []
-
-    for (const key in semestreDisciplinas) {
-      retval.push(
-        <div key={key}> {semestreDisciplinas[key].map((semestreDisciplina) => (
-          <div style={{ border: 'solid', margin: '10px', maxWidth: '180px' }} key={semestreDisciplina?.id}>
-            <div>{semestreDisciplina?.disciplina?.nome} </div>
-            <div>{semestreDisciplina?.disciplina?.creditos}</div>
-          </div>
-        ))}
-        </div>)
-    }
-
-    return retval
-  }
+  const BasicFlow = () => <ReactFlow nodesDraggable={false} selectNodesOnDrag={false} draggable={false}
+    zoomOnDoubleClick={false} style={{ overflow: 'visible' }} elements={elements}>
+  </ReactFlow>
 
   return (
     <Paper style={{ minHeight: '80vh', marginLeft: '4vw' }}>
@@ -56,9 +68,7 @@ const GradeIlustradaPage: React.FC = () => {
       }}> Grade Ilustrada
       </div>
 
-      <div style={{ display: 'flex', height: '100%' }}>
-        {disciplines()}
-      </div>
+      <BasicFlow/>
     </Paper>
   )
 }
